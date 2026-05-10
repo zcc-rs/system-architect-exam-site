@@ -1,8 +1,4 @@
 .DS_Store
 
-# 原始试卷与扫描页不发布到 GitHub，避免直接暴露原卷/答案。
-*.pdf
-assets/pages/
-
 # Local/editor state
 .vscode/

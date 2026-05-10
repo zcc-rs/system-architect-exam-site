@@ -5,6 +5,19 @@ const toast = document.querySelector("#toast");
 const objectivePapers = bank.papers.filter((paper) => paper.type === "objective");
 const subjectivePapers = bank.papers.filter((paper) => paper.type !== "objective");
 const optionKeys = ["A", "B", "C", "D"];
+const chineseNumbers = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+const caseFieldGroups = {
+  "case1-1": [[0, 1], [2, 3, 4, 5], [6, 7, 8]],
+  "case1-2": [[0, 1, 2], [3, 4, 5], [6]],
+  "case1-3": [[0, 1, 2, 3], [4], [5, 6, 7, 8]],
+  "case1-4": [[0, 1], [2, 3, 4, 5], [6]],
+  "case1-5": [[0, 1, 2], [3], [4], [5]],
+  "case2-1": [[0, 1, 2], [3, 4, 5, 6], [7]],
+  "case2-2": [[0], [1, 2, 3, 4, 5, 6], [7]],
+  "case2-3": [[0, 1, 2, 3], [4]],
+  "case2-4": [[0], [1], [2]],
+  "case2-5": [[0], [1], [2]],
+};
 
 const state = {
   mode: "exam",
@@ -78,13 +91,13 @@ function expandCaseField(field, fieldIndex) {
   const normalized = String(field).replace(/[～－—]/g, "~");
   const match = normalized.match(/^(.*?)[（(](\d+)[)）]\s*~\s*[（(](\d+)[)）](.*)$/);
   if (!match) {
-    return [{ key: String(fieldIndex), label: field, original: field, isRange: false }];
+    return [{ key: String(fieldIndex), label: field, original: field, fieldIndex, isRange: false }];
   }
 
   const start = Number(match[2]);
   const end = Number(match[3]);
   if (!Number.isInteger(start) || !Number.isInteger(end) || end <= start || end - start > 30) {
-    return [{ key: String(fieldIndex), label: field, original: field, isRange: false }];
+    return [{ key: String(fieldIndex), label: field, original: field, fieldIndex, isRange: false }];
   }
 
   const prefix = match[1].trim();
@@ -95,6 +108,7 @@ function expandCaseField(field, fieldIndex) {
       key: `${fieldIndex}-${number}`,
       label: `${prefix}（${number}）${suffix}`,
       original: field,
+      fieldIndex,
       isRange: true,
     };
   });
@@ -102,6 +116,21 @@ function expandCaseField(field, fieldIndex) {
 
 function expandedCaseFields(fields) {
   return fields.flatMap((field, index) => expandCaseField(field, index));
+}
+
+function questionHeading(index) {
+  return `问题${chineseNumbers[index] || index + 1}`;
+}
+
+function groupedCaseFields(item) {
+  const configuredGroups = caseFieldGroups[item.id];
+  if (!configuredGroups) {
+    return [{ title: questionHeading(0), fields: expandedCaseFields(item.fields) }];
+  }
+  return configuredGroups.map((fieldIndexes, index) => ({
+    title: questionHeading(index),
+    fields: fieldIndexes.flatMap((fieldIndex) => expandCaseField(item.fields[fieldIndex], fieldIndex)),
+  }));
 }
 
 function loadJson(key, fallback) {
@@ -555,7 +584,7 @@ function renderSubjective() {
 function renderCasePaper(paper) {
   const item = paper.caseItems[Math.min(state.subjectiveItemIndex, paper.caseItems.length - 1)];
   const draft = loadJson(caseDraftKey(paper.id, item.id), {});
-  const fields = expandedCaseFields(item.fields);
+  const fieldGroups = groupedCaseFields(item);
   app.innerHTML = `<div class="case-workspace">
     <aside class="panel side-panel">
       <div class="panel-title"><h2>案例训练</h2></div>
@@ -591,17 +620,35 @@ function renderCasePaper(paper) {
       </section>
       <section class="case-section">
         <h3>需要填写的内容</h3>
-        <div class="fill-grid">${fields.map((field) => `<span>${escapeHtml(field.label)}</span>`).join("")}</div>
+        <div class="field-groups compact-field-groups">
+          ${fieldGroups
+            .map(
+              (group) => `<div class="field-group">
+                <h4>${escapeHtml(group.title)}</h4>
+                <div class="fill-grid">${group.fields.map((field) => `<span>${escapeHtml(field.label)}</span>`).join("")}</div>
+              </div>`
+            )
+            .join("")}
+        </div>
       </section>
       <section class="case-section">
         <h3>逐项作答</h3>
-        <div class="field-answer-grid">
-          ${fields
+        <div class="field-groups">
+          ${fieldGroups
             .map(
-              (field) => `<label class="field-answer ${field.isRange ? "" : "field-answer-wide"}">
-                <span>${escapeHtml(field.label)}</span>
-                <textarea data-action="case-field-draft" data-item="${item.id}" data-field="${field.key}" placeholder="填写${escapeHtml(field.label)}">${escapeHtml(draft[field.key] || "")}</textarea>
-              </label>`
+              (group) => `<section class="field-group answer-field-group">
+                <h4>${escapeHtml(group.title)}</h4>
+                <div class="field-answer-grid">
+                  ${group.fields
+                    .map(
+                      (field) => `<label class="field-answer ${field.isRange ? "" : "field-answer-wide"}">
+                        <span>${escapeHtml(field.label)}</span>
+                        <textarea data-action="case-field-draft" data-item="${item.id}" data-field="${field.key}" placeholder="填写${escapeHtml(field.label)}">${escapeHtml(draft[field.key] || "")}</textarea>
+                      </label>`
+                    )
+                    .join("")}
+                </div>
+              </section>`
             )
             .join("")}
         </div>

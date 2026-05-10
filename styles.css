@@ -573,6 +573,37 @@ textarea {
   font-weight: 700;
 }
 
+.field-groups {
+  display: grid;
+  gap: 14px;
+}
+
+.compact-field-groups {
+  gap: 10px;
+}
+
+.field-group {
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.field-group:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.field-group h4 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.answer-field-group {
+  gap: 10px;
+}
+
 .field-answer-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
