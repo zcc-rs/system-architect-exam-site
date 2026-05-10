@@ -4,6 +4,7 @@ const toast = document.querySelector("#toast");
 
 const objectivePapers = bank.papers.filter((paper) => paper.type === "objective");
 const subjectivePapers = bank.papers.filter((paper) => paper.type !== "objective");
+const caseGuidance = window.CASE_GUIDANCE || {};
 const optionKeys = ["A", "B", "C", "D"];
 const chineseNumbers = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
 const caseFieldGroups = {
@@ -131,6 +132,18 @@ function groupedCaseFields(item) {
     title: questionHeading(index),
     fields: fieldIndexes.flatMap((fieldIndex) => expandCaseField(item.fields[fieldIndex], fieldIndex)),
   }));
+}
+
+function renderCaseFieldGuidance(itemId, field) {
+  const guidance = caseGuidance[itemId]?.[field.key] || caseGuidance[itemId]?.[String(field.fieldIndex)];
+  if (!guidance) {
+    return `<div class="case-guidance"><p><strong>参考答案：</strong>见本题整题评分要点。</p><p><strong>为什么：</strong>此处属于综合说明题，需要结合题干场景组织答案。</p><p><strong>知识点：</strong>先定位题目考查的架构概念，再写清定义、场景依据和结论。</p></div>`;
+  }
+  return `<div class="case-guidance">
+    <p><strong>参考答案：</strong>${escapeHtml(guidance.answer)}</p>
+    <p><strong>为什么这样填：</strong>${escapeHtml(guidance.why)}</p>
+    <p><strong>相关知识：</strong>${escapeHtml(guidance.knowledge)}</p>
+  </div>`;
 }
 
 function loadJson(key, fallback) {
@@ -641,10 +654,11 @@ function renderCasePaper(paper) {
                 <div class="field-answer-grid">
                   ${group.fields
                     .map(
-                      (field) => `<label class="field-answer ${field.isRange ? "" : "field-answer-wide"}">
-                        <span>${escapeHtml(field.label)}</span>
-                        <textarea data-action="case-field-draft" data-item="${item.id}" data-field="${field.key}" placeholder="填写${escapeHtml(field.label)}">${escapeHtml(draft[field.key] || "")}</textarea>
-                      </label>`
+                      (field) => `<div class="field-answer ${field.isRange ? "" : "field-answer-wide"}">
+                        <label for="case-${escapeHtml(item.id)}-${escapeHtml(field.key)}">${escapeHtml(field.label)}</label>
+                        <textarea id="case-${escapeHtml(item.id)}-${escapeHtml(field.key)}" data-action="case-field-draft" data-item="${item.id}" data-field="${field.key}" placeholder="填写${escapeHtml(field.label)}">${escapeHtml(draft[field.key] || "")}</textarea>
+                        ${state.showReference ? renderCaseFieldGuidance(item.id, field) : ""}
+                      </div>`
                     )
                     .join("")}
                 </div>
@@ -657,7 +671,7 @@ function renderCasePaper(paper) {
         <button class="secondary-button" type="button" data-action="toggle-reference">${state.showReference ? "隐藏参考答案" : "显示参考答案"}</button>
         <button class="ghost-button" type="button" data-action="clear-case-draft" data-item="${item.id}">清空本题草稿</button>
       </div>
-      ${state.showReference ? `<section class="reference"><h3>参考答案 / 评分要点</h3>${escapeHtml(item.reference)}</section>` : `<section class="reference"><h3>作答提示</h3>先覆盖所有填写项，再检查答案是否包含定义、示例编号、分类依据和结论。案例题最好按“题号 - 答案 - 理由”组织。</section>`}
+      ${state.showReference ? `<section class="reference"><h3>整题评分要点</h3>${escapeHtml(item.reference)}</section>` : `<section class="reference"><h3>作答提示</h3>先覆盖所有填写项，再检查答案是否包含定义、示例编号、分类依据和结论。案例题最好按“题号 - 答案 - 理由”组织。</section>`}
     </section>
   </div>`;
 }

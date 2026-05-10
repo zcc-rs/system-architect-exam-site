@@ -24,6 +24,7 @@
 - `styles.css`：页面样式。
 - `app.js`：答题、判分、解析和草稿保存逻辑。
 - `data/question-bank.js`：题库数据。
+- `data/case-guidance.js`：案例题逐空答案、原因和知识点讲解。
 - `scripts/build_question_bank.py`：从 OCR 文本生成题库的脚本。
 - `assets/pages/`：试卷页面图片资源。
 - `*.pdf`：原始试卷 PDF 资源。

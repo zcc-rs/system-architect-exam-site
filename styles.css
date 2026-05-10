@@ -619,7 +619,7 @@ textarea {
   grid-column: 1 / -1;
 }
 
-.field-answer span {
+.field-answer label {
   color: var(--accent-strong);
   font-size: 13px;
   font-weight: 700;
@@ -628,6 +628,26 @@ textarea {
 .field-answer textarea {
   min-height: 62px;
   padding: 10px;
+}
+
+.case-guidance {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid #d7e6e3;
+  border-radius: 8px;
+  background: #f8fcfb;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.case-guidance p {
+  margin: 0;
+}
+
+.case-guidance strong {
+  color: var(--ink);
 }
 
 .reference {
