@@ -374,8 +374,44 @@ textarea {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fbfcfe;
-  white-space: pre-wrap;
+  white-space: normal;
   line-height: 1.65;
+}
+
+.stem-paragraph {
+  margin: 0 0 10px;
+}
+
+.stem-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.stem-table-wrap {
+  margin-top: 8px;
+}
+
+.stem-table-caption {
+  margin-bottom: 6px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.stem-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 14px;
+}
+
+.stem-table th,
+.stem-table td {
+  padding: 6px 8px;
+  border: 1px solid #8ea0b3;
+  text-align: center;
+}
+
+.stem-table thead th {
+  background: #eef2f6;
 }
 
 .choice-list {

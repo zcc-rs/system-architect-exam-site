@@ -233,6 +233,92 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function extractResourceDemandTable(stemText) {
+  const lines = String(stemText || "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const rowPattern = /^P(\d+)[：:]\s*最大需求\s*(\d+)[，,]\s*已分配\s*(\d+)[，,]\s*尚需\s*(\d+)/;
+  const rows = [];
+
+  for (const line of lines) {
+    const match = line.match(rowPattern);
+    if (!match) {
+      continue;
+    }
+    rows.push({
+      process: `P${match[1]}`,
+      maxDemand: match[2],
+      allocated: match[3],
+      needed: match[4],
+    });
+  }
+
+  if (rows.length !== 4) {
+    return null;
+  }
+
+  const captionLine = lines.find((line) => /^表\s*1/.test(line)) || "表 1 T0 时刻进程对资源的需求情况";
+  return {
+    caption: captionLine,
+    rows,
+  };
+}
+
+function renderQuestionStem(question) {
+  const fallback = "OCR 未能稳定识别本题文字，请查看题库数据修正。";
+  const source = String(question.stem || fallback);
+  const table = extractResourceDemandTable(source);
+
+  let textOnly = source;
+  if (table) {
+    textOnly = textOnly
+      .replace(/\n?表\s*1[^\n]*/g, "")
+      .replace(/\n?P\d+[：:]\s*最大需求\s*\d+[，,]\s*已分配\s*\d+[，,]\s*尚需\s*\d+/g, "")
+      .trim();
+  }
+
+  const paragraphHtml = textOnly
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.replace(/\n+/g, " ").trim())
+    .filter(Boolean)
+    .map((paragraph) => `<p class="stem-paragraph">${escapeHtml(paragraph)}</p>`)
+    .join("");
+
+  if (!table) {
+    return paragraphHtml || `<p class="stem-paragraph">${escapeHtml(fallback)}</p>`;
+  }
+
+  const tableRows = table.rows
+    .map(
+      (row) => `<tr>
+        <td>${escapeHtml(row.process)}</td>
+        <td>${escapeHtml(row.maxDemand)}</td>
+        <td>${escapeHtml(row.allocated)}</td>
+        <td>${escapeHtml(row.needed)}</td>
+      </tr>`
+    )
+    .join("");
+
+  return `${paragraphHtml}
+    <div class="stem-table-wrap">
+      <div class="stem-table-caption">${escapeHtml(table.caption)}</div>
+      <table class="stem-table">
+        <thead>
+          <tr>
+            <th>进程</th>
+            <th>最大需求数</th>
+            <th>已分配资源数</th>
+            <th>尚需资源数</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tableRows}
+        </tbody>
+      </table>
+    </div>`;
+}
+
 function formatDuration(totalSeconds) {
   const safeSeconds = Math.max(0, Math.floor(totalSeconds));
   const hours = Math.floor(safeSeconds / 3600);
@@ -585,7 +671,7 @@ function renderObjective() {
           <button class="icon-button" type="button" data-action="next-question" title="下一题">›</button>
         </div>
       </div>
-      <div class="question-stem">${escapeHtml(question.stem || "OCR 未能稳定识别本题文字，请查看题库数据修正。")}</div>
+      <div class="question-stem">${renderQuestionStem(question)}</div>
       ${renderChoices(question, selected, reveal)}
       <div class="toolbar-group" style="justify-content: space-between; width: 100%; margin-top: 12px;">
         ${state.mode === "study" ? `<button class="secondary-button" type="button" data-action="toggle-reveal" data-question="${question.number}">${reveal ? "隐藏解析" : "显示解析"}</button>` : `<span class="muted">${state.finished ? "已交卷，可逐题查看解析" : "选择答案会自动保存"}</span>`}
