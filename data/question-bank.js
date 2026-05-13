@@ -192,7 +192,7 @@ window.QUESTION_BANK = {
           "answer": "A",
           "topic": "综合知识",
           "page": 6,
-          "stem": "13、",
+          "stem": "13、\n\n软件的文档体系大致可以划分为系统文档和 ( ) 两大类。",
           "options": {
             "A": "用户文档",
             "B": "测试报告",
