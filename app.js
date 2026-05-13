@@ -6,6 +6,8 @@ const objectivePapers = bank.papers.filter((paper) => paper.type === "objective"
 const subjectivePapers = bank.papers.filter((paper) => paper.type !== "objective");
 const caseGuidance = window.CASE_GUIDANCE || {};
 const optionKeys = ["A", "B", "C", "D"];
+const UI_STATE_KEY = "sa-ui-state-v1";
+const studyFilters = new Set(["all", "wrong", "unmastered"]);
 const chineseNumbers = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
 const caseFieldGroups = {
   "case1-1": [[0, 1], [2, 3, 4, 5], [6, 7, 8]],
@@ -20,23 +22,37 @@ const caseFieldGroups = {
   "case2-5": [[0], [1], [2]],
 };
 
+const savedUiState = loadJson(UI_STATE_KEY, {});
+const initialObjectivePaper = objectivePapers.find((paper) => paper.id === savedUiState.paperId) || objectivePapers[0];
+const initialSubjectivePaper = subjectivePapers.find((paper) => paper.id === savedUiState.subjectiveId) || subjectivePapers[0];
+const initialMode = ["exam", "study", "subjective"].includes(savedUiState.mode) ? savedUiState.mode : "exam";
+const initialQuestionNumber = Math.min(
+  initialObjectivePaper.questions.length,
+  Math.max(1, Number(savedUiState.questionNumber) || 1)
+);
+const initialExamState = loadExamState(initialObjectivePaper);
+const initialCaseCount = initialSubjectivePaper.caseItems?.length || 0;
+const initialSubjectiveItemIndex = initialCaseCount
+  ? Math.min(initialCaseCount - 1, Math.max(0, Number(savedUiState.subjectiveItemIndex) || 0))
+  : 0;
+
 const state = {
-  mode: "exam",
-  paperId: objectivePapers[0].id,
-  subjectiveId: subjectivePapers[0].id,
-  questionNumber: 1,
-  pageIndex: 0,
-  subjectivePageIndex: 0,
-  subjectiveItemIndex: 0,
-  answers: loadJson(answerKey(objectivePapers[0].id), {}),
-  result: loadJson(resultKey(objectivePapers[0].id), null),
-  startedAt: Date.now(),
-  deadline: Date.now() + objectivePapers[0].durationMinutes * 60 * 1000,
-  finished: Boolean(loadJson(resultKey(objectivePapers[0].id), null)),
-  studyFilter: "all",
+  mode: initialMode,
+  paperId: initialObjectivePaper.id,
+  subjectiveId: initialSubjectivePaper.id,
+  questionNumber: initialQuestionNumber,
+  pageIndex: Math.max(0, Number(savedUiState.pageIndex) || 0),
+  subjectivePageIndex: Math.max(0, Number(savedUiState.subjectivePageIndex) || 0),
+  subjectiveItemIndex: initialSubjectiveItemIndex,
+  answers: loadJson(answerKey(initialObjectivePaper.id), {}),
+  result: loadJson(resultKey(initialObjectivePaper.id), null),
+  startedAt: initialExamState.startedAt,
+  deadline: initialExamState.deadline,
+  finished: Boolean(loadJson(resultKey(initialObjectivePaper.id), null)),
+  studyFilter: studyFilters.has(savedUiState.studyFilter) ? savedUiState.studyFilter : "all",
   revealMap: {},
   mastered: loadJson("sa-mastered", {}),
-  showReference: false,
+  showReference: Boolean(savedUiState.showReference),
 };
 
 let timerId = null;
@@ -70,6 +86,10 @@ const topicExamples = {
 
 function answerKey(paperId) {
   return `sa-answers-${paperId}`;
+}
+
+function examStateKey(paperId) {
+  return `sa-exam-state-${paperId}`;
 }
 
 function resultKey(paperId) {
@@ -157,6 +177,39 @@ function loadJson(key, fallback) {
 
 function saveJson(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
+}
+
+function loadExamState(paper) {
+  const saved = loadJson(examStateKey(paper.id), null);
+  if (saved && Number.isFinite(saved.startedAt) && Number.isFinite(saved.deadline) && saved.deadline > saved.startedAt) {
+    return saved;
+  }
+  const now = Date.now();
+  return {
+    startedAt: now,
+    deadline: now + paper.durationMinutes * 60 * 1000,
+  };
+}
+
+function saveExamState(paperId = state.paperId) {
+  saveJson(examStateKey(paperId), {
+    startedAt: state.startedAt,
+    deadline: state.deadline,
+  });
+}
+
+function persistUiState() {
+  saveJson(UI_STATE_KEY, {
+    mode: state.mode,
+    paperId: state.paperId,
+    subjectiveId: state.subjectiveId,
+    questionNumber: state.questionNumber,
+    pageIndex: state.pageIndex,
+    subjectivePageIndex: state.subjectivePageIndex,
+    subjectiveItemIndex: state.subjectiveItemIndex,
+    studyFilter: state.studyFilter,
+    showReference: state.showReference,
+  });
 }
 
 function currentObjectivePaper() {
@@ -294,6 +347,7 @@ function resetCurrentPaper() {
   state.pageIndex = 0;
   state.startedAt = Date.now();
   state.deadline = Date.now() + paper.durationMinutes * 60 * 1000;
+  saveExamState(paper.id);
   localStorage.removeItem(answerKey(paper.id));
   localStorage.removeItem(resultKey(paper.id));
   render();
@@ -311,8 +365,9 @@ function switchObjectivePaper(paperId) {
   state.answers = loadJson(answerKey(paper.id), {});
   state.result = loadJson(resultKey(paper.id), null);
   state.finished = Boolean(state.result);
-  state.startedAt = Date.now();
-  state.deadline = Date.now() + paper.durationMinutes * 60 * 1000;
+  const examState = loadExamState(paper);
+  state.startedAt = examState.startedAt;
+  state.deadline = examState.deadline;
   render();
 }
 
@@ -336,8 +391,12 @@ function selectAnswer(questionNumber, answer) {
   if (state.mode === "exam" && state.finished) {
     return;
   }
+  const paper = currentObjectivePaper();
   state.answers[questionNumber] = answer;
   saveJson(answerKey(state.paperId), state.answers);
+  if (state.questionNumber === questionNumber && questionNumber < paper.questions.length) {
+    state.questionNumber = questionNumber + 1;
+  }
   render();
 }
 
@@ -677,6 +736,8 @@ function renderCasePaper(paper) {
 }
 
 function render() {
+  saveExamState();
+  persistUiState();
   setActiveTab();
   if (state.mode === "subjective") {
     clearInterval(timerId);

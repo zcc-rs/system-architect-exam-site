@@ -52,7 +52,7 @@ window.QUESTION_BANK = {
           "answer": "D",
           "topic": "软件工程",
           "page": 1,
-          "stem": "3、\n\n为了测试新系统的性能，用户必须依靠评价程序来评价机器的性能，以下 4 种评价程序，\n\n( ) 评测的准确程度最高。",
+          "stem": "为了测试新系统的性能，用户必须依靠评价程序来评价机器的性能，以下 4 种评价程序，( ) 评测的准确程度最高。",
           "options": {
             "A": "核心程序",
             "B": "合成基准程序",
@@ -66,7 +66,7 @@ window.QUESTION_BANK = {
           "answer": "B",
           "topic": "软件工程",
           "page": 1,
-          "stem": "4、\n\n假设系统中互斥资源 R 的可用数为 30。T0 时刻进程 P1、P2、P3、P4 对资源 R 的最大需求数、已分配资源数和尚需资源数的情况如表 1 所示，若 P1 和 P2 分别申请资源 R 数为 1 和 2，则系统 ( )。\n\n表 1 T0 时刻进程对资源的需求情况：\nP1：最大需求 12，已分配 8，尚需 4\nP2：最大需求 8，已分配 6，尚需 2\nP3：最大需求 9，已分配 6，尚需 3\nP4：最大需求 13，已分配 8，尚需 5",
+          "stem": "假设系统中互斥资源R的可用数为 30。T0 时刻进程 P1、P2、P3、P4 对资源 R 的最大需求数、已分配资源数和尚需资源数的情况如表 1 所示，若 P1 和 P2 分别申请资源 R 数为 1 和 2，则系统 ()。\n\n表 1 T0 时刻进程对资源的需求情况：\nP1：最大需求 12，已分配 8，尚需 4\nP2：最大需求 8，已分配 6，尚需 2\nP3：最大需求 9，已分配 6，尚需 3\nP4：最大需求 13，已分配 8，尚需 5",
           "options": {
             "A": "只能先给 P1 进行分配，因为分配后系统状态是安全的",
             "B": "只能先给 P2 进行分配，因为分配后系统状态是安全的",
@@ -183,9 +183,9 @@ window.QUESTION_BANK = {
             "A": "它强调以合理的成本开发出高质量的软件",
             "B": "它提倡开发者不需要进行单元测试",
             "C": "其理论基础主要是函数理论和抽样理论",
-            "D": "测试是净室工程的核心，它使软件质量有了极大提高 在软件开发过程中，文档扮演着至关重要的角色，尤其对于软件的可维护性而言。软件的文 档体系大致可以划分为系统文档和 ( 1 ) 两大类。第二类更侧重于描述软件的 ( 2 ) 和使 用方法，不会关心功能具体是怎么实现的。"
+            "D": "测试是净室工程的核心，它使软件质量有了极大提高"
           },
-          "correctOptionText": "测试是净室工程的核心，它使软件质量有了极大提高 在软件开发过程中，文档扮演着至关重要的角色，尤其对于软件的可维护性而言。软件的文 档体系大致可以划分为系统文档和 ( 1 ) 两大类。第二类更侧重于描述软件的 ( 2 ) 和使 用方法，不会关心功能具体是怎么实现的。"
+          "correctOptionText": "测试是净室工程的核心，它使软件质量有了极大提高"
         },
         {
           "number": 13,
@@ -295,7 +295,7 @@ window.QUESTION_BANK = {
             "A": "确定系统的总体结构和模块间的层次关系",
             "B": "设计每个模块的实现算法和所需的局部数据结构",
             "C": "从数据流图 (DFD) 中导出系统初始的模块结构图 (SC)",
-            "D": "绘制系统的用户界面原型 按照传统的软件生命周期方法学，可以把软件生命周期划分为软件定义、〈 1 ) 和软件运行 与维护三个阶段。其中，使软件持久满足用户的要求是 ( 2 ) 阶段的主要任务。"
+            "D": "绘制系统的用户界面原型"
           },
           "correctOptionText": "设计每个模块的实现算法和所需的局部数据结构"
         },
@@ -365,7 +365,7 @@ window.QUESTION_BANK = {
             "A": "自适应软件开发 (ASD)",
             "B": "极限编程 (XP)",
             "C": "SCRUM 开发",
-            "D": "功用驱动开发 (FDD) (1) 的目的是检查每个模块能否正确地实现设计说明中的功能、性能、接口和其他设计约 束等条件，发现模块内可能存在的各种差错。其测试的技术依据是 ( 2 ) 。"
+            "D": "功用驱动开发 (FDD)"
           },
           "correctOptionText": "自适应软件开发 (ASD)"
         },
@@ -476,10 +476,10 @@ window.QUESTION_BANK = {
           "options": {
             "A": "搜索服务",
             "B": "复制服务",
-            "C": "ORBA 构件模型中， ( 1 ) 的作用是为用户提供与其他分布式网络环境中对象通信的接 口，( 2 ) 是最终完成客户请求的服务对象实现。",
+            "C": "联邦服务",
             "D": "转换服务"
           },
-          "correctOptionText": "ORBA 构件模型中， ( 1 ) 的作用是为用户提供与其他分布式网络环境中对象通信的接 口，( 2 ) 是最终完成客户请求的服务对象实现。"
+          "correctOptionText": "联邦服务"
         },
         {
           "number": 34,
@@ -519,7 +519,7 @@ window.QUESTION_BANK = {
             "A": "刺激源",
             "B": "环境",
             "C": "制品",
-            "D": "响应 某政务云平台在设计其公文流转系统时，识别出一项核心需求: 系统必须确保所有公文操作 (如起草、审批、传阅) 均可被独 立验证目操作记录无法被算改，以便在发生争议时提供明 确的责任追溯。这一需求主要与 ( 1 ) 质量属性相关，通常可通过 ( 2 ) 策略来强化。"
+            "D": "响应"
           },
           "correctOptionText": "环境"
         },
@@ -699,9 +699,9 @@ window.QUESTION_BANK = {
           "stem": "49、\n\n关于 DSSA (特定领域软件架构) 的建立过程，以下说法错误的是 ( ) 。",
           "options": {
             "A": "建立过程需根据应用领域调整，一般用该领域应用开发者习惯的工具和方法建立模型",
-            "B": "定义领域学围阶段重点是确定领域边界及过程结束时间，主要输出是满足用户需求的应用 集合",
+            "B": "定义领域学围阶段重点是确定领域边界及过程结束时间，主要输出是满足用户需求的应用集合",
             "C": "定义领域特定的设计和实现需求约束阶段，只需识别出解空间中有差别的特性约束",
-            "D": "DSSA 建立过程是并发、递归、反复的螺旋模型，可能需对每个阶段经历多遍增加细节 基于软件系统的生命周期，可以将软件系统的质量属性分为开发期质量属性和运行期质量属 性两个部分。 其中， ( 1 ) 关注软件因适应新需求或需求变化而增加新功能的能力; ( 2 ) 是关注软件系统同时兼顾向合法用户提供服务，以及阻止非授权使用的能力。"
+            "D": "DSSA 建立过程是并发、递归、反复的螺旋模型，可能需对每个阶段经历多遍增加细节"
           },
           "correctOptionText": "定义领域特定的设计和实现需求约束阶段，只需识别出解空间中有差别的特性约束"
         },
@@ -771,7 +771,7 @@ window.QUESTION_BANK = {
             "A": "关系完整性",
             "B": "用户定义完整性",
             "C": "参照完整性",
-            "D": "实体完整性 某学校进行教学管理系统 ER 图设计，教务部门定义的学生实体具有属性: 学号、姓名、性 别、年级、专业，招生部门定义的新生实体具有属性: 考生号、姓名、性别、录取专业、高 考成绩，其中“专业”和“录取专业”本质上指向学校开设的同一类专业概念。这种情况属 于 ( 1 ) 。在合并E-R 图时，解决这一冲突的方法是 ( 2 ) 。"
+            "D": "实体完整性"
           },
           "correctOptionText": "用户定义完整性"
         },
@@ -995,7 +995,7 @@ window.QUESTION_BANK = {
             "A": "480",
             "B": "428",
             "C": "460",
-            "D": "393 As a comprehensive and holistic system security prevention system, it is also hierarchical. Different levels reflect different security issues. According to the current application status and structure of the network, the security prevention system can be divided into the following levels: Physical layer security. Physical layer security includes the security of communication lines, (1) and computer rooms, etc. Physical layer security mainly lies in the reliability of communication lines, the security of software and hardware devices, device backup, disaster prevention capability, interference prevention capability, device operating environment and uninterruptible power supply guarantee, etc. ( 2 ) . The security issues at the system layer come from the security of the operating system used in the computer network. It mainly manifests in three aspects: first, the security factors brought by the defects of the operating system itself, mainly including identity authentication, access control and system vulnerabilities, etc.; second, the security configuration of the operating system; third, the threat of viruses to the operating system. ( 3 ) . The security issues at the network layer mainly lie in the computer network, including network layer identity authentication, access control of network resources, confidentiality and integrity of data transmission, security of remote access, security of domain name system, security of routing system, means of intrusion detection and anti-virus of network facilities, etc. Application security. The security issues at the application layer are mainly caused by the security of the application software and data used to provide services, including Web services, email systems and DNS, etc. In addition, it also includes the threat of ( 4 ) tothe system. Security management. Security management includes the management of security technologies and equipment, security management systems, organizational rules of departments and personnel, etc. The institutionalization of management greatly affects the security of the entire computer network. Strict (5 ) , clear departmental security responsibilities and reasonable personnel role allocation can greatly reduce security vulnerabilities at other levels."
+            "D": "393"
           },
           "correctOptionText": "428"
         },
@@ -1635,7 +1635,7 @@ window.QUESTION_BANK = {
             "A": "大数据",
             "B": "物联网",
             "C": "虚拟化",
-            "D": "人工智能 在软件架构设计中，对于实时交易系统而言，确保系统在高峰时段能够处理大 量并发请求，这一需求主要与 (1) 质量属性相关，通常会采用 ( 2 ) 策略来 实现。"
+            "D": "人工智能"
           },
           "correctOptionText": "虚拟化"
         },
@@ -1747,9 +1747,9 @@ window.QUESTION_BANK = {
             "A": "PART",
             "B": "POST",
             "C": "PUT",
-            "D": "PATCH 基公司产品相关数据库中有产品关系 P_ (产品号，产品名称，型号，颜色) ; 仓库关系 W (仓库号，仓库名称，地址，负责人) ; 库存关系1 (仓库号，产 品号，产品数量) 。若需得到每种产品的名称和该产品的总库存量目按照库存 从小到大排列，则对应的查询语句为: SELECT 产品名称，SUM (产品数量) AS 产品库存量 From P, | WHERE P.产品号 = |. aS (1) (2);"
+            "D": "PATCH"
           },
-          "correctOptionText": "PATCH 基公司产品相关数据库中有产品关系 P_ (产品号，产品名称，型号，颜色) ; 仓库关系 W (仓库号，仓库名称，地址，负责人) ; 库存关系1 (仓库号，产 品号，产品数量) 。若需得到每种产品的名称和该产品的总库存量目按照库存 从小到大排列，则对应的查询语句为: SELECT 产品名称，SUM (产品数量) AS 产品库存量 From P, | WHERE P.产品号 = |. aS (1) (2);"
+          "correctOptionText": "PATCH"
         },
         {
           "number": 49,
@@ -2094,22 +2094,22 @@ window.QUESTION_BANK = {
           "page": 35,
           "stem": "73、",
           "options": {
-            "A": "business-logic-based                                 al (= Eze      mint = = EN    tH, SEN",
-            "B": "data-model-centered                   END)     aA) = =>\"",
-            "C": "domain-driven",
-            "D": "user-experience-oriented"
+            "A": "model-centric",
+            "B": "pattern-recognition",
+            "C": "pattern-driven",
+            "D": "quality-attribute-focused"
           },
-          "correctOptionText": "domain-driven"
+          "correctOptionText": "pattern-driven"
         },
         {
           "number": 74,
           "answer": "C",
           "topic": "英文综合题",
           "page": 35,
-          "stem": "73、",
+          "stem": "【考生回忆版】原始资料中该题题干被遮挡，仅保留选项。",
           "options": {
-            "A": "business-logic-based                                 al (= Eze      mint = = EN    tH, SEN",
-            "B": "data-model-centered                   END)     aA) = =>\"",
+            "A": "business-logic-based",
+            "B": "data-model-centered",
             "C": "domain-driven",
             "D": "user-experience-oriented"
           },
