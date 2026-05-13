@@ -499,6 +499,101 @@ textarea {
   margin: 8px 0;
 }
 
+/* 新增解析样式 */
+.explanation .answer-feedback {
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  border-left: 3px solid var(--blue);
+}
+
+.explanation .answer-feedback p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.answer-label {
+  display: inline-block;
+  min-width: 30px;
+  padding: 2px 8px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 13px;
+}
+
+.key-points {
+  margin: 12px 0;
+  padding: 8px 12px;
+  background: #fff;
+  border-radius: 6px;
+  border-left: 3px solid var(--amber);
+}
+
+.key-points strong {
+  color: var(--amber);
+}
+
+.key-point-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  margin: 2px 4px 2px 0;
+  background: var(--amber);
+  color: #fff;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.detailed-analysis {
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 3px solid var(--green);
+  margin-top: 12px;
+}
+
+.detailed-analysis p {
+  margin: 8px 0;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.section-header {
+  color: var(--green);
+  font-weight: bold;
+}
+
+.analysis-content {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.study-tips {
+  background: #fef9e7;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 12px;
+  border-left: 3px solid var(--amber);
+}
+
+.study-tips strong {
+  color: var(--amber);
+}
+
+.study-tips ul {
+  margin: 8px 0;
+  padding-left: 20px;
+  font-size: 13px;
+}
+
+.study-tips li {
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
 .result-summary {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

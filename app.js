@@ -440,6 +440,45 @@ function resetCurrentPaper() {
   showToast("已重置本卷。新的一轮开始了。 ");
 }
 
+function exportAnswers() {
+  const paper = currentObjectivePaper();
+  const exportData = {
+    paperTitle: paper.title,
+    exportTime: new Date().toLocaleString('zh-CN'),
+    totalScore: paper.totalScore,
+    questions: []
+  };
+  
+  // 为每个题目收集数据
+  for (const q of paper.questions) {
+    const userAnswer = state.answers[q.number] || "";
+    const isCorrect = userAnswer === q.answer;
+    
+    exportData.questions.push({
+      number: q.number,
+      stem: q.stem,
+      options: q.options,
+      correctAnswer: q.answer,
+      correctOptionText: q.correctOptionText,
+      userAnswer: userAnswer,
+      isCorrect: isCorrect,
+      explanation: q.explanation || {}
+    });
+  }
+  
+  // 生成JSON文件
+  const fileName = `${paper.id}_answers_${new Date().getTime()}.json`;
+  const jsonStr = JSON.stringify(exportData, null, 2);
+  const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  link.click();
+  URL.revokeObjectURL(link.href);
+  
+  showToast(`已导出答题记录到 ${fileName}`);
+}
+
 function switchObjectivePaper(paperId) {
   const paper = objectivePapers.find((item) => item.id === paperId);
   if (!paper) {
@@ -611,14 +650,32 @@ function renderExplanation(question, selected) {
   const topicHint = topicHints[question.topic] || topicHints.综合知识;
   const isCorrect = selected === question.answer;
   const verdict = isCorrect ? "本题作答正确。" : selected ? `你选择了 ${selected}，需要回到题干限定条件重新辨析。` : "本题未作答，复盘时先独立完成一次再看答案。";
+  // 使用新的explanation字段（如果存在）
+  const expl = question.explanation || {};
+  const keyPts = expl.keyPoints || [question.topic];
+  const analysisText = expl.analysis || `正确答案：${question.answer} - ${correctText}`;
+  
+  // 生成知识点标签HTML
+  const kpHtml = keyPts.map(kp => `<span class="key-point-tag">${escapeHtml(kp)}</span>`).join(" ");
+  
+  // 格式化分析文本
+  const formattedAnalysis = analysisText
+    .split('\n')
+    .map(line => line.trim())
+    .filter(l => l)
+    .map(line => `<p>${escapeHtml(line)}</p>`)
+    .join('');
+  
   return `<section class="explanation">
     <h3>第 ${question.number} 题解析</h3>
-    <p><strong>正确答案：</strong>${question.answer}${correctText ? `：${escapeHtml(correctText)}` : ""}</p>
-    <p><strong>你的答案：</strong>${selected || "未作答"}${selected && selectedText ? `：${escapeHtml(selectedText)}` : ""}。${verdict}</p>
-    <p><strong>考点定位：</strong>${escapeHtml(question.topic)}。${escapeHtml(topicHint)}</p>
-    <p><strong>知识点示例：</strong>${escapeHtml(topicExamples[question.topic] || topicExamples.综合知识)}</p>
-    <p><strong>解题思路：</strong>先抓题干中的限定词、场景和问法，再把每个选项与这些条件逐项匹配。能完全贴合核心定义或计算结果的选项才是答案；只说中部分事实、扩大适用范围或偷换概念的选项应排除。</p>
-    <p><strong>复盘建议：</strong>把本题整理成“关键词 → 对应概念 → 排除理由”三列笔记。下次遇到同类题，先复述概念边界，再看选项。</p>
+    <div class="answer-feedback">
+      <p><strong>正确答案：</strong><span class="answer-label">${question.answer}</span> - ${escapeHtml(correctText)}</p>
+      <p><strong>你的答案：</strong>${selected || "未作答"}${selected && selectedText ? ` - ${escapeHtml(selectedText)}` : ""}　${verdict}</p>
+    </div>
+    ${kpHtml ? `<div class="key-points"><strong>知识点：</strong>${kpHtml}</div>` : ''}
+    <div class="detailed-analysis">
+      ${formattedAnalysis}
+    </div>
   </section>`;
 }
 
@@ -646,9 +703,10 @@ function renderObjective() {
       </div>
       <div class="exam-note">原卷与答案页已隐藏；交卷后才显示答案和解析。</div>
       ${renderAnswerGrid(paper)}
-      <div class="toolbar-group" style="margin-top: 14px; width: 100%; justify-content: space-between;">
+      <div class="toolbar-group" style="margin-top: 14px; width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
         <button class="secondary-button" type="button" data-action="reset-paper">重做本卷</button>
         ${state.mode === "exam" && !state.finished ? `<button class="primary-button" type="button" data-action="submit-paper">提交试卷</button>` : ""}
+        ${(state.mode === "exam" && state.finished) || state.mode === "study" ? `<button class="secondary-button" type="button" data-action="export-answers">导出答题记录</button>` : ""}
       </div>
     </aside>
 
@@ -857,6 +915,7 @@ document.addEventListener("click", (event) => {
   if (action === "page-next") setPage(state.pageIndex + 1);
   if (action === "submit-paper") submitPaper(false);
   if (action === "reset-paper") resetCurrentPaper();
+  if (action === "export-answers") exportAnswers();
   if (action === "toggle-reveal") {
     const key = `${paper.id}-${question.number}`;
     state.revealMap[key] = !state.revealMap[key];

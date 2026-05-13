@@ -31,7 +31,16 @@ window.QUESTION_BANK = {
             "C": "共享性、不可交互性",
             "D": "独立性、不可交互性"
           },
-          "correctOptionText": "独立性、交互性"
+          "correctOptionText": "独立性、交互性",
+          "explanation": {
+            "keyPoints": [
+              "分时操作系统",
+              "系统特性",
+              "多路性/独立性/交互性"
+            ],
+            "analysis": "【知识点】分时操作系统的四大特点\n分时操作系统是将CPU的工作时间划分为许多很短的时间片，轮流为各个终端用户服务。\n\n【四大特点】\n1. 多路性 - 多个用户可以同时使用计算机系统\n2. 独立性 - 各用户作业独立运行，互不影响  \n3. 交互性 - 用户与系统进行人机对话式的交互通信\n4. 及时性 - 系统对用户的请求能及时响应和处理\n\n【正确答案分析】B - 独立性、交互性与题干给出的多路性和及时性并列，构成分时系统的四大特点。",
+            "source": "知识库"
+          }
         },
         {
           "number": 2,
@@ -45,7 +54,16 @@ window.QUESTION_BANK = {
             "C": "在 CPU 周期中插入等待周期",
             "D": "扩大主存的容量"
           },
-          "correctOptionText": "在 CPU 和主存之间插入少量的高速缓冲存储器"
+          "correctOptionText": "在 CPU 和主存之间插入少量的高速缓冲存储器",
+          "explanation": {
+            "keyPoints": [
+              "CPU与主存速度不匹配",
+              "高速缓存",
+              "Cache"
+            ],
+            "analysis": "【知识点】CPU与主存的速度差距问题\n\n【问题背景】CPU速度远快于主存速度（CPU纳秒级，主存微秒级），导致CPU经常等待主存的数据，成为系统瓶颈。\n\n【解决方案】使用高速缓冲存储器（Cache），是位于CPU和主存之间的小容量高速存储器。\n\n【工作原理】\n- CPU优先从Cache读取数据（命中率>90%）\n- Cache未命中时，从主存取数据并自动复制到Cache\n- 存储器三层结构：寄存器 → Cache → 主存\n\n【答案】B",
+            "source": "知识库"
+          }
         },
         {
           "number": 3,
@@ -59,7 +77,14 @@ window.QUESTION_BANK = {
             "C": "小型基准程序",
             "D": "真实程序"
           },
-          "correctOptionText": "真实程序"
+          "correctOptionText": "真实程序",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - 真实程序\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 4,
@@ -73,7 +98,14 @@ window.QUESTION_BANK = {
             "C": "可以同时给 P1、P2 进行分配，因为分配后系统状态是安全的",
             "D": "不能给 P2 进行分配，因为分配后系统状态是不安全的"
           },
-          "correctOptionText": "只能先给 P2 进行分配，因为分配后系统状态是安全的"
+          "correctOptionText": "只能先给 P2 进行分配，因为分配后系统状态是安全的",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 只能先给 P2 进行分配，因为分配后系统状态是安全的\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 5,
@@ -87,7 +119,16 @@ window.QUESTION_BANK = {
             "C": "9",
             "D": "10"
           },
-          "correctOptionText": "9"
+          "correctOptionText": "9",
+          "explanation": {
+            "keyPoints": [
+              "Amdahl定律",
+              "系统加速比",
+              "可优化比例"
+            ],
+            "analysis": "【知识点】Amdahl定律（Amdahl's Law）- 系统性能优化的理论极限\n\n【公式】系统加速比 S = 1 / [(1-f) + f/k]\n- S = 系统加速比（目标加速倍数）\n- f = 可被优化部分所占的比例（0.9）\n- k = 该部分的加速倍数（待求）\n\n【求解过程】\n5 = 1 / [0.1 + 0.9/k]\n0.1 + 0.9/k = 0.2\nk = 9\n\n【物理意义】即使矩阵乘法提升9倍，整个系统也只能提升5倍。这体现了优化需要平衡各部分的原理。\n\n【答案】C - 9倍",
+            "source": "知识库"
+          }
         },
         {
           "number": 6,
@@ -101,7 +142,16 @@ window.QUESTION_BANK = {
             "C": "现场保护区",
             "D": "源代码"
           },
-          "correctOptionText": "源代码"
+          "correctOptionText": "源代码",
+          "explanation": {
+            "keyPoints": [
+              "进程控制块PCB",
+              "PCB内容",
+              "进程管理"
+            ],
+            "analysis": "【知识点】进程控制块（Process Control Block, PCB）\n\n【PCB的三部分内容】\n1. 进程标识符 - 进程的唯一标识（PID）\n2. 控制信息 - 进程状态、优先级、进程队列指针等\n3. 现场保护区 - 进程切换时保存的寄存器内容\n\n【关键区分】进程 = 程序块(code) + PCB(管理信息) + 数据块(data)\n源代码属于程序块，不属于PCB\n\n【答案】D - 源代码",
+            "source": "知识库"
+          }
         },
         {
           "number": 7,
@@ -115,7 +165,16 @@ window.QUESTION_BANK = {
             "C": "1024",
             "D": "512"
           },
-          "correctOptionText": "512"
+          "correctOptionText": "512",
+          "explanation": {
+            "keyPoints": [
+              "页式存储",
+              "位示图",
+              "内存管理"
+            ],
+            "analysis": "【知识点】页式存储管理中的位示图（Bitmap）\n\n【计算过程】\n页框数 = 32GB / 8KB = 2^35字节 / 2^13字节 = 2^22 = 4,194,304个\n位示图 = 2^22位 = 2^19字节 = 512KB\n\n【答案】D - 512 KB",
+            "source": "知识库"
+          }
         },
         {
           "number": 8,
@@ -129,7 +188,14 @@ window.QUESTION_BANK = {
             "C": "应用",
             "D": "垂直"
           },
-          "correctOptionText": "信息"
+          "correctOptionText": "信息",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】A - 信息\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 9,
@@ -143,7 +209,14 @@ window.QUESTION_BANK = {
             "C": "专家系统可用于处理不确定的知识，主要适用于特定的领域",
             "D": "专家系统内部含有某个领域具有专家水平的大量知识与经验"
           },
-          "correctOptionText": "专家系统中的知识库用于存储问题的状态描述、中间结果、了求解过程等信息"
+          "correctOptionText": "专家系统中的知识库用于存储问题的状态描述、中间结果、了求解过程等信息",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 专家系统中的知识库用于存储问题的状态描述、中间结果、了求解过程等信息\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 10,
@@ -157,7 +230,14 @@ window.QUESTION_BANK = {
             "C": "客户、商户、银行和物流企业",
             "D": "客户、商户、政府和物流企业"
           },
-          "correctOptionText": "客户、商户、银行和认证中心"
+          "correctOptionText": "客户、商户、银行和认证中心",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - 客户、商户、银行和认证中心\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 11,
@@ -171,7 +251,14 @@ window.QUESTION_BANK = {
             "C": "联机分析、多维度分析和跨维度分析",
             "D": "数据仓库、数据挖掘和业务优化重组"
           },
-          "correctOptionText": "数据仓库、联机分析和数据挖掘"
+          "correctOptionText": "数据仓库、联机分析和数据挖掘",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - 数据仓库、联机分析和数据挖掘\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 12,
@@ -185,7 +272,14 @@ window.QUESTION_BANK = {
             "C": "其理论基础主要是函数理论和抽样理论",
             "D": "测试是净室工程的核心，它使软件质量有了极大提高"
           },
-          "correctOptionText": "测试是净室工程的核心，它使软件质量有了极大提高"
+          "correctOptionText": "测试是净室工程的核心，它使软件质量有了极大提高",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - 测试是净室工程的核心，它使软件质量有了极大提高\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 13,
@@ -199,7 +293,16 @@ window.QUESTION_BANK = {
             "C": "部署指南",
             "D": "设计文档"
           },
-          "correctOptionText": "用户文档"
+          "correctOptionText": "用户文档",
+          "explanation": {
+            "keyPoints": [
+              "软件文档体系",
+              "系统文档",
+              "用户文档"
+            ],
+            "analysis": "【知识点】软件文档分类体系\n\n【文档体系结构】根据IEEE标准，软件文档分为两大类：\n1. 系统文档 - 针对开发人员：架构、设计、代码等\n2. 用户文档 - 针对使用者：手册、操作指南等\n\n【为什么选A】\n- A \"用户文档\" ✓ 与系统文档平级\n- B \"测试报告\" ✗ 属于系统文档子类\n- C \"部署指南\" ✗ 属于运维文档\n- D \"设计文档\" ✗ 属于系统文档子类\n\n【答案】A - 用户文档",
+            "source": "知识库"
+          }
         },
         {
           "number": 14,
@@ -213,7 +316,14 @@ window.QUESTION_BANK = {
             "C": "系统功能",
             "D": "系统测试"
           },
-          "correctOptionText": "系统功能"
+          "correctOptionText": "系统功能",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 系统功能\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 15,
@@ -227,7 +337,14 @@ window.QUESTION_BANK = {
             "C": "适用于高风险和不确定性的项目，但可能导致项目延期",
             "D": "适用于小型和个人项目，但可能降低开发效率"
           },
-          "correctOptionText": "适用于需求明确且稳定的项目，但难以适应需求变更"
+          "correctOptionText": "适用于需求明确且稳定的项目，但难以适应需求变更",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】A - 适用于需求明确且稳定的项目，但难以适应需求变更\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 16,
@@ -241,7 +358,14 @@ window.QUESTION_BANK = {
             "C": "用户交互复杂性",
             "D": "对象层次深度"
           },
-          "correctOptionText": "环路复杂度"
+          "correctOptionText": "环路复杂度",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 环路复杂度\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 17,
@@ -255,7 +379,14 @@ window.QUESTION_BANK = {
             "C": "回归测试",
             "D": "验收测试"
           },
-          "correctOptionText": "验收测试"
+          "correctOptionText": "验收测试",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - 验收测试\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 18,
@@ -269,7 +400,14 @@ window.QUESTION_BANK = {
             "C": "检查需求是否完整、准确、无层义，并且技术上可行。",
             "D": "将需求转化为软件设计或实现计划。"
           },
-          "correctOptionText": "检查需求是否完整、准确、无层义，并且技术上可行。"
+          "correctOptionText": "检查需求是否完整、准确、无层义，并且技术上可行。",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - 检查需求是否完整、准确、无层义，并且技术上可行。\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 19,
@@ -283,7 +421,14 @@ window.QUESTION_BANK = {
             "C": "接口设计",
             "D": "过程设计"
           },
-          "correctOptionText": "数据设计"
+          "correctOptionText": "数据设计",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 数据设计\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 20,
@@ -297,7 +442,14 @@ window.QUESTION_BANK = {
             "C": "从数据流图 (DFD) 中导出系统初始的模块结构图 (SC)",
             "D": "绘制系统的用户界面原型"
           },
-          "correctOptionText": "设计每个模块的实现算法和所需的局部数据结构"
+          "correctOptionText": "设计每个模块的实现算法和所需的局部数据结构",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 设计每个模块的实现算法和所需的局部数据结构\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 21,
@@ -311,7 +463,14 @@ window.QUESTION_BANK = {
             "C": ":软件详细设计",
             "D": "软件评估"
           },
-          "correctOptionText": "软件开发"
+          "correctOptionText": "软件开发",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 软件开发\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 22,
@@ -325,7 +484,14 @@ window.QUESTION_BANK = {
             "C": "软件运行与维护",
             "D": "软件评估"
           },
-          "correctOptionText": "软件运行与维护"
+          "correctOptionText": "软件运行与维护",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 软件运行与维护\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 23,
@@ -339,7 +505,14 @@ window.QUESTION_BANK = {
             "C": "过程控制与消息服务器",
             "D": "环境用户界面                                              all,              40 2006,"
           },
-          "correctOptionText": "过程控制与消息服务器"
+          "correctOptionText": "过程控制与消息服务器",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - 过程控制与消息服务器\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 24,
@@ -353,7 +526,14 @@ window.QUESTION_BANK = {
             "C": "测试阶段",
             "D": "验证阶段"
           },
-          "correctOptionText": "测试阶段"
+          "correctOptionText": "测试阶段",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 测试阶段\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 25,
@@ -367,7 +547,14 @@ window.QUESTION_BANK = {
             "C": "SCRUM 开发",
             "D": "功用驱动开发 (FDD)"
           },
-          "correctOptionText": "自适应软件开发 (ASD)"
+          "correctOptionText": "自适应软件开发 (ASD)",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】A - 自适应软件开发 (ASD)\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 26,
@@ -381,7 +568,14 @@ window.QUESTION_BANK = {
             "C": "系统测试",
             "D": "回归测试"
           },
-          "correctOptionText": "单元测试"
+          "correctOptionText": "单元测试",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - 单元测试\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 27,
@@ -395,7 +589,14 @@ window.QUESTION_BANK = {
             "C": "软件概要设计文档",
             "D": "软件配置文档"
           },
-          "correctOptionText": "软件详细设计说明书"
+          "correctOptionText": "软件详细设计说明书",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - 软件详细设计说明书\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 28,
@@ -409,7 +610,14 @@ window.QUESTION_BANK = {
             "C": "依赖倒置",
             "D": "接口隔离"
           },
-          "correctOptionText": "迪米特"
+          "correctOptionText": "迪米特",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 迪米特\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 29,
@@ -423,7 +631,14 @@ window.QUESTION_BANK = {
             "C": "访问者模式是纯类模式",
             "D": "迭代器模式是纯对象模式"
           },
-          "correctOptionText": "迭代器模式是纯对象模式"
+          "correctOptionText": "迭代器模式是纯对象模式",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】D - 迭代器模式是纯对象模式\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 30,
@@ -437,7 +652,14 @@ window.QUESTION_BANK = {
             "C": "②④",
             "D": "③④"
           },
-          "correctOptionText": "①②"
+          "correctOptionText": "①②",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】A - ①②\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 31,
@@ -451,7 +673,14 @@ window.QUESTION_BANK = {
             "C": "145",
             "D": "132"
           },
-          "correctOptionText": "132"
+          "correctOptionText": "132",
+          "explanation": {
+            "keyPoints": [
+              "项目管理"
+            ],
+            "analysis": "【题目考查】项目管理\n\n【正确答案】D - 132\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 32,
@@ -465,7 +694,14 @@ window.QUESTION_BANK = {
             "C": "架构风险级别",
             "D": "技术实现难度"
           },
-          "correctOptionText": "投资回报"
+          "correctOptionText": "投资回报",
+          "explanation": {
+            "keyPoints": [
+              "项目管理"
+            ],
+            "analysis": "【题目考查】项目管理\n\n【正确答案】A - 投资回报\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 33,
@@ -479,7 +715,14 @@ window.QUESTION_BANK = {
             "C": "联邦服务",
             "D": "转换服务"
           },
-          "correctOptionText": "联邦服务"
+          "correctOptionText": "联邦服务",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 联邦服务\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 34,
@@ -493,7 +736,14 @@ window.QUESTION_BANK = {
             "C": "对象请求代理 ORB",
             "D": "对象适配器 POA"
           },
-          "correctOptionText": "对象请求代理 ORB"
+          "correctOptionText": "对象请求代理 ORB",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 对象请求代理 ORB\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 35,
@@ -507,7 +757,14 @@ window.QUESTION_BANK = {
             "C": "IDL Skeleton",
             "D": "活动对象映射表"
           },
-          "correctOptionText": "伺服对象 servant"
+          "correctOptionText": "伺服对象 servant",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 伺服对象 servant\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 36,
@@ -521,7 +778,14 @@ window.QUESTION_BANK = {
             "C": "制品",
             "D": "响应"
           },
-          "correctOptionText": "环境"
+          "correctOptionText": "环境",
+          "explanation": {
+            "keyPoints": [
+              "系统架构"
+            ],
+            "analysis": "【题目考查】系统架构\n\n【正确答案】B - 环境\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 37,
@@ -535,7 +799,14 @@ window.QUESTION_BANK = {
             "C": "安全性",
             "D": "互操作性"
           },
-          "correctOptionText": "安全性"
+          "correctOptionText": "安全性",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 安全性\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 38,
@@ -549,7 +820,14 @@ window.QUESTION_BANK = {
             "C": "审计追踪",
             "D": "运行时注册"
           },
-          "correctOptionText": "审计追踪"
+          "correctOptionText": "审计追踪",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 审计追踪\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 39,
@@ -563,7 +841,14 @@ window.QUESTION_BANK = {
             "C": "使用可复用资产一构造/获取可复用资产一管理可复用资产",
             "D": "构造/获取可复用资产一使用可复用资产一管理可复用资产"
           },
-          "correctOptionText": "构造/获取可复用资产一管理可复用资产一使用可复用资产"
+          "correctOptionText": "构造/获取可复用资产一管理可复用资产一使用可复用资产",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 构造/获取可复用资产一管理可复用资产一使用可复用资产\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 40,
@@ -577,7 +862,14 @@ window.QUESTION_BANK = {
             "C": "SOAP (Simple Object Access Protocol)",
             "D": "BPEL (Business Process Execution Language)"
           },
-          "correctOptionText": "UDDI (Universal Description, Discovery and Integration)"
+          "correctOptionText": "UDDI (Universal Description, Discovery and Integration)",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】A - UDDI (Universal Description, Discovery and Integration)\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 41,
@@ -591,7 +883,14 @@ window.QUESTION_BANK = {
             "C": "虚拟机风格",
             "D": "数据流风格"
           },
-          "correctOptionText": "调用/返回风格"
+          "correctOptionText": "调用/返回风格",
+          "explanation": {
+            "keyPoints": [
+              "系统架构"
+            ],
+            "analysis": "【题目考查】系统架构\n\n【正确答案】B - 调用/返回风格\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 42,
@@ -605,7 +904,14 @@ window.QUESTION_BANK = {
             "C": "规则系统架构风格",
             "D": "管道-过滤器架构风格"
           },
-          "correctOptionText": "规则系统架构风格"
+          "correctOptionText": "规则系统架构风格",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 规则系统架构风格\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 43,
@@ -619,7 +925,14 @@ window.QUESTION_BANK = {
             "C": "事件驱动架构",
             "D": "面向对象架构"
           },
-          "correctOptionText": "事件驱动架构"
+          "correctOptionText": "事件驱动架构",
+          "explanation": {
+            "keyPoints": [
+              "系统架构"
+            ],
+            "analysis": "【题目考查】系统架构\n\n【正确答案】C - 事件驱动架构\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 44,
@@ -633,7 +946,14 @@ window.QUESTION_BANK = {
             "C": "HTML",
             "D": "JSON"
           },
-          "correctOptionText": "ADL"
+          "correctOptionText": "ADL",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - ADL\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 45,
@@ -647,7 +967,14 @@ window.QUESTION_BANK = {
             "C": "详细算法文档",
             "D": "领域架构模型"
           },
-          "correctOptionText": "体系结构视图"
+          "correctOptionText": "体系结构视图",
+          "explanation": {
+            "keyPoints": [
+              "系统架构"
+            ],
+            "analysis": "【题目考查】系统架构\n\n【正确答案】B - 体系结构视图\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 46,
@@ -661,7 +988,14 @@ window.QUESTION_BANK = {
             "C": "架构设计能够支持冲突分析",
             "D": "架构设计主要关注系统的具体功能实现细节，满足系统的品质 NS            Ott ho"
           },
-          "correctOptionText": "架构设计主要关注系统的具体功能实现细节，满足系统的品质 NS            Ott ho"
+          "correctOptionText": "架构设计主要关注系统的具体功能实现细节，满足系统的品质 NS            Ott ho",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - 架构设计主要关注系统的具体功能实现细节，满足系统的品质 NS            Ott ho\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 47,
@@ -675,7 +1009,14 @@ window.QUESTION_BANK = {
             "C": "多视图通过从不同视角描述特定系统体系结构得到多个视图并组织成整体模型，体现了关 注点分离思想，4 + 1 模型中“1”指的是统一场景",
             "D": "4 + 1 模型描述软件体系结构时，各视图没有特定指向，只是随意组合，“1”所代表内容 与关注点分离无关"
           },
-          "correctOptionText": "多视图通过从不同视角描述特定系统体系结构得到多个视图并组织成整体模型，体现了关 注点分离思想，4 + 1 模型中“1”指的是统一场景"
+          "correctOptionText": "多视图通过从不同视角描述特定系统体系结构得到多个视图并组织成整体模型，体现了关 注点分离思想，4 + 1 模型中“1”指的是统一场景",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - 多视图通过从不同视角描述特定系统体系结构得到多个视图并组织成整体模型，体现了关 注点分离思想，4 + 1 模型中“1”指的是统一场景\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 48,
@@ -689,7 +1030,14 @@ window.QUESTION_BANK = {
             "C": "基于度量的评估方法需先建立质量属性和度量的映射原则",
             "D": "系统架构评估仅针对系统的一致性和正确性提供分析结果"
           },
-          "correctOptionText": "基于度量的评估方法需先建立质量属性和度量的映射原则"
+          "correctOptionText": "基于度量的评估方法需先建立质量属性和度量的映射原则",
+          "explanation": {
+            "keyPoints": [
+              "系统架构"
+            ],
+            "analysis": "【题目考查】系统架构\n\n【正确答案】C - 基于度量的评估方法需先建立质量属性和度量的映射原则\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 49,
@@ -703,7 +1051,14 @@ window.QUESTION_BANK = {
             "C": "定义领域特定的设计和实现需求约束阶段，只需识别出解空间中有差别的特性约束",
             "D": "DSSA 建立过程是并发、递归、反复的螺旋模型，可能需对每个阶段经历多遍增加细节"
           },
-          "correctOptionText": "定义领域特定的设计和实现需求约束阶段，只需识别出解空间中有差别的特性约束"
+          "correctOptionText": "定义领域特定的设计和实现需求约束阶段，只需识别出解空间中有差别的特性约束",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - 定义领域特定的设计和实现需求约束阶段，只需识别出解空间中有差别的特性约束\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 50,
@@ -717,7 +1072,14 @@ window.QUESTION_BANK = {
             "C": "性能",
             "D": "可重用性"
           },
-          "correctOptionText": "可扩展性"
+          "correctOptionText": "可扩展性",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 可扩展性\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 51,
@@ -731,7 +1093,14 @@ window.QUESTION_BANK = {
             "C": "可移植性",
             "D": "可用性 在软件架构评估中， ( 1 +) 方法采用效用树这一工具来对质量属性进行分类和优先级排序。 效用树的结构包括: (2)."
           },
-          "correctOptionText": "安全性"
+          "correctOptionText": "安全性",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 安全性\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 52,
@@ -745,7 +1114,14 @@ window.QUESTION_BANK = {
             "C": "SAAM",
             "D": "CBAM"
           },
-          "correctOptionText": "ATAM"
+          "correctOptionText": "ATAM",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - ATAM\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 53,
@@ -759,7 +1135,14 @@ window.QUESTION_BANK = {
             "C": "树根—质量属性—属性描述—质量属性场景（叶子节点）",
             "D": "树根—功能需求—需求描述—质量属性场景（叶子节点）"
           },
-          "correctOptionText": "树根—质量属性—属性分类—质量属性场景（叶子节点）"
+          "correctOptionText": "树根—质量属性—属性分类—质量属性场景（叶子节点）",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - 树根—质量属性—属性分类—质量属性场景（叶子节点）\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 54,
@@ -773,7 +1156,14 @@ window.QUESTION_BANK = {
             "C": "参照完整性",
             "D": "实体完整性"
           },
-          "correctOptionText": "用户定义完整性"
+          "correctOptionText": "用户定义完整性",
+          "explanation": {
+            "keyPoints": [
+              "数据库"
+            ],
+            "analysis": "【题目考查】数据库\n\n【正确答案】B - 用户定义完整性\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 55,
@@ -787,7 +1177,14 @@ window.QUESTION_BANK = {
             "C": "命名冲突",
             "D": "数据冲突"
           },
-          "correctOptionText": "命名冲突"
+          "correctOptionText": "命名冲突",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 命名冲突\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 56,
@@ -801,7 +1198,14 @@ window.QUESTION_BANK = {
             "C": "对学生实体和新生实体中相关属性进行统一命名后整合",
             "D": "将新生实体所有属性并入学生实体，舍弃新生实体"
           },
-          "correctOptionText": "对学生实体和新生实体中相关属性进行统一命名后整合"
+          "correctOptionText": "对学生实体和新生实体中相关属性进行统一命名后整合",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 对学生实体和新生实体中相关属性进行统一命名后整合\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 57,
@@ -815,7 +1219,14 @@ window.QUESTION_BANK = {
             "C": "AB",
             "D": "AE"
           },
-          "correctOptionText": "AB"
+          "correctOptionText": "AB",
+          "explanation": {
+            "keyPoints": [
+              "数据库"
+            ],
+            "analysis": "【题目考查】数据库\n\n【正确答案】C - AB\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 58,
@@ -829,7 +1240,14 @@ window.QUESTION_BANK = {
             "C": "数据 - 段 - 帧 - 分组 - 比特",
             "D": "数据 - 分组 - 帧 - 段 - 比特"
           },
-          "correctOptionText": "数据 - 段 - 分组 - 帧 - 比特"
+          "correctOptionText": "数据 - 段 - 分组 - 帧 - 比特",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - 数据 - 段 - 分组 - 帧 - 比特\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 59,
@@ -843,7 +1261,14 @@ window.QUESTION_BANK = {
             "C": "接入层为用户设备提供本地网段访问能力，并负责用户认证、计费管理和用户信息收集",
             "D": "汇聚层直接处理用户设备的接入请求，并提供用户设备的本地互访能力"
           },
-          "correctOptionText": "汇聚层直接处理用户设备的接入请求，并提供用户设备的本地互访能力"
+          "correctOptionText": "汇聚层直接处理用户设备的接入请求，并提供用户设备的本地互访能力",
+          "explanation": {
+            "keyPoints": [
+              "网络与安全"
+            ],
+            "analysis": "【题目考查】网络与安全\n\n【正确答案】D - 汇聚层直接处理用户设备的接入请求，并提供用户设备的本地互访能力\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 60,
@@ -857,7 +1282,14 @@ window.QUESTION_BANK = {
             "C": "总线结构",
             "D": "树状结构"
           },
-          "correctOptionText": "星状结构"
+          "correctOptionText": "星状结构",
+          "explanation": {
+            "keyPoints": [
+              "系统架构"
+            ],
+            "analysis": "【题目考查】系统架构\n\n【正确答案】A - 星状结构\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 61,
@@ -871,7 +1303,14 @@ window.QUESTION_BANK = {
             "C": "DSP 的实时运行速度可达每秒数以千万条复杂指令程序，远远超过通用微处理器，它的强 大数据处理能力和高运行速度，是最值得称道的两大特色",
             "D": "SoC 称为处理器芯片，是一个有专用目标的集成电路"
           },
-          "correctOptionText": "SoC 称为处理器芯片，是一个有专用目标的集成电路"
+          "correctOptionText": "SoC 称为处理器芯片，是一个有专用目标的集成电路",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】D - SoC 称为处理器芯片，是一个有专用目标的集成电路\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 62,
@@ -885,7 +1324,14 @@ window.QUESTION_BANK = {
             "C": "@O@@O@OO",
             "D": "@@@OOO"
           },
-          "correctOptionText": "@O@@O@OO"
+          "correctOptionText": "@O@@O@OO",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - @O@@O@OO\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 63,
@@ -899,7 +1345,14 @@ window.QUESTION_BANK = {
             "C": "服务器集群模式",
             "D": "双机双工模式"
           },
-          "correctOptionText": "服务器集群模式"
+          "correctOptionText": "服务器集群模式",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 服务器集群模式\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 64,
@@ -913,7 +1366,14 @@ window.QUESTION_BANK = {
             "C": "电子签名是一种电子代码",
             "D": "电子签名是一种电子印章"
           },
-          "correctOptionText": "电子签名是书面签名的数字图像化"
+          "correctOptionText": "电子签名是书面签名的数字图像化",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 电子签名是书面签名的数字图像化\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 65,
@@ -927,7 +1387,14 @@ window.QUESTION_BANK = {
             "C": "SM4",
             "D": "SM9"
           },
-          "correctOptionText": "SM3"
+          "correctOptionText": "SM3",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - SM3\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 66,
@@ -941,7 +1408,14 @@ window.QUESTION_BANK = {
             "C": "仿真",
             "D": "基于数据融合的数字线程"
           },
-          "correctOptionText": "大数据"
+          "correctOptionText": "大数据",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - 大数据\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 67,
@@ -955,7 +1429,14 @@ window.QUESTION_BANK = {
             "C": "商业秘密是经法人采取相应保密措施的技术信息、经营信息等商业信息",
             "D": "商业秘密具有对抗善意第三人的效力"
           },
-          "correctOptionText": "商业秘密为知识产权的客体"
+          "correctOptionText": "商业秘密为知识产权的客体",
+          "explanation": {
+            "keyPoints": [
+              "知识产权"
+            ],
+            "analysis": "【题目考查】知识产权\n\n【正确答案】B - 商业秘密为知识产权的客体\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 68,
@@ -969,7 +1450,14 @@ window.QUESTION_BANK = {
             "C": "软件的测试用例文档",
             "D": "用户手册"
           },
-          "correctOptionText": "程序的源代码"
+          "correctOptionText": "程序的源代码",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 程序的源代码\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 69,
@@ -983,7 +1471,14 @@ window.QUESTION_BANK = {
             "C": "HO “ONO",
             "D": "合作作品的著作权归属于所有参与和组织创作的人     Oly: vo,    Re Bio,"
           },
-          "correctOptionText": "改编作品的著作权归属于改编人"
+          "correctOptionText": "改编作品的著作权归属于改编人",
+          "explanation": {
+            "keyPoints": [
+              "知识产权"
+            ],
+            "analysis": "【题目考查】知识产权\n\n【正确答案】A - 改编作品的著作权归属于改编人\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 70,
@@ -997,7 +1492,14 @@ window.QUESTION_BANK = {
             "C": "460",
             "D": "393"
           },
-          "correctOptionText": "428"
+          "correctOptionText": "428",
+          "explanation": {
+            "keyPoints": [
+              "数学与运筹"
+            ],
+            "analysis": "【题目考查】数学与运筹\n\n【正确答案】B - 428\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 71,
@@ -1011,7 +1513,14 @@ window.QUESTION_BANK = {
             "C": "database software",
             "D": "system blueprints"
           },
-          "correctOptionText": "physical devices"
+          "correctOptionText": "physical devices",
+          "explanation": {
+            "keyPoints": [
+              "英文综合题"
+            ],
+            "analysis": "【题目考查】英文综合题\n\n【正确答案】A - physical devices\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 72,
@@ -1025,7 +1534,14 @@ window.QUESTION_BANK = {
             "C": "Operating system security",
             "D": "Communication security (Qa                                                                                         ARBOR, Ib Ae"
           },
-          "correctOptionText": "Operating system security"
+          "correctOptionText": "Operating system security",
+          "explanation": {
+            "keyPoints": [
+              "英文综合题"
+            ],
+            "analysis": "【题目考查】英文综合题\n\n【正确答案】C - Operating system security\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 73,
@@ -1039,7 +1555,14 @@ window.QUESTION_BANK = {
             "C": "Operating system security",
             "D": "Communication security"
           },
-          "correctOptionText": "Network security"
+          "correctOptionText": "Network security",
+          "explanation": {
+            "keyPoints": [
+              "英文综合题"
+            ],
+            "analysis": "【题目考查】英文综合题\n\n【正确答案】B - Network security\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 74,
@@ -1053,7 +1576,14 @@ window.QUESTION_BANK = {
             "C": "bacteria",
             "D": "models"
           },
-          "correctOptionText": "viruses"
+          "correctOptionText": "viruses",
+          "explanation": {
+            "keyPoints": [
+              "英文综合题"
+            ],
+            "analysis": "【题目考查】英文综合题\n\n【正确答案】A - viruses\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 75,
@@ -1067,7 +1597,14 @@ window.QUESTION_BANK = {
             "C": "management personnel",
             "D": "security management systems Vin «! ae                    id 4 weg ity          SN AZ"
           },
-          "correctOptionText": "security management systems Vin «! ae                    id 4 weg ity          SN AZ"
+          "correctOptionText": "security management systems Vin «! ae                    id 4 weg ity          SN AZ",
+          "explanation": {
+            "keyPoints": [
+              "英文综合题"
+            ],
+            "analysis": "【题目考查】英文综合题\n\n【正确答案】D - security management systems Vin «! ae                    id 4 weg ity          SN AZ\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         }
       ]
     },
@@ -1091,7 +1628,16 @@ window.QUESTION_BANK = {
             "C": "现代 CISC 处理器内部大多采用 RISC-like 的微操作来执行指令",
             "D": "RISC 架构由于指令简单，其流水线更容易被中断事件影响"
           },
-          "correctOptionText": "RISC 架构由于指令简单，其流水线更容易被中断事件影响"
+          "correctOptionText": "RISC 架构由于指令简单，其流水线更容易被中断事件影响",
+          "explanation": {
+            "keyPoints": [
+              "分时操作系统",
+              "系统特性",
+              "多路性/独立性/交互性"
+            ],
+            "analysis": "【知识点】分时操作系统的四大特点\n分时操作系统是将CPU的工作时间划分为许多很短的时间片，轮流为各个终端用户服务。\n\n【四大特点】\n1. 多路性 - 多个用户可以同时使用计算机系统\n2. 独立性 - 各用户作业独立运行，互不影响  \n3. 交互性 - 用户与系统进行人机对话式的交互通信\n4. 及时性 - 系统对用户的请求能及时响应和处理\n\n【正确答案分析】B - 独立性、交互性与题干给出的多路性和及时性并列，构成分时系统的四大特点。",
+            "source": "知识库"
+          }
         },
         {
           "number": 2,
@@ -1105,7 +1651,16 @@ window.QUESTION_BANK = {
             "B": "@ODO@OOO®",
             "D": "@@@OODOOOO"
           },
-          "correctOptionText": "O@O@OODO@OO"
+          "correctOptionText": "O@O@OODO@OO",
+          "explanation": {
+            "keyPoints": [
+              "CPU与主存速度不匹配",
+              "高速缓存",
+              "Cache"
+            ],
+            "analysis": "【知识点】CPU与主存的速度差距问题\n\n【问题背景】CPU速度远快于主存速度（CPU纳秒级，主存微秒级），导致CPU经常等待主存的数据，成为系统瓶颈。\n\n【解决方案】使用高速缓冲存储器（Cache），是位于CPU和主存之间的小容量高速存储器。\n\n【工作原理】\n- CPU优先从Cache读取数据（命中率>90%）\n- Cache未命中时，从主存取数据并自动复制到Cache\n- 存储器三层结构：寄存器 → Cache → 主存\n\n【答案】B",
+            "source": "知识库"
+          }
         },
         {
           "number": 3,
@@ -1119,7 +1674,14 @@ window.QUESTION_BANK = {
             "C": "EEPROM",
             "D": "EPROM"
           },
-          "correctOptionText": "EPROM"
+          "correctOptionText": "EPROM",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】D - EPROM\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 4,
@@ -1133,7 +1695,14 @@ window.QUESTION_BANK = {
             "C": "位示图法在文件系统中用于加速文件的查找速度",
             "D": "位示图法无法处理大量磁盘块的分配情况"
           },
-          "correctOptionText": "位示图法通过位图来表示磁盘中每个块的分配状态，每一位对应一个磁盘块"
+          "correctOptionText": "位示图法通过位图来表示磁盘中每个块的分配状态，每一位对应一个磁盘块",
+          "explanation": {
+            "keyPoints": [
+              "操作系统"
+            ],
+            "analysis": "【题目考查】操作系统\n\n【正确答案】A - 位示图法通过位图来表示磁盘中每个块的分配状态，每一位对应一个磁盘块\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 5,
@@ -1147,7 +1716,16 @@ window.QUESTION_BANK = {
             "C": "功能测试、代码测试、表单测试",
             "D": "可靠性测试、功能测试、AB 测试"
           },
-          "correctOptionText": "基准性能测试、压力测试、可靠性测试"
+          "correctOptionText": "基准性能测试、压力测试、可靠性测试",
+          "explanation": {
+            "keyPoints": [
+              "Amdahl定律",
+              "系统加速比",
+              "可优化比例"
+            ],
+            "analysis": "【知识点】Amdahl定律（Amdahl's Law）- 系统性能优化的理论极限\n\n【公式】系统加速比 S = 1 / [(1-f) + f/k]\n- S = 系统加速比（目标加速倍数）\n- f = 可被优化部分所占的比例（0.9）\n- k = 该部分的加速倍数（待求）\n\n【求解过程】\n5 = 1 / [0.1 + 0.9/k]\n0.1 + 0.9/k = 0.2\nk = 9\n\n【物理意义】即使矩阵乘法提升9倍，整个系统也只能提升5倍。这体现了优化需要平衡各部分的原理。\n\n【答案】C - 9倍",
+            "source": "知识库"
+          }
         },
         {
           "number": 6,
@@ -1161,7 +1739,16 @@ window.QUESTION_BANK = {
             "C": "一级间接地址索引、二级间接地址索引",
             "D": "二级间接地址索引、二级间接地址索引"
           },
-          "correctOptionText": "一级间接地址索引、二级间接地址索引"
+          "correctOptionText": "一级间接地址索引、二级间接地址索引",
+          "explanation": {
+            "keyPoints": [
+              "进程控制块PCB",
+              "PCB内容",
+              "进程管理"
+            ],
+            "analysis": "【知识点】进程控制块（Process Control Block, PCB）\n\n【PCB的三部分内容】\n1. 进程标识符 - 进程的唯一标识（PID）\n2. 控制信息 - 进程状态、优先级、进程队列指针等\n3. 现场保护区 - 进程切换时保存的寄存器内容\n\n【关键区分】进程 = 程序块(code) + PCB(管理信息) + 数据块(data)\n源代码属于程序块，不属于PCB\n\n【答案】D - 源代码",
+            "source": "知识库"
+          }
         },
         {
           "number": 7,
@@ -1175,7 +1762,16 @@ window.QUESTION_BANK = {
             "C": "外部总线是计算机板和外部设备之间，或者计算机系统之间互联的总线，又 称为通信和总线",
             "D": "计算机总线存在许多种类，常见的有并行总线和串行总线。并行总线主要包 括 USB, SATA, CAN, RS-232, RS-485, RapidlO 和以太网等，串行总线 主要包括 PC和 ATA (IDE) 等"
           },
-          "correctOptionText": "计算机总线存在许多种类，常见的有并行总线和串行总线。并行总线主要包 括 USB, SATA, CAN, RS-232, RS-485, RapidlO 和以太网等，串行总线 主要包括 PC和 ATA (IDE) 等"
+          "correctOptionText": "计算机总线存在许多种类，常见的有并行总线和串行总线。并行总线主要包 括 USB, SATA, CAN, RS-232, RS-485, RapidlO 和以太网等，串行总线 主要包括 PC和 ATA (IDE) 等",
+          "explanation": {
+            "keyPoints": [
+              "页式存储",
+              "位示图",
+              "内存管理"
+            ],
+            "analysis": "【知识点】页式存储管理中的位示图（Bitmap）\n\n【计算过程】\n页框数 = 32GB / 8KB = 2^35字节 / 2^13字节 = 2^22 = 4,194,304个\n位示图 = 2^22位 = 2^19字节 = 512KB\n\n【答案】D - 512 KB",
+            "source": "知识库"
+          }
         },
         {
           "number": 8,
@@ -1189,7 +1785,14 @@ window.QUESTION_BANK = {
             "C": "企业对政府 (B2G)",
             "D": "政府对公民 (G2C)"
           },
-          "correctOptionText": "公民对政府 (C2G)"
+          "correctOptionText": "公民对政府 (C2G)",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 公民对政府 (C2G)\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 9,
@@ -1203,7 +1806,14 @@ window.QUESTION_BANK = {
             "C": "最常见资源管理方法的有企业资源计划 (ERP). 供应链管理 (SCM) 等",
             "D": "信息系统建设方法的中心思想是，在信息技术和网络技术迅猛发展的时代， 企业必须重新审视企业的生产经营过程，利用信息技术和网络技术，对企业的 组织结构和工作方法进行“彻底的、根本性的”重新设计，以适应当今市场发 展和信息社会的需求                   . ak —                        Mo,     On yo, sas (二   ss     2和2 IY ’     Do Ng = TO    NO"
           },
-          "correctOptionText": "最常见资源管理方法的有企业资源计划 (ERP). 供应链管理 (SCM) 等"
+          "correctOptionText": "最常见资源管理方法的有企业资源计划 (ERP). 供应链管理 (SCM) 等",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 最常见资源管理方法的有企业资源计划 (ERP). 供应链管理 (SCM) 等\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 10,
@@ -1217,7 +1827,14 @@ window.QUESTION_BANK = {
             "B": "DSS 用来支援用户做决策而不是代蔡用户做决策",
             "C": "DSS 主要用于解决结构化及半结构化问题"
           },
-          "correctOptionText": "DSS 主要用于解决结构化及半结构化问题"
+          "correctOptionText": "DSS 主要用于解决结构化及半结构化问题",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - DSS 主要用于解决结构化及半结构化问题\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 11,
@@ -1231,7 +1848,14 @@ window.QUESTION_BANK = {
             "C": "通讯服务、应用连接服务、信息传递与转化服务、流程控制服务",
             "D": "通讯服务、信息传递与转化服务、应用连接服务、流程控制服务"
           },
-          "correctOptionText": "通讯服务、信息传递与转化服务、应用连接服务、流程控制服务"
+          "correctOptionText": "通讯服务、信息传递与转化服务、应用连接服务、流程控制服务",
+          "explanation": {
+            "keyPoints": [
+              "操作系统"
+            ],
+            "analysis": "【题目考查】操作系统\n\n【正确答案】D - 通讯服务、信息传递与转化服务、应用连接服务、流程控制服务\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 12,
@@ -1245,7 +1869,14 @@ window.QUESTION_BANK = {
             "C": "判定覆盖对程序逻辑的覆盖程度比条件覆盖高",
             "D": "条件覆盖不一定包含判定覆盖，因为条件覆盖仅关注每个条件的结果，而不一定覆盖所有判定分支"
           },
-          "correctOptionText": "条件覆盖不一定包含判定覆盖，因为条件覆盖仅关注每个条件的结果，而不一定覆盖所有判定分支"
+          "correctOptionText": "条件覆盖不一定包含判定覆盖，因为条件覆盖仅关注每个条件的结果，而不一定覆盖所有判定分支",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - 条件覆盖不一定包含判定覆盖，因为条件覆盖仅关注每个条件的结果，而不一定覆盖所有判定分支\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 13,
@@ -1259,7 +1890,16 @@ window.QUESTION_BANK = {
             "C": "Bridge",
             "D": "Facade"
           },
-          "correctOptionText": "Bridge"
+          "correctOptionText": "Bridge",
+          "explanation": {
+            "keyPoints": [
+              "软件文档体系",
+              "系统文档",
+              "用户文档"
+            ],
+            "analysis": "【知识点】软件文档分类体系\n\n【文档体系结构】根据IEEE标准，软件文档分为两大类：\n1. 系统文档 - 针对开发人员：架构、设计、代码等\n2. 用户文档 - 针对使用者：手册、操作指南等\n\n【为什么选A】\n- A \"用户文档\" ✓ 与系统文档平级\n- B \"测试报告\" ✗ 属于系统文档子类\n- C \"部署指南\" ✗ 属于运维文档\n- D \"设计文档\" ✗ 属于系统文档子类\n\n【答案】A - 用户文档",
+            "source": "知识库"
+          }
         },
         {
           "number": 14,
@@ -1273,7 +1913,14 @@ window.QUESTION_BANK = {
             "C": "可在不影响其他对象的情况下，以动态、透明的方式给单个对象添加职责",
             "D": "将一个接口转换为客户希望的另一个接口"
           },
-          "correctOptionText": "将抽象部分与它的实现部分分离，使它们都可以独立地变化"
+          "correctOptionText": "将抽象部分与它的实现部分分离，使它们都可以独立地变化",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 将抽象部分与它的实现部分分离，使它们都可以独立地变化\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 15,
@@ -1287,7 +1934,14 @@ window.QUESTION_BANK = {
             "C": "类的属性只能在类内部访问",
             "D": "类的属性只能在派生类中访问"
           },
-          "correctOptionText": "类的属性只能通过公共接口访问"
+          "correctOptionText": "类的属性只能通过公共接口访问",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 类的属性只能通过公共接口访问\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 16,
@@ -1301,7 +1955,14 @@ window.QUESTION_BANK = {
             "C": "预防性维护",
             "D": "完善性维护"
           },
-          "correctOptionText": "预防性维护"
+          "correctOptionText": "预防性维护",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - 预防性维护\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 17,
@@ -1315,7 +1976,14 @@ window.QUESTION_BANK = {
             "C": "客户端应用",
             "D": "管理监控工具 在面向对象设计中，用于描述系统外部实体与系统内部功能交互的类被称为 (1 ) ，下面不属于这种类的是 (2 ) 。"
           },
-          "correctOptionText": "流程定义工具"
+          "correctOptionText": "流程定义工具",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 流程定义工具\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 18,
@@ -1329,7 +1997,14 @@ window.QUESTION_BANK = {
             "C": "控制类",
             "D": "抽象类"
           },
-          "correctOptionText": "边界类"
+          "correctOptionText": "边界类",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 边界类\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 19,
@@ -1343,7 +2018,14 @@ window.QUESTION_BANK = {
             "C": "通信协议",
             "D": "用户"
           },
-          "correctOptionText": "用户"
+          "correctOptionText": "用户",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】D - 用户\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 20,
@@ -1357,7 +2039,14 @@ window.QUESTION_BANK = {
             "C": "构建阶段",
             "D": "交付阶段"
           },
-          "correctOptionText": "构建阶段"
+          "correctOptionText": "构建阶段",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - 构建阶段\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 21,
@@ -1371,7 +2060,14 @@ window.QUESTION_BANK = {
             "C": "逻辑内聚",
             "D": "顺序内聚"
           },
-          "correctOptionText": "通信内聚"
+          "correctOptionText": "通信内聚",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】A - 通信内聚\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 22,
@@ -1385,7 +2081,14 @@ window.QUESTION_BANK = {
             "C": "测试分析",
             "D": "输入数据和预期输出结果"
           },
-          "correctOptionText": "输入数据和预期输出结果"
+          "correctOptionText": "输入数据和预期输出结果",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - 输入数据和预期输出结果\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 23,
@@ -1399,7 +2102,14 @@ window.QUESTION_BANK = {
             "C": "HE AK",
             "D": "多重继承"
           },
-          "correctOptionText": "取代继承"
+          "correctOptionText": "取代继承",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 取代继承\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 24,
@@ -1413,7 +2123,14 @@ window.QUESTION_BANK = {
             "C": "容量测试",
             "D": "可靠性测试"
           },
-          "correctOptionText": "压力测试"
+          "correctOptionText": "压力测试",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 压力测试\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 25,
@@ -1427,7 +2144,14 @@ window.QUESTION_BANK = {
             "C": "问卷调查",
             "D": "现场观察"
           },
-          "correctOptionText": "代码审查"
+          "correctOptionText": "代码审查",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 代码审查\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 26,
@@ -1441,7 +2165,14 @@ window.QUESTION_BANK = {
             "C": "敏捷开发方法适用于所有类型的项目，特别是大型、复杂的项目，而瀑布模 型则更适合小型、需求明确的项目。",
             "D": "瀑布模型强调客户合作和面对面沟通，而敏捷开发方法则更侧重于文档和流 程的规范。"
           },
-          "correctOptionText": "瀑布模型将开发过程划分为一系列严格的阶段，每个阶段都有明确的输入和 输出，而敏捷开发方法则采用和运代和增量的方式。"
+          "correctOptionText": "瀑布模型将开发过程划分为一系列严格的阶段，每个阶段都有明确的输入和 输出，而敏捷开发方法则采用和运代和增量的方式。",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 瀑布模型将开发过程划分为一系列严格的阶段，每个阶段都有明确的输入和 输出，而敏捷开发方法则采用和运代和增量的方式。\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 27,
@@ -1455,7 +2186,14 @@ window.QUESTION_BANK = {
             "C": "投资控制、进度控制、质量控制、成本控制",
             "D": "成本控制、进度控制、质量控制、合同控制"
           },
-          "correctOptionText": "投资控制、进度控制、质量控制、变更控制"
+          "correctOptionText": "投资控制、进度控制、质量控制、变更控制",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 投资控制、进度控制、质量控制、变更控制\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 28,
@@ -1469,7 +2207,14 @@ window.QUESTION_BANK = {
             "C": "17",
             "D": "19"
           },
-          "correctOptionText": "19"
+          "correctOptionText": "19",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - 19\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 29,
@@ -1483,7 +2228,14 @@ window.QUESTION_BANK = {
             "C": "领域设计人员 - 需熟悉软件设计方法，主要任务为根据现有系统开发 DSSA 并建立与领域模型联系",
             "D": "领域实现人员 - 应熟悉软件再工程技术，主要任务是从现有系统提取可重用 构件并验证"
           },
-          "correctOptionText": "领域设计人员 - 需熟悉软件设计方法，主要任务为根据现有系统开发 DSSA 并建立与领域模型联系"
+          "correctOptionText": "领域设计人员 - 需熟悉软件设计方法，主要任务为根据现有系统开发 DSSA 并建立与领域模型联系",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - 领域设计人员 - 需熟悉软件设计方法，主要任务为根据现有系统开发 DSSA 并建立与领域模型联系\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 30,
@@ -1497,7 +2249,14 @@ window.QUESTION_BANK = {
             "C": "软件架构复用类型只有机会复用",
             "D": "软件架构复用可减少开发工作、时间与成本，提高产品质量和维护便利性"
           },
-          "correctOptionText": "软件架构复用可减少开发工作、时间与成本，提高产品质量和维护便利性"
+          "correctOptionText": "软件架构复用可减少开发工作、时间与成本，提高产品质量和维护便利性",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - 软件架构复用可减少开发工作、时间与成本，提高产品质量和维护便利性\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 31,
@@ -1511,7 +2270,14 @@ window.QUESTION_BANK = {
             "C": "让开友人员自行处理复杂问题无需架构指导",
             "D": "只关注系统的小部分功能以降低复杂感知"
           },
-          "correctOptionText": "通过构件及关系描述抽象系统并提供高层次管理方法"
+          "correctOptionText": "通过构件及关系描述抽象系统并提供高层次管理方法",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 通过构件及关系描述抽象系统并提供高层次管理方法\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 32,
@@ -1525,7 +2291,14 @@ window.QUESTION_BANK = {
             "C": "①③④",
             "D": "①②④"
           },
-          "correctOptionText": "①②④"
+          "correctOptionText": "①②④",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - ①②④\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 33,
@@ -1539,7 +2312,14 @@ window.QUESTION_BANK = {
             "C": "独 立构件风格",
             "D": "虚拟机风格"
           },
-          "correctOptionText": "管道-过滤器风格"
+          "correctOptionText": "管道-过滤器风格",
+          "explanation": {
+            "keyPoints": [
+              "系统架构"
+            ],
+            "analysis": "【题目考查】系统架构\n\n【正确答案】A - 管道-过滤器风格\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 34,
@@ -1553,7 +2333,14 @@ window.QUESTION_BANK = {
             "C": "ESB",
             "D": "RMI"
           },
-          "correctOptionText": "ESB"
+          "correctOptionText": "ESB",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - ESB\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 35,
@@ -1567,7 +2354,14 @@ window.QUESTION_BANK = {
             "C": "领域层",
             "D": "应用层"
           },
-          "correctOptionText": "领域层"
+          "correctOptionText": "领域层",
+          "explanation": {
+            "keyPoints": [
+              "系统架构"
+            ],
+            "analysis": "【题目考查】系统架构\n\n【正确答案】C - 领域层\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 36,
@@ -1581,7 +2375,14 @@ window.QUESTION_BANK = {
             "C": "WSDL 用于描述 Web 服务，SOAP 用于传输消息",
             "D": "SOAP 和 WSDL 都是用于定义 Web 服务的安全策略"
           },
-          "correctOptionText": "WSDL 用于描述 Web 服务，SOAP 用于传输消息"
+          "correctOptionText": "WSDL 用于描述 Web 服务，SOAP 用于传输消息",
+          "explanation": {
+            "keyPoints": [
+              "系统架构"
+            ],
+            "analysis": "【题目考查】系统架构\n\n【正确答案】C - WSDL 用于描述 Web 服务，SOAP 用于传输消息\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 37,
@@ -1595,7 +2396,14 @@ window.QUESTION_BANK = {
             "C": "效用树沿着两个维度排列优先顺序: 每个场景对系统成功的重要性以及实现 该场景 (从架构师的角度来看) 的难度估计",
             "D": "(M, H) 代表该场景重要性中等，但实现难度较高"
           },
-          "correctOptionText": "系统性能场景属于高优先级场景"
+          "correctOptionText": "系统性能场景属于高优先级场景",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 系统性能场景属于高优先级场景\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 38,
@@ -1609,7 +2417,14 @@ window.QUESTION_BANK = {
             "C": "权衡点是指影响多个质量属性的特性，通常是多个质量属性的敏感点",
             "D": "架构风险可以通过增加元余设计完全消除"
           },
-          "correctOptionText": "权衡点是指影响多个质量属性的特性，通常是多个质量属性的敏感点"
+          "correctOptionText": "权衡点是指影响多个质量属性的特性，通常是多个质量属性的敏感点",
+          "explanation": {
+            "keyPoints": [
+              "系统架构"
+            ],
+            "analysis": "【题目考查】系统架构\n\n【正确答案】C - 权衡点是指影响多个质量属性的特性，通常是多个质量属性的敏感点\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 39,
@@ -1623,7 +2438,14 @@ window.QUESTION_BANK = {
             "C": "中央数据结构",
             "D": "事件日志"
           },
-          "correctOptionText": "中央数据结构"
+          "correctOptionText": "中央数据结构",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - 中央数据结构\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 40,
@@ -1637,7 +2459,14 @@ window.QUESTION_BANK = {
             "C": "虚拟化",
             "D": "人工智能"
           },
-          "correctOptionText": "虚拟化"
+          "correctOptionText": "虚拟化",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 虚拟化\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 41,
@@ -1651,7 +2480,14 @@ window.QUESTION_BANK = {
             "C": "安全性",
             "D": "可用性"
           },
-          "correctOptionText": "性能"
+          "correctOptionText": "性能",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - 性能\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 42,
@@ -1665,7 +2501,14 @@ window.QUESTION_BANK = {
             "C": "限制访问                  Muley,     wae i, pReIBIA                 sgt,  SN",
             "D": "接口-实现分离            (ie. See"
           },
-          "correctOptionText": "队列调度"
+          "correctOptionText": "队列调度",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - 队列调度\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 43,
@@ -1679,7 +2522,14 @@ window.QUESTION_BANK = {
             "C": "叠加",
             "D": "循环"
           },
-          "correctOptionText": "叠加"
+          "correctOptionText": "叠加",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - 叠加\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 44,
@@ -1693,7 +2543,14 @@ window.QUESTION_BANK = {
             "C": "分析已有构件",
             "D": "分析构件间的关系"
           },
-          "correctOptionText": "需求变化归类"
+          "correctOptionText": "需求变化归类",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】A - 需求变化归类\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 45,
@@ -1707,7 +2564,14 @@ window.QUESTION_BANK = {
             "C": "虚拟机风格",
             "D": "数据流风格"
           },
-          "correctOptionText": "独立构件风格"
+          "correctOptionText": "独立构件风格",
+          "explanation": {
+            "keyPoints": [
+              "操作系统"
+            ],
+            "analysis": "【题目考查】操作系统\n\n【正确答案】A - 独立构件风格\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 46,
@@ -1721,7 +2585,14 @@ window.QUESTION_BANK = {
             "C": "测试环境的准备时间",
             "D": "执行测试的时间"
           },
-          "correctOptionText": "故障修复时间"
+          "correctOptionText": "故障修复时间",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】B - 故障修复时间\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 47,
@@ -1735,7 +2606,14 @@ window.QUESTION_BANK = {
             "C": "③",
             "D": "①③"
           },
-          "correctOptionText": "②"
+          "correctOptionText": "②",
+          "explanation": {
+            "keyPoints": [
+              "数学与运筹"
+            ],
+            "analysis": "【题目考查】数学与运筹\n\n【正确答案】A - ②\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 48,
@@ -1749,7 +2627,14 @@ window.QUESTION_BANK = {
             "C": "PUT",
             "D": "PATCH"
           },
-          "correctOptionText": "PATCH"
+          "correctOptionText": "PATCH",
+          "explanation": {
+            "keyPoints": [
+              "数学与运筹"
+            ],
+            "analysis": "【题目考查】数学与运筹\n\n【正确答案】D - PATCH\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 49,
@@ -1763,7 +2648,14 @@ window.QUESTION_BANK = {
             "C": "GROUP BY 产品名称",
             "D": "GROUP BY 产品数量"
           },
-          "correctOptionText": "GROUP BY 产品名称"
+          "correctOptionText": "GROUP BY 产品名称",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - GROUP BY 产品名称\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 50,
@@ -1777,7 +2669,14 @@ window.QUESTION_BANK = {
             "C": "GROUP BY 产品库存量 ASC;",
             "D": "GROUP BY 产品库存量 DESC;"
           },
-          "correctOptionText": "ORDER BY 产品库存量 ASC;"
+          "correctOptionText": "ORDER BY 产品库存量 ASC;",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - ORDER BY 产品库存量 ASC;\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 51,
@@ -1791,7 +2690,14 @@ window.QUESTION_BANK = {
             "C": "静态增量转储",
             "D": "动态增量转储"
           },
-          "correctOptionText": "动态增量转储"
+          "correctOptionText": "动态增量转储",
+          "explanation": {
+            "keyPoints": [
+              "数学与运筹"
+            ],
+            "analysis": "【题目考查】数学与运筹\n\n【正确答案】D - 动态增量转储\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 52,
@@ -1805,7 +2711,14 @@ window.QUESTION_BANK = {
             "C": "Employees (员工ID，姓名，职位，入职日期，家庭电话)",
             "D": "Employees (员工ID，姓名，入职日期，工龄，家庭电话)"
           },
-          "correctOptionText": "Employees (员工ID，姓名，职位，入职日期，家庭电话)"
+          "correctOptionText": "Employees (员工ID，姓名，职位，入职日期，家庭电话)",
+          "explanation": {
+            "keyPoints": [
+              "数据库"
+            ],
+            "analysis": "【题目考查】数据库\n\n【正确答案】C - Employees (员工ID，姓名，职位，入职日期，家庭电话)\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 53,
@@ -1819,7 +2732,14 @@ window.QUESTION_BANK = {
             "C": "DHCP 服务器在分配地址前，会强制使用ICMP 协议检测该地址是否已被使 用",
             "D": "通过配置 DHCP 中继代理，可以使一个物理网段内的客户端从多个逻辑子网 中获取IP 地址"
           },
-          "correctOptionText": "通过配置 DHCP 中继代理，可以使一个物理网段内的客户端从多个逻辑子网 中获取IP 地址"
+          "correctOptionText": "通过配置 DHCP 中继代理，可以使一个物理网段内的客户端从多个逻辑子网 中获取IP 地址",
+          "explanation": {
+            "keyPoints": [
+              "网络与安全"
+            ],
+            "analysis": "【题目考查】网络与安全\n\n【正确答案】D - 通过配置 DHCP 中继代理，可以使一个物理网段内的客户端从多个逻辑子网 中获取IP 地址\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 54,
@@ -1833,7 +2753,14 @@ window.QUESTION_BANK = {
             "C": "ICMP和 SMTP",
             "D": "IP和1CMP"
           },
-          "correctOptionText": "NFS和Telnet"
+          "correctOptionText": "NFS和Telnet",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - NFS和Telnet\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 55,
@@ -1847,7 +2774,14 @@ window.QUESTION_BANK = {
             "C": "网桥",
             "D": "中继器 a) SS"
           },
-          "correctOptionText": "中继器 a) SS"
+          "correctOptionText": "中继器 a) SS",
+          "explanation": {
+            "keyPoints": [
+              "网络与安全"
+            ],
+            "analysis": "【题目考查】网络与安全\n\n【正确答案】D - 中继器 a) SS\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 56,
@@ -1861,7 +2795,14 @@ window.QUESTION_BANK = {
             "C": "使用深度睡眠模式",
             "D": "优化数据结构和算法"
           },
-          "correctOptionText": "使用多线程并行处理任务"
+          "correctOptionText": "使用多线程并行处理任务",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】A - 使用多线程并行处理任务\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 57,
@@ -1875,7 +2816,14 @@ window.QUESTION_BANK = {
             "C": "基于内存的数据库系统 (MMDB) 通过将数据库或其主要工作部分常驻内存， 显著提高了事务处理的实时性和可预测性",
             "D": "座入式网络数据库系统通常由客户端、通信协议和远程服务器三部分组成， 其中客户端提供座入式程序访问数据库的接口，通信协议规范了客户端与远程 服务器之间的数据传输，远程服务器则负责维护数据库数据的安全性和一致性"
           },
-          "correctOptionText": "找入式网络数据库的访问方式是被动式的，只要了解其文件格式，任何程序 都可以直接读取，因此它的安全性很低"
+          "correctOptionText": "找入式网络数据库的访问方式是被动式的，只要了解其文件格式，任何程序 都可以直接读取，因此它的安全性很低",
+          "explanation": {
+            "keyPoints": [
+              "数据库"
+            ],
+            "analysis": "【题目考查】数据库\n\n【正确答案】A - 找入式网络数据库的访问方式是被动式的，只要了解其文件格式，任何程序 都可以直接读取，因此它的安全性很低\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 58,
@@ -1889,7 +2837,14 @@ window.QUESTION_BANK = {
             "C": "A 等级失效状态是灾难性的，软件异常会导致航空器无法安全飞行和着陆。",
             "D": "E 等级失效状态是危害性的，软件异常会严重降低航空器或机组克服不利运行情况的能力。"
           },
-          "correctOptionText": "E 等级失效状态是危害性的，软件异常会严重降低航空器或机组克服不利运行情况的能力。"
+          "correctOptionText": "E 等级失效状态是危害性的，软件异常会严重降低航空器或机组克服不利运行情况的能力。",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - E 等级失效状态是危害性的，软件异常会严重降低航空器或机组克服不利运行情况的能力。\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 59,
@@ -1903,7 +2858,14 @@ window.QUESTION_BANK = {
             "B": "0.970",
             "D": "0.999"
           },
-          "correctOptionText": "0.970"
+          "correctOptionText": "0.970",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 0.970\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 60,
@@ -1917,7 +2879,14 @@ window.QUESTION_BANK = {
             "C": "@@®",
             "D": "@@O®"
           },
-          "correctOptionText": "@@O®"
+          "correctOptionText": "@@O®",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】D - @@O®\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 61,
@@ -1931,7 +2900,14 @@ window.QUESTION_BANK = {
             "C": "数字签名是为了同时实现保密性和完整性验证，发送者用私钥加密整个信息， 接收者用公钥解密",
             "D": "数字签名是为了验证信息完整性，发送者用对称密钥加密摘要，接收者用相 同密钥解密"
           },
-          "correctOptionText": "数字签名是为了防止信息被算改，并证明发送者身份，发送者先用哈希函数 生成信息摘要，再用私钥加密摘要生成数字签名。接收者用公钥解密签名得到 摘要，并比对自行计算的摘要以验证完整性和来源"
+          "correctOptionText": "数字签名是为了防止信息被算改，并证明发送者身份，发送者先用哈希函数 生成信息摘要，再用私钥加密摘要生成数字签名。接收者用公钥解密签名得到 摘要，并比对自行计算的摘要以验证完整性和来源",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 数字签名是为了防止信息被算改，并证明发送者身份，发送者先用哈希函数 生成信息摘要，再用私钥加密摘要生成数字签名。接收者用公钥解密签名得到 摘要，并比对自行计算的摘要以验证完整性和来源\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 62,
@@ -1945,7 +2921,14 @@ window.QUESTION_BANK = {
             "C": "审计",
             "D": "认证"
           },
-          "correctOptionText": "审计"
+          "correctOptionText": "审计",
+          "explanation": {
+            "keyPoints": [
+              "网络与安全"
+            ],
+            "analysis": "【题目考查】网络与安全\n\n【正确答案】C - 审计\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 63,
@@ -1959,7 +2942,14 @@ window.QUESTION_BANK = {
             "C": "UDP 洪水攻击",
             "D": "DNS 洪水攻击"
           },
-          "correctOptionText": "SYN 洪水攻击"
+          "correctOptionText": "SYN 洪水攻击",
+          "explanation": {
+            "keyPoints": [
+              "网络与安全"
+            ],
+            "analysis": "【题目考查】网络与安全\n\n【正确答案】A - SYN 洪水攻击\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 64,
@@ -1973,7 +2963,14 @@ window.QUESTION_BANK = {
             "C": "产生式表示法",
             "D": "面向对象表示法"
           },
-          "correctOptionText": "罗辑表示法"
+          "correctOptionText": "罗辑表示法",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】A - 罗辑表示法\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 65,
@@ -1987,7 +2984,14 @@ window.QUESTION_BANK = {
             "C": "贝叶斯方法",
             "D": "决策树方法"
           },
-          "correctOptionText": "循环神经网络"
+          "correctOptionText": "循环神经网络",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】B - 循环神经网络\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 66,
@@ -2001,7 +3005,14 @@ window.QUESTION_BANK = {
             "C": "软件的开发工作全部完成的那一天",
             "D": "软件著作权登记证书颁发到手的时候"
           },
-          "correctOptionText": "软件的开发工作全部完成的那一天"
+          "correctOptionText": "软件的开发工作全部完成的那一天",
+          "explanation": {
+            "keyPoints": [
+              "软件工程"
+            ],
+            "analysis": "【题目考查】软件工程\n\n【正确答案】C - 软件的开发工作全部完成的那一天\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 67,
@@ -2015,7 +3026,14 @@ window.QUESTION_BANK = {
             "C": "若甲公司和乙公司不愿协商，商标局应当对其商标注册申请均予以驳回",
             "D": "商标局应当初步审定并公告申请在先的商标，直接驳回另一方的申请"
           },
-          "correctOptionText": "甲公司和乙公司应当在收到商标局通知之日起 30 日内自行协商确定申请人， 若协商不成，则商标局通知双方以抽签的方式确定一个申请人，驱回另一人的 注册申请"
+          "correctOptionText": "甲公司和乙公司应当在收到商标局通知之日起 30 日内自行协商确定申请人， 若协商不成，则商标局通知双方以抽签的方式确定一个申请人，驱回另一人的 注册申请",
+          "explanation": {
+            "keyPoints": [
+              "知识产权"
+            ],
+            "analysis": "【题目考查】知识产权\n\n【正确答案】B - 甲公司和乙公司应当在收到商标局通知之日起 30 日内自行协商确定申请人， 若协商不成，则商标局通知双方以抽签的方式确定一个申请人，驱回另一人的 注册申请\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 68,
@@ -2029,7 +3047,14 @@ window.QUESTION_BANK = {
             "C": "普通使用许可: 多个授权对象和著作权人均可用，但有限制条件",
             "D": "独占使用许可: 仅 1 个授权对象可用，著作权人不可用"
           },
-          "correctOptionText": "独占使用许可: 仅 1 个授权对象可用，著作权人不可用"
+          "correctOptionText": "独占使用许可: 仅 1 个授权对象可用，著作权人不可用",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】D - 独占使用许可: 仅 1 个授权对象可用，著作权人不可用\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 69,
@@ -2043,7 +3068,14 @@ window.QUESTION_BANK = {
             "C": "5.94%",
             "D": "9.41%"
           },
-          "correctOptionText": "5.94%"
+          "correctOptionText": "5.94%",
+          "explanation": {
+            "keyPoints": [
+              "数学与运筹"
+            ],
+            "analysis": "【题目考查】数学与运筹\n\n【正确答案】C - 5.94%\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 70,
@@ -2057,7 +3089,14 @@ window.QUESTION_BANK = {
             "C": "指数平滑法",
             "D": "线性回归法 The process of architecture design involves creating a software architecture that fulfills user requirements. Several common methodologies used in architecture design include: extracting architectural descriptions from artifact descriptions, known as the (1 ) approach; deriving architectural abstractions from use cases, referred to as the ( 2 ) method; inducing architectural abstractions from patterns, termed the ( 3 ) approach; deriving architectural abstractions from domain models, labeled as the (4) method; and obtaining requirements for architectural quality attributes during the design process, known as the (5 ) method."
           },
-          "correctOptionText": "指数平滑法"
+          "correctOptionText": "指数平滑法",
+          "explanation": {
+            "keyPoints": [
+              "综合知识"
+            ],
+            "analysis": "【题目考查】综合知识\n\n【正确答案】C - 指数平滑法\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 71,
@@ -2071,7 +3110,14 @@ window.QUESTION_BANK = {
             "C": "domain-focused",
             "D": "artifact-driven"
           },
-          "correctOptionText": "artifact-driven"
+          "correctOptionText": "artifact-driven",
+          "explanation": {
+            "keyPoints": [
+              "英文综合题"
+            ],
+            "analysis": "【题目考查】英文综合题\n\n【正确答案】D - artifact-driven\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 72,
@@ -2085,7 +3131,14 @@ window.QUESTION_BANK = {
             "C": "usecase-driven",
             "D": "pattern-driven"
           },
-          "correctOptionText": "usecase-driven"
+          "correctOptionText": "usecase-driven",
+          "explanation": {
+            "keyPoints": [
+              "英文综合题"
+            ],
+            "analysis": "【题目考查】英文综合题\n\n【正确答案】C - usecase-driven\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 73,
@@ -2099,7 +3152,14 @@ window.QUESTION_BANK = {
             "C": "pattern-driven",
             "D": "quality-attribute-focused"
           },
-          "correctOptionText": "pattern-driven"
+          "correctOptionText": "pattern-driven",
+          "explanation": {
+            "keyPoints": [
+              "英文综合题"
+            ],
+            "analysis": "【题目考查】英文综合题\n\n【正确答案】C - pattern-driven\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 74,
@@ -2113,7 +3173,14 @@ window.QUESTION_BANK = {
             "C": "domain-driven",
             "D": "user-experience-oriented"
           },
-          "correctOptionText": "domain-driven"
+          "correctOptionText": "domain-driven",
+          "explanation": {
+            "keyPoints": [
+              "英文综合题"
+            ],
+            "analysis": "【题目考查】英文综合题\n\n【正确答案】C - domain-driven\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         },
         {
           "number": 75,
@@ -2127,7 +3194,14 @@ window.QUESTION_BANK = {
             "C": "security-focused",
             "D": "test-driven development"
           },
-          "correctOptionText": "attribute-driven design"
+          "correctOptionText": "attribute-driven design",
+          "explanation": {
+            "keyPoints": [
+              "英文综合题"
+            ],
+            "analysis": "【题目考查】英文综合题\n\n【正确答案】B - attribute-driven design\n\n[根据标准答案，该选项最为准确。详细解析待完善]",
+            "source": "标准答案"
+          }
         }
       ]
     },
