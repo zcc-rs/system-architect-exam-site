@@ -519,7 +519,7 @@ function selectAnswer(questionNumber, answer) {
   const paper = currentObjectivePaper();
   state.answers[questionNumber] = answer;
   saveJson(answerKey(state.paperId), state.answers);
-  if (state.questionNumber === questionNumber && questionNumber < paper.questions.length) {
+  if (state.mode === "exam" && state.questionNumber === questionNumber && questionNumber < paper.questions.length) {
     state.questionNumber = questionNumber + 1;
   }
   render();
@@ -683,7 +683,7 @@ function renderObjective() {
   const paper = currentObjectivePaper();
   const question = currentQuestion();
   const selected = state.answers[question.number];
-  const reveal = state.finished || state.mode === "study" || state.revealMap[`${paper.id}-${question.number}`];
+  const reveal = state.finished || (state.mode === "study" && Boolean(selected));
   const masteredSet = getMasteredSet(paper.id);
   const result = state.finished ? state.result : null;
 
@@ -701,7 +701,7 @@ function renderObjective() {
         <div class="metric"><span>合格线</span><strong>${paper.passingScore}</strong></div>
         <div class="metric"><span>题数</span><strong>${paper.questions.length}</strong></div>
       </div>
-      <div class="exam-note">原卷与答案页已隐藏；交卷后才显示答案和解析。</div>
+      <div class="exam-note">${state.mode === "study" ? "学习模式下作答后才显示答案和解析。" : "原卷与答案页已隐藏；交卷后才显示答案和解析。"}</div>
       ${renderAnswerGrid(paper)}
       <div class="toolbar-group" style="margin-top: 14px; width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
         <button class="secondary-button" type="button" data-action="reset-paper">重做本卷</button>
@@ -732,7 +732,7 @@ function renderObjective() {
       <div class="question-stem">${renderQuestionStem(question)}</div>
       ${renderChoices(question, selected, reveal)}
       <div class="toolbar-group" style="justify-content: space-between; width: 100%; margin-top: 12px;">
-        ${state.mode === "study" ? `<button class="secondary-button" type="button" data-action="toggle-reveal" data-question="${question.number}">${reveal ? "隐藏解析" : "显示解析"}</button>` : `<span class="muted">${state.finished ? "已交卷，可逐题查看解析" : "选择答案会自动保存"}</span>`}
+        ${state.mode === "study" ? `<span class="muted">${selected ? "已作答，答案和解析已展开。" : "先作答，再查看答案和解析。"}</span>` : `<span class="muted">${state.finished ? "已交卷，可逐题查看解析" : "选择答案会自动保存"}</span>`}
         ${state.mode === "study" ? `<button class="secondary-button" type="button" data-action="toggle-mastered" data-question="${question.number}">${masteredSet.has(question.number) ? "取消掌握" : "标记掌握"}</button>` : ""}
       </div>
       ${reveal ? renderExplanation(question, selected) : ""}
