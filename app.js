@@ -517,9 +517,13 @@ function selectAnswer(questionNumber, answer) {
     return;
   }
   const paper = currentObjectivePaper();
+  const question = paper.questions[questionNumber - 1];
   state.answers[questionNumber] = answer;
   saveJson(answerKey(state.paperId), state.answers);
   if (state.mode === "exam" && state.questionNumber === questionNumber && questionNumber < paper.questions.length) {
+    state.questionNumber = questionNumber + 1;
+  }
+  if (state.mode === "study" && state.questionNumber === questionNumber && questionNumber < paper.questions.length && question?.answer === answer) {
     state.questionNumber = questionNumber + 1;
   }
   render();
@@ -701,7 +705,7 @@ function renderObjective() {
         <div class="metric"><span>合格线</span><strong>${paper.passingScore}</strong></div>
         <div class="metric"><span>题数</span><strong>${paper.questions.length}</strong></div>
       </div>
-      <div class="exam-note">${state.mode === "study" ? "学习模式下作答后才显示答案和解析。" : "原卷与答案页已隐藏；交卷后才显示答案和解析。"}</div>
+      <div class="exam-note">${state.mode === "study" ? "学习模式下答对自动进入下一题，答错后留在原题查看答案和解析。" : "原卷与答案页已隐藏；交卷后才显示答案和解析。"}</div>
       ${renderAnswerGrid(paper)}
       <div class="toolbar-group" style="margin-top: 14px; width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
         <button class="secondary-button" type="button" data-action="reset-paper">重做本卷</button>
@@ -732,7 +736,7 @@ function renderObjective() {
       <div class="question-stem">${renderQuestionStem(question)}</div>
       ${renderChoices(question, selected, reveal)}
       <div class="toolbar-group" style="justify-content: space-between; width: 100%; margin-top: 12px;">
-        ${state.mode === "study" ? `<span class="muted">${selected ? "已作答，答案和解析已展开。" : "先作答，再查看答案和解析。"}</span>` : `<span class="muted">${state.finished ? "已交卷，可逐题查看解析" : "选择答案会自动保存"}</span>`}
+        ${state.mode === "study" ? `<span class="muted">${selected ? (selected === question.answer ? "答对后已自动进入下一题，可在答题卡回看本题。" : "答错后停留当前题，答案和解析已展开。") : "先作答；答对自动下一题，答错停留查看解析。"}</span>` : `<span class="muted">${state.finished ? "已交卷，可逐题查看解析" : "选择答案会自动保存"}</span>`}
         ${state.mode === "study" ? `<button class="secondary-button" type="button" data-action="toggle-mastered" data-question="${question.number}">${masteredSet.has(question.number) ? "取消掌握" : "标记掌握"}</button>` : ""}
       </div>
       ${reveal ? renderExplanation(question, selected) : ""}
