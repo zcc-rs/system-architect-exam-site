@@ -2941,7 +2941,7 @@ window.QUESTION_BANK = {
           "answer": "A",
           "topic": "数学与运筹",
           "page": 22,
-          "stem": "47、\n\n【学员回忆版】（ ）包括两大关键技术，即网格技术和 Web Service 技术，它是在其基础上，结合 Web Service 技术提出的，解决了两个重要问题：标准服务接口的定义和协议的识别。\n\n① 计算池模型\n② 开放网格服务体系结构\n③ Web 服务资源框架",
+          "stem": "47、\n\n【学员回忆版】（ ）包括两大关键技术，即网格技术和 Web Service 技术，它是在其基础上，结合 Web Service 技术提出的，解决了两个重要问题：标准服务接口的定义和协议的识别。\n\n① 计算池模型\n② 开放网格服务体系结构\n③ 五层沙漏模型\n④ Web 服务资源框架",
           "options": {
             "A": "②④",
             "B": "①②",
@@ -3604,7 +3604,7 @@ window.QUESTION_BANK = {
               "领域驱动",
               "架构设计"
             ],
-            "analysis": "【知识点闭环】domain-driven method 意为“领域驱动方法”，从领域模型、领域概念、业务规则和领域关系中推导架构抽象，使架构结构贴合业务领域。\n\n【解题过程】原题干被遮挡，但前一段英文说明第 4 空为 deriving architectural abstractions from domain models，即“从领域模型推导架构抽象”，应选 domain-driven。business-logic-based 只强调业务逻辑，data-model-centered 只强调数据模型，user-experience-oriented 强调用户体验。\n\n【选项分析】A 错，business-logic-based 范围较窄；B 错，data-model-centered 只围绕数据模型；C 对，domain-driven 对应 from domain models；D 错，user-experience-oriented 不表示领域模型推导。\n\n【答案结论】选择 C。",
+            "analysis": "【知识点闭环】domain-driven method 意为“领域驱动方法”，从领域模型、领域概念、业务规则和领域关系中推导架构抽象，使架构结构贴合业务领域。\n\n【解题过程】题干英文原句直接写出 deriving architectural abstractions from domain models，意思就是“从领域模型推导架构抽象”，因此应选 domain-driven。business-logic-based 只强调业务逻辑，data-model-centered 只强调数据模型，user-experience-oriented 强调用户体验，都不如 domain-driven 与题干原句对应得准确。\n\n【选项分析】A 错，business-logic-based 范围较窄，不能直接对应 domain models。B 错，data-model-centered 只围绕数据模型，缺少领域驱动的业务语义。C 对，domain-driven 与 from domain models 精确对应。D 错，user-experience-oriented 不表示领域模型推导。\n\n【答案结论】选择 C。",
             "source": "AI显式编写"
           }
         },
