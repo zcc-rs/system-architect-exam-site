@@ -12,7 +12,19 @@ from pathlib import Path
 QUESTION_BANK_PATH = Path("data/question-bank.js")
 OPTION_LABELS = ("A", "B", "C", "D")
 FORBIDDEN_PHRASES = ("待" + "完善", "根据" + "标准答案", "待" + "补充", "详见" + "资料", "建议" + "自行查阅")
-TEMPLATE_LIKE_PHRASES = ("题干限定条件", "偏离了", "本题围绕", "不能完整满足题干所要求", "标准表述及题干限定条件一致")
+TEMPLATE_LIKE_PHRASES = (
+    "题干限定条件",
+    "偏离了",
+    "本题围绕",
+    "不能完整满足题干所要求",
+    "标准表述及题干限定条件一致",
+    "核心定义或正确处理方法",
+    "能够回答本题所问",
+    "能够直接回答本题",
+    "属于该知识点下的正确或相近表述",
+    "对应的规则不一致",
+)
+NEGATIVE_CUES = ("不正确", "错误", "不属于", "不是")
 
 
 SPECIAL_EXPLANATIONS: dict[tuple[str, int], dict[str, object]] = {
@@ -373,7 +385,55 @@ SPECIAL_EXPLANATIONS.update({
 })
 
 
+SPECIAL_EXPLANATIONS.update({
+    ("zk2", 1): {
+        "keyPoints": ["RISC", "CISC", "指令系统", "流水线", "微操作"],
+        "analysis": """【知识点闭环】RISC 与 CISC 的核心差异在于指令系统复杂度和实现方式。RISC 倾向于使用定长、简单指令和更多寄存器，强调流水线效率；CISC 倾向于提供更复杂、变长的指令，现代实现里常把复杂指令再译成内部微操作执行。
+
+【解题过程】题干要求找“错误”的说法。A 说 RISC 常用定长指令、CISC 常用变长指令，这是经典区别；B 说 RISC 的访存指令类型更少，也符合 load/store 风格；C 说现代 CISC 处理器内部常拆成 RISC-like 微操作，也符合现实实现。只有 D 把“指令简单”解释成“更容易受中断影响”，这个因果关系不成立。
+
+【选项分析】A 不选，RISC 定长、CISC 变长是教材中的典型对比；B 不选，RISC 往往把访存操作限制在更少、更明确的指令类型中；C 不选，x86 等现代 CISC 处理器内部确实大量采用微操作执行；D 对，RISC 指令简单、规则统一，通常更有利于流水线设计与实现，不能据此得出“更容易被中断事件影响”的结论。
+
+【答案结论】选择 D。""",
+    },
+    ("zk2", 37): {
+        "keyPoints": ["效用树", "ATAM", "优先级", "重要性", "实现难度"],
+        "analysis": """【知识点闭环】ATAM 的效用树会把质量属性场景按两个维度排序：一是该场景对系统成功的重要性，二是实现该场景的难度。排序结果通常用高、中、低等相对等级表示，而不是预先规定某类场景一定高优先级。
+
+【解题过程】题目要求找“错误”的说法。A 说明优先级常用 H、M、L 表示，这是对的；C 说明优先级由重要性和实现难度两个维度共同决定，也是对的；D 说明 (M, H) 表示重要性中等、难度较高，仍是正确解释。B 说“系统性能场景属于高优先级场景”，把某一类质量属性场景直接固定为高优先级，忽略了业务背景和难度评估，因此错误。
+
+【选项分析】A 不选，效用树常用相对等级表达优先级；B 对，性能场景是否高优先级要看业务关键程度和实现难度，不能一概而论；C 不选，重要性与实现难度正是效用树排序的两个核心维度；D 不选，(M, H) 的含义就是重要性中等、实现难度高。
+
+【答案结论】选择 B。""",
+    },
+    ("zk2", 61): {
+        "keyPoints": ["数字签名", "哈希摘要", "私钥签名", "公钥验证", "完整性认证"],
+        "analysis": """【知识点闭环】数字签名的目标是验证消息来源和内容完整性，而不是直接提供保密性。标准流程是发送方先对消息求哈希摘要，再用自己的私钥对摘要进行签名；接收方使用发送方公钥验证签名，并把得到的摘要与自己重新计算的摘要对比。
+
+【解题过程】题干要求找“正确”的说法。判断时抓住三个要点即可：第一，数字签名解决的是完整性、认证和不可否认，不是保密；第二，签名对象通常是摘要而不是整个明文；第三，签名必须使用非对称密码中的私钥签名、公钥验证。四个选项里只有 B 三点都满足。
+
+【选项分析】A 错，它把数字签名说成保密机制，还把密钥使用方向说反了；B 对，先哈希、再用私钥签摘要、接收方用公钥验证，这是数字签名的标准过程；C 错，用私钥加密整个消息既不是数字签名的常规做法，也不能说明“同时实现保密性”；D 错，对称密钥机制不能实现数字签名所需的身份认证和不可否认。
+
+【答案结论】选择 B。""",
+    },
+    ("zk2", 65): {
+        "keyPoints": ["机器学习", "传统机器学习", "深度学习", "循环神经网络", "分类算法"],
+        "analysis": """【知识点闭环】题目按考试常见口径，把机器学习区分为传统机器学习和深度学习。传统机器学习常见算法包括决策树、朴素贝叶斯、支持向量机等；深度学习则以多层神经网络为代表，循环神经网络是其中典型模型之一。
+
+【解题过程】题干要求找“传统机器学习不包括”的算法。C 的贝叶斯方法和 D 的决策树方法都属于传统机器学习；B 的循环神经网络是典型深度学习模型，因此应选。A 的“三层人工神经网络”在不同资料里可能被称为浅层神经网络或经典 ANN，但这道题的标准答案明确把循环神经网络作为需要排除的深度学习代表。
+
+【选项分析】A 不选，本题并未把它作为标准答案所对应的排除项；B 对，循环神经网络属于深度学习范畴，不归入传统机器学习算法；C 不选，贝叶斯方法是经典传统机器学习方法；D 不选，决策树方法同样是传统机器学习中的常见算法。
+
+【答案结论】选择 B。""",
+    },
+})
+
+
 DOMAIN_RULES: list[tuple[tuple[str, ...], tuple[str, list[str], str]]] = [
+    (("RISC", "CISC"), ("RISC 与 CISC", ["指令系统", "定长与变长指令", "流水线", "微操作实现"], "RISC 强调简单规则的指令体系和流水线效率，CISC 强调丰富复杂的指令能力，现代 CISC 处理器内部常拆成微操作执行。")),
+    (("效用树", "优先级"), ("效用树优先级", ["ATAM", "重要性", "实现难度", "高中低排序"], "效用树按场景对系统成功的重要性和实现难度进行排序，优先级通常以高、中、低等相对等级表示。")),
+    (("数字签名", "私钥", "公钥"), ("数字签名", ["哈希摘要", "私钥签名", "公钥验证", "完整性认证"], "数字签名用于验证消息来源与完整性，标准过程是先求摘要，再由发送方私钥签名，接收方用公钥验证。")),
+    (("机器学习", "深度学习"), ("机器学习分类", ["传统机器学习", "深度学习", "贝叶斯", "决策树", "神经网络"], "传统机器学习常见算法包括贝叶斯、决策树等；深度学习则以多层神经网络模型为代表。")),
     (("分时",), ("分时操作系统", ["多路性", "独立性", "交互性", "及时性"], "分时系统通过时间片轮转让多个终端用户共享 CPU，标准特点是多路性、独立性、交互性和及时性。")),
     (("高速缓冲", "Cache", "主存速度"), ("Cache 高速缓存", ["局部性原理", "CPU 与主存速度匹配", "存储层次"], "Cache 位于 CPU 与主存之间，利用程序局部性缓解二者速度不匹配。")),
     (("性能", "评价程序", "基准"), ("性能评价程序", ["真实程序", "核心程序", "合成基准", "评价准确性"], "越接近实际负载的评价程序越能反映真实系统性能，真实程序的准确性最高。")),
@@ -411,8 +471,10 @@ DOMAIN_RULES: list[tuple[tuple[str, ...], tuple[str, list[str], str]]] = [
     (("4 + 1", "多视图"), ("4+1 视图模型", ["逻辑视图", "开发视图", "进程视图", "物理视图", "场景"], "4+1 模型用多个视图分离关注点，并用场景串联和验证架构。")),
     (("基于度量", "架构评估"), ("架构评估方法", ["调查问卷", "场景评估", "度量评估", "质量属性映射"], "基于度量的评估需要建立质量属性与可测指标之间的映射。")),
     (("DSSA",), ("特定领域软件架构", ["领域边界", "领域模型", "设计约束", "螺旋迭代"], "DSSA 建立过程是并发、递归、反复的，需要同时识别领域需求与实现约束。")),
+    (("软件架构", "维护费用", "复用资源", "冲突分析"), ("软件架构设计", ["抽象结构", "质量属性", "复用", "权衡分析"], "软件架构关注系统整体结构、构件关系和质量属性权衡，不以具体功能编码细节为中心。")),
     (("用户定义完整性", "年龄"), ("数据库完整性约束", ["实体完整性", "参照完整性", "用户定义完整性", "业务规则"], "用户定义完整性用于表达特定应用语义规则，例如年龄必须大于某阈值。")),
     (("命名冲突",), ("数据库模式冲突", ["命名冲突", "属性冲突", "结构冲突", "模式集成"], "不同模式中同义异名或异义同名属于命名冲突，需要统一命名后整合。")),
+    (("学生实体", "新生实体", "统一命名"), ("数据库模式集成", ["命名冲突", "模式集成", "统一命名", "实体整合"], "两个模式中的同义属性应先统一命名，再做实体或属性层面的整合，不能简单保留重复实体。")),
     (("OSI", "数据单元"), ("OSI 封装", ["数据", "段", "分组", "帧", "比特"], "OSI 自上而下封装时，传输层形成段，网络层形成分组，数据链路层形成帧，物理层传输比特。")),
     (("三层层次化", "核心层", "汇聚层", "接入层"), ("三层网络模型", ["核心层", "汇聚层", "接入层", "用户接入"], "接入层处理终端接入和本地访问，汇聚层实施策略并向核心层屏蔽接入细节。")),
     (("星状", "中心节点"), ("网络拓扑", ["星状结构", "环形结构", "总线结构", "中心节点"], "星状拓扑中所有设备通过中心节点连接和通信。")),
@@ -473,8 +535,13 @@ def extract_concept(question: dict, correct_text: str) -> str:
     stop_words = {
         "以下", "关于", "说法", "正确", "错误", "不正确", "的是", "其中", "系统", "软件", "用户", "方法", "阶段", "选项", "考生回忆版",
         "主要", "用于", "需要", "可以", "一个", "下面", "描述", "属于", "不属于", "不是", "采用", "最为", "合适", "根据", "实现",
+        "KF", "IAF", "ARERA", "内部资料", "禁目传播", "禁止传播",
     }
-    meaningful = [token for token in tokens if token not in stop_words and len(token) >= 2]
+    meaningful = [
+        token
+        for token in tokens
+        if token not in stop_words and len(token) >= 2 and not (token.isupper() and len(token) <= 5)
+    ]
     if meaningful:
         return meaningful[0][:24]
     return topic
@@ -488,9 +555,19 @@ def infer_rule(question: dict) -> tuple[str, list[str], str]:
             " ".join(clean_text(item) for item in question.get("options", {}).values()),
         ]
     )
+    lower_text = text.lower()
+    best_rule: tuple[str, list[str], str] | None = None
+    best_score: tuple[int, float, int] | None = None
     for keywords, rule in DOMAIN_RULES:
-        if any(keyword.lower() in text.lower() for keyword in keywords):
-            return rule
+        matched = [keyword for keyword in keywords if keyword.lower() in lower_text]
+        if not matched:
+            continue
+        score = (len(matched), len(matched) / len(keywords), sum(len(keyword) for keyword in matched))
+        if best_score is None or score > best_score:
+            best_rule = rule
+            best_score = score
+    if best_rule is not None:
+        return best_rule
     topic = clean_text(question.get("topic")) or "综合知识"
     correct_text = clean_text(question.get("correctOptionText")) or "正确选项"
     concept = extract_concept(question, correct_text)
@@ -501,13 +578,20 @@ def infer_rule(question: dict) -> tuple[str, list[str], str]:
     )
 
 
-def option_reason(label: str, option_text: str, answer: str, concept: str, statement: str, stem: str) -> str:
+def is_negative_question(stem: str) -> bool:
+    return any(cue in stem for cue in NEGATIVE_CUES)
+
+
+def option_reason(label: str, option_text: str, answer: str, concept: str, statement: str, stem: str, correct_text: str) -> str:
     text = clean_text(option_text)
+    negative = is_negative_question(stem)
     if label == answer:
-        return f"{label} 对，{text}体现了{concept}的核心定义或正确处理方法，能够回答本题所问。"
-    if "不正确" in stem or "错误" in stem or "不属于" in stem or "不是" in stem:
-        return f"{label} 不选，{text}属于该知识点下的正确或相近表述，不能作为题干要求找出的错误项。"
-    return f"{label} 错，{text}没有体现{concept}的核心定义或正确处理方法；与“{statement}”对应的规则不一致。"
+        if negative:
+            return f"{label} 对，题干要求找出错误项或不属于的一项；{text}与“{statement}”不符，所以应选它。"
+        return f"{label} 对，{text}与“{statement}”一致，正好满足题干要求。"
+    if negative:
+        return f"{label} 不选，{text}与“{statement}”一致，仍属于{concept}中的正确表述。"
+    return f"{label} 错，{text}与“{statement}”不一致，不能像“{correct_text}”那样满足题干要求。"
 
 
 def build_generic_explanation(paper_id: str, question: dict) -> dict:
@@ -531,18 +615,18 @@ def build_generic_explanation(paper_id: str, question: dict) -> dict:
         key_points.append(f"{topic}辨析")
 
     options = question.get("options", {})
-    option_lines = [option_reason(label, options[label], answer, concept, statement, stem) for label in OPTION_LABELS if label in options]
+    option_lines = [option_reason(label, options[label], answer, concept, statement, stem, correct_text) for label in OPTION_LABELS if label in options]
     if not option_lines:
-        option_lines.append(f"{answer} 对，{correct_text}与题干要求匹配；其余选项不能满足{concept}的关键条件。")
+        option_lines.append(f"{answer} 对，{correct_text}与题干要求匹配；其余选项不满足“{statement}”对应的判断条件。")
 
     analysis = f"""【知识点闭环】{statement}
 
-【解题过程】题目有效信息为“{stem[:120]}”。先确定考点是{concept}，再依据定义、适用场景或处理步骤排除干扰项。
+【解题过程】题目有效信息为“{stem[:120]}”。先识别题干是在判断“正确项”还是“错误项/不属于项”，再把各选项与知识点规则逐一对照。
 
 【选项分析】
 """ + "\n".join(f"- {line}" for line in option_lines) + f"""
 
-【答案结论】选择 {answer}。{correct_text}能够直接回答本题。"""
+【答案结论】选择 {answer}。{correct_text}最符合题干要求。"""
     return {"keyPoints": key_points, "analysis": analysis.strip(), "source": "知识库"}
 
 
