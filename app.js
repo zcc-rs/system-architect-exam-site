@@ -306,11 +306,53 @@ function extractProductProfitTable(stemText) {
   };
 }
 
+function extractProjectScheduleTable(stemText) {
+  const lines = String(stemText || "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const headerIndex = lines.findIndex((line) => /^工序代号\s+紧前工序\s+正常进度所需时间（天）\s+正常进度直接费用（万元\/天）\s+赶工进度至少时间（天）\s+赶工进度直接费用（万元\/天）$/.test(line));
+  if (headerIndex === -1) {
+    return null;
+  }
+
+  const rowPattern = /^([A-Z])\s+(无|[A-Z])\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)$/;
+  const rows = [];
+  for (const line of lines.slice(headerIndex + 1)) {
+    const compactLine = line.replace(/\s+/g, " ").trim();
+    const match = compactLine.match(rowPattern);
+    if (!match) {
+      continue;
+    }
+    rows.push({
+      step: match[1],
+      predecessor: match[2],
+      normalDuration: match[3],
+      normalCost: match[4],
+      crashDuration: match[5],
+      crashCost: match[6],
+    });
+  }
+
+  if (rows.length !== 4) {
+    return null;
+  }
+
+  return {
+    rows,
+    markerLines: [
+      "工序代号  紧前工序  正常进度所需时间（天）  正常进度直接费用（万元/天）  赶工进度至少时间（天）  赶工进度直接费用（万元/天）",
+      ...rows.map((row) => `${row.step} ${row.predecessor} ${row.normalDuration} ${row.normalCost} ${row.crashDuration} ${row.crashCost}`),
+    ],
+  };
+}
+
 function renderQuestionStem(question) {
   const fallback = "OCR 未能稳定识别本题文字，请查看题库数据修正。";
   const source = String(question.stem || fallback);
   const resourceTable = extractResourceDemandTable(source);
   const productTable = extractProductProfitTable(source);
+  const projectTable = extractProjectScheduleTable(source);
 
   let textOnly = source;
   if (resourceTable) {
@@ -323,6 +365,12 @@ function renderQuestionStem(question) {
       textOnly = textOnly.replace(`\n${markerLine}`, "").replace(markerLine, "");
     }
     textOnly = textOnly.trim();
+  } else if (projectTable) {
+    textOnly = textOnly
+      .replace(/\n?工序代号\s+紧前工序\s+正常进度所需时间（天）\s+正常进度直接费用（万元\/天）\s+赶工进度至少时间（天）\s+赶工进度直接费用（万元\/天）/g, "")
+      .replace(/\n?[A-Z]\s+(?:无|[A-Z])\s+\d+\s+\d+\s+\d+\s+\d+/g, "")
+      .trim();
+    textOnly = textOnly.trim();
   }
 
   const paragraphHtml = textOnly
@@ -332,7 +380,7 @@ function renderQuestionStem(question) {
     .map((paragraph) => `<p class="stem-paragraph">${escapeHtml(paragraph)}</p>`)
     .join("");
 
-  if (!resourceTable && !productTable) {
+  if (!resourceTable && !productTable && !projectTable) {
     return paragraphHtml || `<p class="stem-paragraph">${escapeHtml(fallback)}</p>`;
   }
 
@@ -362,6 +410,40 @@ function renderQuestionStem(question) {
           </thead>
           <tbody>
             ${tableRows}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  if (projectTable) {
+    const projectTableRows = projectTable.rows
+      .map(
+        (row) => `<tr>
+          <td>${escapeHtml(row.step)}</td>
+          <td>${escapeHtml(row.predecessor)}</td>
+          <td>${escapeHtml(row.normalDuration)}</td>
+          <td>${escapeHtml(row.normalCost)}</td>
+          <td>${escapeHtml(row.crashDuration)}</td>
+          <td>${escapeHtml(row.crashCost)}</td>
+        </tr>`
+      )
+      .join("");
+
+    return `${paragraphHtml}
+      <div class="stem-table-wrap">
+        <table class="stem-table">
+          <thead>
+            <tr>
+              <th>工序代号</th>
+              <th>紧前工序</th>
+              <th>正常进度所需时间（天）</th>
+              <th>正常进度直接费用（万元/天）</th>
+              <th>赶工进度至少时间（天）</th>
+              <th>赶工进度直接费用（万元/天）</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${projectTableRows}
           </tbody>
         </table>
       </div>`;
