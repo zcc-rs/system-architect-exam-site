@@ -221,11 +221,11 @@ window.QUESTION_BANK = {
           "stem": "9、\n\n以下关于专家系统【ES】的说法，不正确的是 ( ) 。",
           "options": {
             "A": "专家系统不但能解决问题解释结果，还能进行判断与决策",
-            "B": "专家系统中的知识库用于存储问题的状态描述、中间结果、了求解过程等信息",
+            "B": "专家系统中的知识库用于存储问题的状态描述、中间结果、求解过程等信息",
             "C": "专家系统可用于处理不确定的知识，主要适用于特定的领域",
             "D": "专家系统内部含有某个领域具有专家水平的大量知识与经验"
           },
-          "correctOptionText": "专家系统中的知识库用于存储问题的状态描述、中间结果、了求解过程等信息",
+          "correctOptionText": "专家系统中的知识库用于存储问题的状态描述、中间结果、求解过程等信息",
           "explanation": {
             "keyPoints": [
               "专家系统结构",
@@ -439,14 +439,14 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "软件工程",
           "page": 8,
-          "stem": "18、\n\n在软件开发过程中，需求确认与验证是一个关键步骤，其主要目的是什么”以下哪个选项最\n准确地描述了需求验证的核心目标? ()",
+          "stem": "18、\n\n在软件开发过程中，需求确认与验证是一个关键步骤，其主要目的是什么？以下哪个选项最准确地描述了需求验证的核心目标？（）。",
           "options": {
             "A": "确保所有需求都已被正确地识别并记录在需求文档中。",
             "B": "与利益相关者协商并确定需求的优先级和重要性。",
-            "C": "检查需求是否完整、准确、无层义，并且技术上可行。",
+            "C": "检查需求是否完整、准确、无歧义，并且技术上可行。",
             "D": "将需求转化为软件设计或实现计划。"
           },
-          "correctOptionText": "检查需求是否完整、准确、无层义，并且技术上可行。",
+          "correctOptionText": "检查需求是否完整、准确、无歧义，并且技术上可行。",
           "explanation": {
             "keyPoints": [
               "需求验证",
@@ -512,11 +512,11 @@ window.QUESTION_BANK = {
           "answer": "B",
           "topic": "综合知识",
           "page": 9,
-          "stem": "按照传统的软件生命周期方法学，可以把软件生命周期划分为软件定义、( 1 ) 和软件运行与维护三个阶段。其中，使软件持久满足用户的要求是( 2 ) 阶段的主要任务。\n\n本题填空( 1 )",
+          "stem": "21、\n\n按照传统的软件生命周期方法学，可以把软件生命周期划分为软件定义、（1）和软件运行与维护三个阶段。其中，使软件持久满足用户的要求是（2）阶段的主要任务。本题问（1）应为（）。",
           "options": {
             "A": "软件对象管理",
             "B": "软件开发",
-            "C": ":软件详细设计",
+            "C": "软件详细设计",
             "D": "软件评估"
           },
           "correctOptionText": "软件开发",
@@ -606,7 +606,7 @@ window.QUESTION_BANK = {
           "answer": "A",
           "topic": "软件工程",
           "page": 11,
-          "stem": "25、\n\n() 方法的核心是三个非线性的、重堵的开发阶段: 猜测、合作与学习。",
+          "stem": "25、\n\n（ ）方法的核心是三个非线性的、重叠的开发阶段：猜测、合作与学习。",
           "options": {
             "A": "自适应软件开发 (ASD)",
             "B": "极限编程 (XP)",
@@ -748,7 +748,7 @@ window.QUESTION_BANK = {
           "answer": "D",
           "topic": "项目管理",
           "page": 13,
-          "stem": "31、\n\n某项目包括 A、B、C、D 四道工序，各道工序之间的衔接关系、正常进度下各工序所需的时\n间和直接费用、赶工进度下所需的时间和直接费用如下表所示。该项目每天需要的间接费用\n\n为 2 万元。根据此表，以最短时间完成该项目需要的成本最少为 ( ) 万元。\n工序代号     紧前工序     所需时间     直接费用     至少时间     直接费用\n(天)       (万元/天)       (天)       (万元/天)\nBA | 7 5 | 5 | ao\npec | a | 3s fos | 2 fs\npoo ft ce | os ft 2 | 2 fw |",
+          "stem": "31、\n\n某项目包括 A、B、C、D 四道工序，各道工序之间的衔接关系、正常进度下各工序所需的时间和直接费用、赶工进度下所需的时间和直接费用如下表所示。该项目每天需要的间接费用为 2 万元。根据此表，以最短时间完成该项目需要的成本最少为（ ）万元。\n\n工序代号  紧前工序  正常进度所需时间（天）  正常进度直接费用（万元/天）  赶工进度至少时间（天）  赶工进度直接费用（万元/天）\nA        无       3                     5                         1                     25\nB        A        7                     5                         5                     10\nC        A        3                     5                         2                     15\nD        C        5                     2                         2                     10",
           "options": {
             "A": "140",
             "B": "150",
@@ -771,7 +771,7 @@ window.QUESTION_BANK = {
           "answer": "A",
           "topic": "项目管理",
           "page": 14,
-          "stem": "32、\n【考生回忆版】成本效益分析法 (the Cost Benefit Analysis Method，CBAM) 是在",
+          "stem": "32、\n\n【考生回忆版】成本效益分析法（the Cost Benefit Analysis Method，CBAM）是在 ATAM 方法上构建，CBAM 协助项目干系人根据（ ）选择架构策略。",
           "options": {
             "A": "投资回报",
             "B": "需求重要程度",
@@ -821,7 +821,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "综合知识",
           "page": 15,
-          "stem": "34、在 CORBA 构件模型中，（1）的作用是为用户提供与其他分布式网络环境中对象通信的接口，（2）是最终完成客户请求的服务对象实现。本题填空（1）。",
+          "stem": "34、\n\nCORBA 构件模型中，（1）的作用是为用户提供与其他分布式网络环境中对象通信的接口，（2）是最终完成客户请求的服务对象实现。",
           "options": {
             "A": "伺服对象激活器",
             "B": "适配器激活器",
@@ -844,7 +844,7 @@ window.QUESTION_BANK = {
           "answer": "B",
           "topic": "综合知识",
           "page": 16,
-          "stem": "35、在 CORBA 构件模型中，（1）的作用是为用户提供与其他分布式网络环境中对象通信的接口，（2）是最终完成客户请求的服务对象实现。本题填空（2）。",
+          "stem": "35、\n\nCORBA 构件模型中，（1）的作用是为用户提供与其他分布式网络环境中对象通信的接口，（2）是最终完成客户请求的服务对象实现。",
           "options": {
             "A": "对象引用",
             "B": "伺服对象 servant",
@@ -890,7 +890,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "综合知识",
           "page": 17,
-          "stem": "37、某政务云平台在设计公文流转系统时，要求所有操作（起草、审批、传阅）均可被独立验证且记录不可篡改，以便发生争议时进行责任追溯。该需求主要与（1）质量属性相关。本题填空（1）。",
+          "stem": "37、\n\n某政务云平台在设计其公文流转系统时，识别出一项核心需求：系统必须确保所有公文操作（如起草、审批、传阅）均可被独立验证且操作记录无法被篡改，以便在发生争议时提供明确的责任追溯。这一需求主要与（1）质量属性相关，通常可通过（2）策略来强化。",
           "options": {
             "A": "可测试性",
             "B": "可重用性",
@@ -913,7 +913,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "综合知识",
           "page": 17,
-          "stem": "38、某政务云平台在设计公文流转系统时，要求所有操作（起草、审批、传阅）均可被独立验证且记录不可篡改，以便发生争议时进行责任追溯。通常可通过（2）策略强化该质量属性。本题填空（2）。",
+          "stem": "38、\n\n某政务云平台在设计其公文流转系统时，识别出一项核心需求：系统必须确保所有公文操作（如起草、审批、传阅）均可被独立验证且操作记录无法被篡改，以便在发生争议时提供明确的责任追溯。这一需求主要与（1）质量属性相关，通常可通过（2）策略来强化。",
           "options": {
             "A": "引入冗余",
             "B": "心跳机制",
@@ -1036,7 +1036,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "系统架构",
           "page": 19,
-          "stem": "43、\n\n( ) 风格最适用于需要高度解灶和实时响应的用户交互应用。",
+          "stem": "43、\n\n（ ）风格最适用于需要高度解耦和实时响应的用户交互应用。",
           "options": {
             "A": "分层架构",
             "B": "微内核架构",
@@ -1495,14 +1495,14 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "软件工程",
           "page": 27,
-          "stem": "62、\n\n—ARERA TCR ( ) 组成。\n\n@嵌入式处理器@相关支撑硬件@诸入式操作系统@支撑软件@外部设备@应用软件",
+          "stem": "62、\n\n一般嵌入式系统由（ ）组成。\n\n① 嵌入式处理器 ② 相关支撑硬件 ③ 嵌入式操作系统 ④ 支撑软件 ⑤ 外部设备 ⑥ 应用软件",
           "options": {
-            "A": "®@O@OOO",
-            "B": "@@O@O®",
-            "C": "@O@@O@OO",
-            "D": "@@@OOO"
+            "A": "①②③④⑤⑥",
+            "B": "①②③④⑤",
+            "C": "①②③④⑥",
+            "D": "①③④⑤⑥"
           },
-          "correctOptionText": "@O@@O@OO",
+          "correctOptionText": "①②③④⑥",
           "explanation": {
             "keyPoints": [
               "组成",
@@ -1595,7 +1595,7 @@ window.QUESTION_BANK = {
           "answer": "A",
           "topic": "综合知识",
           "page": 29,
-          "stem": "66、\n数字挛生体是现有或将有的物理实体对象的数字模型，通过实测、仿真和数据分析来实时感\n知、诊断、预测物理实体对象的状态，通过优化和指令来调控物理实体对象的行为，通过相\n关数字模型间的相互学习来进化自身，同时改进利益相关方在物理实体对象生命周期内的决\n策。以下不属于数字挛生体核心技术的是? ( )",
+          "stem": "66、\n数字孪生体是现有或将有的物理实体对象的数字模型，通过实测、仿真和数据分析来实时感\n知、诊断、预测物理实体对象的状态，通过优化和指令来调控物理实体对象的行为，通过相\n关数字模型间的相互学习来进化自身，同时改进利益相关方在物理实体对象生命周期内的决\n策。以下不属于数字孪生体核心技术的是? ( )",
           "options": {
             "A": "大数据",
             "B": "建模",
@@ -1674,8 +1674,8 @@ window.QUESTION_BANK = {
           "options": {
             "A": "改编作品的著作权归属于改编人",
             "B": "职务作品的著作权都归属于企业法人",
-            "C": "HO “ONO",
-            "D": "合作作品的著作权归属于所有参与和组织创作的人     Oly: vo,    Re Bio,"
+            "C": "委托作品的著作权都归属于委托人",
+            "D": "合作作品的著作权归属于所有参与和组织创作的人"
           },
           "correctOptionText": "改编作品的著作权归属于改编人",
           "explanation": {
@@ -1843,7 +1843,7 @@ window.QUESTION_BANK = {
           "answer": "D",
           "topic": "系统架构",
           "page": 1,
-          "stem": "1,\nKF RISC 和 CISC 架构的对比，下列说法错误的是 () 。",
+          "stem": "1、\n\n关于 RISC 和 CISC 架构的对比，下列说法错误的是（）。",
           "options": {
             "A": "RISC 架构通常采用定长指令编码，而 CISC 架构采用变长指令编码",
             "B": "RISC 架构的访存指令类型通常比 CISC 架构少",
@@ -1866,14 +1866,14 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "操作系统",
           "page": 1,
-          "stem": "2、\n计算机系统基础->磁盘管理) 在磁盘调度管理中，应先进行移臂调度，再进行\n旋转调度。假设磁盘移动臂位于 19 号柱面上，进程的请求序列如下表所示。\n\n(IAF                                 soesiees, subfetm\n\n如果采用最短移臂调度算法，那么系统的响应序列应为 ( ) 。",
+          "stem": "2、\n\n在磁盘调度管理中，应先进行移臂调度，再进行旋转调度。假设磁盘移动臂位于 19 号柱面上，进程的请求序列如下表所示。如果采用最短移臂调度算法，那么系统的响应序列应为（）。\n\n请求序列  柱面号  磁头号  扇区号\n①        30      8      6\n②        15      6      3\n③        42      9      6\n④        26      10     5\n⑤        15      8      4\n⑥        26      3      10\n⑦        22      7      6\n⑧        30      10     4\n⑨        22      10     8",
           "options": {
-            "C": "O@O@OODO@OO",
-            "A": "DMO@MOODOO®",
-            "B": "@ODO@OOO®",
-            "D": "@@@OODOOOO"
+            "A": "⑦⑨④⑥⑧①②⑤③",
+            "B": "②⑤⑦⑨④⑥①⑧③",
+            "C": "⑦⑨④⑥⑧①③②⑤",
+            "D": "⑦⑨④⑥①⑧③②⑤"
           },
-          "correctOptionText": "O@O@OODO@OO",
+          "correctOptionText": "⑦⑨④⑥⑧①③②⑤",
           "explanation": {
             "keyPoints": [
               "操作系统",
@@ -1889,7 +1889,7 @@ window.QUESTION_BANK = {
           "answer": "D",
           "topic": "综合知识",
           "page": 2,
-          "stem": "3、\n\n() 的特点是可以使用紫外线照射来擦除其中已写入的数据，之后还可以重新",
+          "stem": "3、\n\n（ ）的特点是可以使用紫外线照射来擦除其中已写入的数据，之后还可以重新进行编程。",
           "options": {
             "A": "ROM",
             "B": "PROM",
@@ -2040,7 +2040,7 @@ window.QUESTION_BANK = {
             "A": "核心业务应用方法特别适用于那些依靠智力和知识而生存的企业，例如，各 种咨询服务、软件开发等企业",
             "B": "企业业务流程重构就是面向企业业务主题的数据库，也就是面向企业的核心 业务的数据库",
             "C": "最常见资源管理方法的有企业资源计划 (ERP). 供应链管理 (SCM) 等",
-            "D": "信息系统建设方法的中心思想是，在信息技术和网络技术迅猛发展的时代， 企业必须重新审视企业的生产经营过程，利用信息技术和网络技术，对企业的 组织结构和工作方法进行“彻底的、根本性的”重新设计，以适应当今市场发 展和信息社会的需求                   . ak —                        Mo,     On yo, sas (二   ss     2和2 IY ’     Do Ng = TO    NO"
+            "D": "企业过程重构方法的中心思想是，在信息技术和网络技术迅猛发展的时代，企业必须重新审视企业的生产经营过程，利用信息技术和网络技术，对企业的组织结构和工作方法进行“彻底的、根本性的”重新设计，以适应当今市场发展和信息社会的需求"
           },
           "correctOptionText": "最常见资源管理方法的有企业资源计划 (ERP). 供应链管理 (SCM) 等",
           "explanation": {
@@ -2064,7 +2064,7 @@ window.QUESTION_BANK = {
           "options": {
             "D": "DSS 的作用在于提高决策的有效性而不是提高决策的效率",
             "A": "数据和模型是 DSS 的主要资源",
-            "B": "DSS 用来支援用户做决策而不是代蔡用户做决策",
+            "B": "DSS 用来支援用户做决策而不是代替用户做决策",
             "C": "DSS 主要用于解决结构化及半结构化问题"
           },
           "correctOptionText": "DSS 主要用于解决结构化及半结构化问题",
@@ -2110,7 +2110,7 @@ window.QUESTION_BANK = {
           "answer": "D",
           "topic": "软件工程",
           "page": 6,
-          "stem": "12、\n\n在白盒测试中，关于覆盖标准描述正确的是 ( ) 。\n\n人.语句覆盖要求每条语句都被至少一个测试用例覆盖，它比判定覆盖强",
+          "stem": "12、\n\n在白盒测试中，关于覆盖标准描述正确的是（）。",
           "options": {
             "A": "语句覆盖要求每条语句都被至少一个测试用例覆盖，它比判定覆盖强",
             "B": "满足条件组合覆盖的测试用例不一定满足判定/条件覆盖",
@@ -2208,7 +2208,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "软件工程",
           "page": 8,
-          "stem": "16、\n\nLAR () 类型是为了提高软件的可维护性和可靠性，采用先进的软件工程方法\n对软件进行改进。",
+          "stem": "16、\n\n（ ）类型是为了提高软件的可维护性和可靠性，采用先进的软件工程方法对软件进行改进。",
           "options": {
             "A": "改正性维护",
             "B": "适应性维护",
@@ -2235,7 +2235,7 @@ window.QUESTION_BANK = {
           "page": 9,
           "stem": "17、\n\n工作流参考模型 (Workflow Reference Model, WRM) 中的 () 模块可以\n用于创建新的流程或者改变现有流程，且在过程中可以指定各项活动的参与者\n的类型、活动之间的相互关系和传递规则等。",
           "options": {
-            "A": "工作流引警",
+            "A": "工作流引擎",
             "B": "流程定义工具",
             "C": "客户端应用",
             "D": "管理监控工具"
@@ -2379,7 +2379,7 @@ window.QUESTION_BANK = {
           "options": {
             "A": "实现继承",
             "B": "取代继承",
-            "C": "HE AK",
+            "C": "接口继承",
             "D": "多重继承"
           },
           "correctOptionText": "取代继承",
@@ -2447,11 +2447,11 @@ window.QUESTION_BANK = {
           "stem": "26,\n\n在软件工程中，关于敏捷开发方法与瀑布模型的对比，以下描述中正确的是\n() 。",
           "options": {
             "A": "敏捷开发方法强调严格的计划驱动，而瀑布模型则更注重灵活性和快速响应 变化。",
-            "B": "瀑布模型将开发过程划分为一系列严格的阶段，每个阶段都有明确的输入和 输出，而敏捷开发方法则采用和运代和增量的方式。",
+            "B": "瀑布模型将开发过程划分为一系列严格的阶段，每个阶段都有明确的输入和输出，而敏捷开发方法则采用迭代和增量的方式。",
             "C": "敏捷开发方法适用于所有类型的项目，特别是大型、复杂的项目，而瀑布模 型则更适合小型、需求明确的项目。",
             "D": "瀑布模型强调客户合作和面对面沟通，而敏捷开发方法则更侧重于文档和流 程的规范。"
           },
-          "correctOptionText": "瀑布模型将开发过程划分为一系列严格的阶段，每个阶段都有明确的输入和 输出，而敏捷开发方法则采用和运代和增量的方式。",
+          "correctOptionText": "瀑布模型将开发过程划分为一系列严格的阶段，每个阶段都有明确的输入和输出，而敏捷开发方法则采用迭代和增量的方式。",
           "explanation": {
             "keyPoints": [
               "敏捷与瀑布",
@@ -2520,7 +2520,7 @@ window.QUESTION_BANK = {
           "stem": "29、\n在参与 DSSA (特定领域软件架构) 的人员角色中，以下关于各角色任务与能\n力要求匹配错误的是 ( ) 。",
           "options": {
             "A": "领域专家 - 需熟悉领域中系统硬件限制、未来用户需求等，主要任务有复审 领域模型等",
-            "B": "领域分析人员 - 要具备较高抽象、关联和类比能力，主要任务是控制领域分",
+            "B": "领域分析人员 - 要具备较高抽象、关联和类比能力，主要任务是控制领域分析过程、维护领域模型",
             "C": "领域设计人员 - 需熟悉软件设计方法，主要任务为根据现有系统开发 DSSA 并建立与领域模型联系",
             "D": "领域实现人员 - 应熟悉软件再工程技术，主要任务是从现有系统提取可重用 构件并验证"
           },
@@ -2571,7 +2571,7 @@ window.QUESTION_BANK = {
           "options": {
             "A": "完全消除系统中的所有问题",
             "B": "通过构件及关系描述抽象系统并提供高层次管理方法",
-            "C": "让开友人员自行处理复杂问题无需架构指导",
+            "C": "让开发人员自行处理复杂问题无需架构指导",
             "D": "只关注系统的小部分功能以降低复杂感知"
           },
           "correctOptionText": "通过构件及关系描述抽象系统并提供高层次管理方法",
@@ -2592,7 +2592,7 @@ window.QUESTION_BANK = {
           "answer": "D",
           "topic": "软件工程",
           "page": 16,
-          "stem": "32、\n软件架构设计过程中，为确保最终体系架构的完整性，架构设计师必须做的工\n作包括 ( ) 。\n@@明确地定义体系架构\n@定义恰当的标准和指导方针\n@完成所有组件的开发\n@ 对开发过程活动采取恰当的架构回顾和评估",
+          "stem": "32、\n\n软件架构设计过程中，为确保最终体系架构的完整性，架构设计师必须做的工作包括（）。\n① 明确地定义体系架构\n② 定义恰当的标准和指导方针\n③ 完成所有组件的开发\n④ 对开发过程活动采取恰当的架构回顾和评估",
           "options": {
             "A": "①②",
             "B": "①②③",
@@ -2642,7 +2642,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "综合知识",
           "page": 17,
-          "stem": "34、\n\n【学员回忆版】从逻辑上和高层抽象来看，有多种实现 SOA 的方法。其中，\n\n( ) 使用了中间件技术消除了服务请求者与服务提供者之间的直接连接，使得\n服务请求者与服务提供者之间进一步解看。",
+          "stem": "34、\n\n【学员回忆版】从逻辑上和高层抽象来看，有多种实现 SOA 的方法。其中，（ ）使用了中间件技术，消除了服务请求者与服务提供者之间的直接连接，使得服务请求者与服务提供者之间进一步解耦。",
           "options": {
             "A": "Web Service",
             "B": "服务注册表",
@@ -2667,7 +2667,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "系统架构",
           "page": 17,
-          "stem": "35、\n\n【学员回忆版】领域驱动设计分层架构中， (+) 负责表达业务概念、业务状态\n信息以及业务规则采用的主要技术。",
+          "stem": "35、\n\n【学员回忆版】领域驱动设计分层架构中，（ ）负责表达业务概念、业务状态信息以及业务规则采用的主要技术。",
           "options": {
             "A": "用户接口层",
             "B": "基础设施层",
@@ -2790,7 +2790,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "综合知识",
           "page": 19,
-          "stem": "40、\n\n以下哪种技术属于云计算的核心技术?” (+)",
+          "stem": "40、\n\n以下哪种技术属于云计算的核心技术（）。",
           "options": {
             "A": "大数据",
             "B": "物联网",
@@ -2963,7 +2963,7 @@ window.QUESTION_BANK = {
           "answer": "A",
           "topic": "数学与运筹",
           "page": 22,
-          "stem": "47、\n\n【学员回忆版】 ( ) 包括两大关键技术，即网格技术和 Webservice 技术，它\n是在其基础上，结合 Web Service 技术提出的，解决了两个重要问题: 标准服\n务接口的定义和协议的识别。\n\n@计算池模型\n@开放网格服务体系结构\n\n@Web 服务资源框架",
+          "stem": "47、\n\n【学员回忆版】（ ）包括两大关键技术，即网格技术和 Web Service 技术，它是在其基础上，结合 Web Service 技术提出的，解决了两个重要问题：标准服务接口的定义和协议的识别。\n\n① 计算池模型\n② 开放网格服务体系结构\n③ Web 服务资源框架",
           "options": {
             "A": "②",
             "B": "①②",
@@ -3091,7 +3091,7 @@ window.QUESTION_BANK = {
           "stem": "52、\n\n一家公司的员工信息管理系统中，原始设计的员工关系模式为 Employees (员\n\n工ID，姓名，职位，入职日期，工龄，家庭电话) ，根据派生属性的原则，以\n\n下 () 关系模式设计更合理。",
           "options": {
             "A": "Employees (员工ID，职位，入职日期，工龄，家庭电话)",
-            "B": "Employees (员工1D，姓名，职位，入职日期，工龄)",
+            "B": "Employees (员工ID，姓名，职位，入职日期，工龄)",
             "C": "Employees (员工ID，姓名，职位，入职日期，家庭电话)",
             "D": "Employees (员工ID，姓名，入职日期，工龄，家庭电话)"
           },
@@ -3138,12 +3138,12 @@ window.QUESTION_BANK = {
           "answer": "A",
           "topic": "综合知识",
           "page": 26,
-          "stem": "54、\n() 是在应用层层定义的协议。",
+          "stem": "54、\n\n（ ）是在应用层定义的协议。",
           "options": {
             "A": "NFS和Telnet",
             "B": "TCP和UDP",
             "C": "ICMP和 SMTP",
-            "D": "IP和1CMP"
+            "D": "IP 和 ICMP"
           },
           "correctOptionText": "NFS和Telnet",
           "explanation": {
@@ -3168,9 +3168,9 @@ window.QUESTION_BANK = {
             "A": "路由器",
             "B": "交换机",
             "C": "网桥",
-            "D": "中继器 a) SS"
+            "D": "中继器"
           },
-          "correctOptionText": "中继器 a) SS",
+          "correctOptionText": "中继器",
           "explanation": {
             "keyPoints": [
               "以下网络互联设备中",
@@ -3313,12 +3313,12 @@ window.QUESTION_BANK = {
           "page": 29,
           "stem": "61、\n\n关于数字签名技术的描述，以下 () 说法是正确的。",
           "options": {
-            "A": "数字签名是为了确保信息保密性，发送者用公钥加密信息生成摘要，接收者 用私角解密验证",
-            "B": "数字签名是为了防止信息被算改，并证明发送者身份，发送者先用哈希函数 生成信息摘要，再用私钥加密摘要生成数字签名。接收者用公钥解密签名得到 摘要，并比对自行计算的摘要以验证完整性和来源",
+            "A": "数字签名是为了确保信息保密性，发送者用公钥加密信息生成摘要，接收者用私钥解密验证",
+            "B": "数字签名是为了防止信息被篡改，并证明发送者身份，发送者先用哈希函数生成信息摘要，再用私钥加密摘要生成数字签名。接收者用公钥解密签名得到摘要，并比对自行计算的摘要以验证完整性和来源",
             "C": "数字签名是为了同时实现保密性和完整性验证，发送者用私钥加密整个信息， 接收者用公钥解密",
             "D": "数字签名是为了验证信息完整性，发送者用对称密钥加密摘要，接收者用相 同密钥解密"
           },
-          "correctOptionText": "数字签名是为了防止信息被算改，并证明发送者身份，发送者先用哈希函数 生成信息摘要，再用私钥加密摘要生成数字签名。接收者用公钥解密签名得到 摘要，并比对自行计算的摘要以验证完整性和来源",
+          "correctOptionText": "数字签名是为了防止信息被篡改，并证明发送者身份，发送者先用哈希函数生成信息摘要，再用私钥加密摘要生成数字签名。接收者用公钥解密签名得到摘要，并比对自行计算的摘要以验证完整性和来源",
           "explanation": {
             "keyPoints": [
               "综合知识",
@@ -3386,12 +3386,12 @@ window.QUESTION_BANK = {
           "page": 31,
           "stem": "64、\n【考生回忆版】 ( ) 是以谓词形式来表示动作的主体，客体，是一种叙述性知\n识表示方法。",
           "options": {
-            "A": "罗辑表示法",
+            "A": "逻辑表示法",
             "B": "框架表示法",
             "C": "产生式表示法",
             "D": "面向对象表示法"
           },
-          "correctOptionText": "罗辑表示法",
+          "correctOptionText": "逻辑表示法",
           "explanation": {
             "keyPoints": [
               "是以谓词形式来表示动作的",
@@ -3460,11 +3460,11 @@ window.QUESTION_BANK = {
           "stem": "67、\n\n甲公司和乙公司在同一种商品上，以相似但非完全相同的商标分别向商标局提\n出了注册申请，且两者在申请日前均未实际使用过该商标。若商标局在审查过\n程中发现了这一情况，根据商标法及其实施条例的规定，以下处理方式正确的\n是 () 。",
           "options": {
             "A": "商标局应当直接依职权确定其中一个申请人为商标权人",
-            "B": "甲公司和乙公司应当在收到商标局通知之日起 30 日内自行协商确定申请人， 若协商不成，则商标局通知双方以抽签的方式确定一个申请人，驱回另一人的 注册申请",
+            "B": "甲公司和乙公司应当在收到商标局通知之日起 30 日内自行协商确定申请人，若协商不成，则商标局通知双方以抽签的方式确定一个申请人，驳回另一人的注册申请",
             "C": "若甲公司和乙公司不愿协商，商标局应当对其商标注册申请均予以驳回",
             "D": "商标局应当初步审定并公告申请在先的商标，直接驳回另一方的申请"
           },
-          "correctOptionText": "甲公司和乙公司应当在收到商标局通知之日起 30 日内自行协商确定申请人， 若协商不成，则商标局通知双方以抽签的方式确定一个申请人，驱回另一人的 注册申请",
+          "correctOptionText": "甲公司和乙公司应当在收到商标局通知之日起 30 日内自行协商确定申请人，若协商不成，则商标局通知双方以抽签的方式确定一个申请人，驳回另一人的注册申请",
           "explanation": {
             "keyPoints": [
               "甲公司和乙公司在同一种商",
@@ -3484,12 +3484,12 @@ window.QUESTION_BANK = {
           "page": 32,
           "stem": "68,\n\n根据被许可使用权的排他性强弱不同，以下哪项关于使用许可的分类及其描述\n是正确的? ()",
           "options": {
-            "A": "独占使用许可: 多个授权对象可用，著作权人也可用",
-            "B": "排他使用许可: 1 1 个授权对象可用，著作权人不可用",
-            "C": "普通使用许可: 多个授权对象和著作权人均可用，但有限制条件",
-            "D": "独占使用许可: 仅 1 个授权对象可用，著作权人不可用"
+            "A": "独占使用许可：多个授权对象可用，著作权人也可用",
+            "B": "排他使用许可：仅 1 个授权对象可用，著作权人不可用",
+            "C": "普通使用许可：多个授权对象和著作权人均可用，但有限制条件",
+            "D": "独占使用许可：仅 1 个授权对象可用，著作权人不可用"
           },
-          "correctOptionText": "独占使用许可: 仅 1 个授权对象可用，著作权人不可用",
+          "correctOptionText": "独占使用许可：仅 1 个授权对象可用，著作权人不可用",
           "explanation": {
             "keyPoints": [
               "根据被许可使用权的排他性",
@@ -3533,7 +3533,7 @@ window.QUESTION_BANK = {
           "stem": "70、已知时间序列值 X1, X2...Xn，根据递推公式可以推算下一期预测值 Yn+1；当 i=n-1...2 时，Yi+1=aXi+(1-a)Yi，且 Y1=X1，其中 a 为参数（0<a<1）。这种预测方法属于（）。",
           "options": {
             "A": "移动算术平均法",
-            "B": ":折中决策法",
+            "B": "折中决策法",
             "C": "指数平滑法",
             "D": "线性回归法"
           },
@@ -3553,7 +3553,7 @@ window.QUESTION_BANK = {
           "answer": "D",
           "topic": "英文综合题",
           "page": 34,
-          "stem": "71、根据下列英文材料，空（1）应选（）。",
+          "stem": "71、\n\n根据下列英文材料，空（1）应选（）。\n\nThe process of architecture design involves creating a software architecture that fulfills user requirements. Several common methodologies used in architecture design include: extracting architectural descriptions from artifact descriptions, known as the (1) approach; deriving architectural abstractions from use cases, referred to as the (2) method; inducing architectural abstractions from patterns, termed the (3) approach; deriving architectural abstractions from domain models, labeled as the (4) method; and obtaining requirements for architectural quality attributes during the design process, known as the (5) method.",
           "options": {
             "A": "artifact-based",
             "B": "use-case-driven",
@@ -3576,7 +3576,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "英文综合题",
           "page": 35,
-          "stem": "72、根据下列英文材料，空（2）应选（）。",
+          "stem": "72、\n\n根据下列英文材料，空（2）应选（）。\n\nThe process of architecture design involves creating a software architecture that fulfills user requirements. Several common methodologies used in architecture design include: extracting architectural descriptions from artifact descriptions, known as the (1) approach; deriving architectural abstractions from use cases, referred to as the (2) method; inducing architectural abstractions from patterns, termed the (3) approach; deriving architectural abstractions from domain models, labeled as the (4) method; and obtaining requirements for architectural quality attributes during the design process, known as the (5) method.",
           "options": {
             "A": "scenario-guided",
             "B": "requirement-centered",
@@ -3599,7 +3599,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "英文综合题",
           "page": 35,
-          "stem": "73、根据下列英文材料，空（3）应选（）。",
+          "stem": "73、\n\n根据下列英文材料，空（3）应选（）。\n\nThe process of architecture design involves creating a software architecture that fulfills user requirements. Several common methodologies used in architecture design include: extracting architectural descriptions from artifact descriptions, known as the (1) approach; deriving architectural abstractions from use cases, referred to as the (2) method; inducing architectural abstractions from patterns, termed the (3) approach; deriving architectural abstractions from domain models, labeled as the (4) method; and obtaining requirements for architectural quality attributes during the design process, known as the (5) method.",
           "options": {
             "A": "model-centric",
             "B": "pattern-recognition",
@@ -3622,7 +3622,7 @@ window.QUESTION_BANK = {
           "answer": "C",
           "topic": "英文综合题",
           "page": 35,
-          "stem": "74、根据下列英文材料，空（4）应选（）。",
+          "stem": "74、\n\n根据下列英文材料，空（4）应选（）。\n\nThe process of architecture design involves creating a software architecture that fulfills user requirements. Several common methodologies used in architecture design include: extracting architectural descriptions from artifact descriptions, known as the (1) approach; deriving architectural abstractions from use cases, referred to as the (2) method; inducing architectural abstractions from patterns, termed the (3) approach; deriving architectural abstractions from domain models, labeled as the (4) method; and obtaining requirements for architectural quality attributes during the design process, known as the (5) method.",
           "options": {
             "A": "business-logic-based",
             "B": "data-model-centered",
@@ -3645,7 +3645,7 @@ window.QUESTION_BANK = {
           "answer": "B",
           "topic": "英文综合题",
           "page": 36,
-          "stem": "75、根据下列英文材料，空（5）应选（）。",
+          "stem": "75、\n\n根据下列英文材料，空（5）应选（）。\n\nThe process of architecture design involves creating a software architecture that fulfills user requirements. Several common methodologies used in architecture design include: extracting architectural descriptions from artifact descriptions, known as the (1) approach; deriving architectural abstractions from use cases, referred to as the (2) method; inducing architectural abstractions from patterns, termed the (3) approach; deriving architectural abstractions from domain models, labeled as the (4) method; and obtaining requirements for architectural quality attributes during the design process, known as the (5) method.",
           "options": {
             "A": "performance-tuning",
             "B": "attribute-driven design",
