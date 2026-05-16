@@ -390,6 +390,28 @@ textarea {
   margin-top: 8px;
 }
 
+.stem-figure-wrap {
+  margin: 10px 0 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.stem-figure {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.stem-figure-caption {
+  margin-top: 8px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+}
+
 .stem-table-caption {
   margin-bottom: 6px;
   text-align: center;

@@ -347,12 +347,27 @@ function extractProjectScheduleTable(stemText) {
   };
 }
 
+function extractStemFigures(stemText) {
+  const matches = Array.from(String(stemText || "").matchAll(/（图见\s+(zk\d+)\s+(page-\d+)）/g));
+  if (!matches.length) {
+    return [];
+  }
+
+  return matches.map((match) => ({
+    marker: match[0],
+    paperId: match[1],
+    pageId: match[2],
+    src: `assets/pages/${match[1]}/${match[2]}.jpg`,
+  }));
+}
+
 function renderQuestionStem(question) {
   const fallback = "OCR 未能稳定识别本题文字，请查看题库数据修正。";
   const source = String(question.stem || fallback);
   const resourceTable = extractResourceDemandTable(source);
   const productTable = extractProductProfitTable(source);
   const projectTable = extractProjectScheduleTable(source);
+  const stemFigures = extractStemFigures(source);
 
   let textOnly = source;
   if (resourceTable) {
@@ -373,6 +388,10 @@ function renderQuestionStem(question) {
     textOnly = textOnly.trim();
   }
 
+  for (const figure of stemFigures) {
+    textOnly = textOnly.replace(figure.marker, "").trim();
+  }
+
   const paragraphHtml = textOnly
     .split(/\n{2,}/)
     .map((paragraph) => paragraph.replace(/\n+/g, " ").trim())
@@ -380,8 +399,17 @@ function renderQuestionStem(question) {
     .map((paragraph) => `<p class="stem-paragraph">${escapeHtml(paragraph)}</p>`)
     .join("");
 
+  const figureHtml = stemFigures
+    .map(
+      (figure) => `<figure class="stem-figure-wrap">
+        <img class="stem-figure" src="${escapeHtml(figure.src)}" alt="题目配图 ${escapeHtml(figure.paperId)} ${escapeHtml(figure.pageId)}" loading="lazy" />
+        <figcaption class="stem-figure-caption">题图：${escapeHtml(figure.paperId)} ${escapeHtml(figure.pageId)}</figcaption>
+      </figure>`
+    )
+    .join("");
+
   if (!resourceTable && !productTable && !projectTable) {
-    return paragraphHtml || `<p class="stem-paragraph">${escapeHtml(fallback)}</p>`;
+    return `${paragraphHtml || `<p class="stem-paragraph">${escapeHtml(fallback)}</p>`}${figureHtml}`;
   }
 
   if (resourceTable) {
@@ -396,7 +424,7 @@ function renderQuestionStem(question) {
       )
       .join("");
 
-    return `${paragraphHtml}
+    return `${paragraphHtml}${figureHtml}
       <div class="stem-table-wrap">
         <div class="stem-table-caption">${escapeHtml(resourceTable.caption)}</div>
         <table class="stem-table">
@@ -429,7 +457,7 @@ function renderQuestionStem(question) {
       )
       .join("");
 
-    return `${paragraphHtml}
+    return `${paragraphHtml}${figureHtml}
       <div class="stem-table-wrap">
         <table class="stem-table">
           <thead>
@@ -460,7 +488,7 @@ function renderQuestionStem(question) {
     )
     .join("");
 
-  return `${paragraphHtml}
+  return `${paragraphHtml}${figureHtml}
     <div class="stem-table-wrap">
       <div class="stem-table-caption">${escapeHtml(productTable.caption)}</div>
       <table class="stem-table">
