@@ -371,6 +371,10 @@ function answeredCount(paper = currentObjectivePaper()) {
   return paper.questions.filter((question) => state.answers[question.number]).length;
 }
 
+function currentScore(paper = currentObjectivePaper()) {
+  return paper.questions.filter((question) => state.answers[question.number] === question.answer).length;
+}
+
 function computeResult(autoSubmitted = false) {
   const paper = currentObjectivePaper();
   const wrongNumbers = [];
@@ -701,7 +705,7 @@ function renderObjective() {
       ${state.mode === "exam" ? (state.finished ? renderFinishedBlock(state.result) : renderTimerBlock(paper)) : renderStudyControls()}
       <div class="metric-grid">
         <div class="metric"><span>已答</span><strong>${answeredCount(paper)}/${paper.questions.length}</strong></div>
-        <div class="metric"><span>当前</span><strong>${question.number}</strong></div>
+        <div class="metric"><span>${state.mode === "study" ? "得分" : "当前"}</span><strong>${state.mode === "study" ? `${currentScore(paper)}/${paper.totalScore}` : question.number}</strong></div>
         <div class="metric"><span>合格线</span><strong>${paper.passingScore}</strong></div>
         <div class="metric"><span>题数</span><strong>${paper.questions.length}</strong></div>
       </div>

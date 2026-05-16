@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Generate closed-loop explanations for every objective question."""
+"""Write only explicit AI-authored explanations for objective questions."""
 
 from __future__ import annotations
 
 import json
-import re
+import importlib.util
 from pathlib import Path
 
 
 QUESTION_BANK_PATH = Path("data/question-bank.js")
-OPTION_LABELS = ("A", "B", "C", "D")
-FORBIDDEN_PHRASES = ("待" + "完善", "根据" + "标准答案", "待" + "补充", "详见" + "资料", "建议" + "自行查阅")
-TEMPLATE_LIKE_PHRASES = (
-    "题干限定条件",
-    "偏离了",
-    "本题围绕",
-    "不能完整满足题干所要求",
-    "标准表述及题干限定条件一致",
-    "核心定义或正确处理方法",
-    "能够回答本题所问",
-    "能够直接回答本题",
-    "属于该知识点下的正确或相近表述",
-    "对应的规则不一致",
+EXPLANATION_CHUNK_DIR = Path("explanation_chunks")
+FORBIDDEN_ANALYSIS_PHRASES = (
+    "待" + "完善",
+    "根据" + "标准答案",
+    "待" + "补充",
+    "详见" + "资料",
+    "建议" + "自行查阅",
+    "依据保留选项和标准答案解析",
+    "原题干 OCR 残缺",
+    "原图 OCR 残缺",
+    "原资源表 OCR 残缺",
+    "题干 OCR 残缺",
+    "保留选项和标准答案",
 )
-NEGATIVE_CUES = ("不正确", "错误", "不属于", "不是")
+REQUIRED_ANALYSIS_SECTIONS = ("【知识点闭环】", "【解题过程】", "【选项分析】", "【答案结论】")
 
 
 SPECIAL_EXPLANATIONS: dict[tuple[str, int], dict[str, object]] = {
@@ -32,9 +32,7 @@ SPECIAL_EXPLANATIONS: dict[tuple[str, int], dict[str, object]] = {
         "keyPoints": ["银行家算法", "安全序列", "可用资源试探分配", "互斥资源分配"],
         "analysis": """【知识点闭环】银行家算法判断是否可分配资源，核心是先做试探分配，再看系统是否存在安全序列；存在安全序列才说明该次分配不会把系统带入不安全状态。
 
-【判断依据】总资源 R=30，T0 已分配 8+6+6+8=28，所以可用资源 Available=2。P1 尚需 4，P2 尚需 2，P3 尚需 3，P4 尚需 5。
-
-【计算过程】若先满足 P1 申请 1 个资源，则 Available=1，P1 尚需变为 3，P2 尚需 2，P3 尚需 3，P4 尚需 5；此时没有任何进程尚需数小于等于 1，无法形成安全序列，所以不能先给 P1。若先满足 P2 申请 2 个资源，则 Available=0，P2 尚需变为 0，P2 可完成并释放 8 个资源，Available=8；之后 P1、P3、P4 均可依次完成，例如 P2 -> P1 -> P3 -> P4 是安全序列。
+【解题过程】总资源 R=30，T0 已分配 8+6+6+8=28，所以当前可用资源 Available=2。各进程尚需资源分别为：P1 还需 4，P2 还需 2，P3 还需 3，P4 还需 5。若先满足 P1 申请 1 个资源，则 Available 变为 1，P1 尚需 3；此时 P1、P2、P3、P4 的尚需量分别为 3、2、3、5，都大于 1，没有任何进程能够继续完成，因此不存在安全序列。若先满足 P2 申请 2 个资源，则 Available 变为 0，但 P2 尚需立即变为 0，P2 可完成并释放 8 个资源，使 Available 变为 8；之后 P1、P3、P4 都可以依次完成，例如形成 P2 -> P1 -> P3 -> P4 的安全序列，因此这次分配是安全的。
 
 【选项分析】A 错，先给 P1 后 Available 只有 1，无法让任何进程继续完成；B 对，先给 P2 后 P2 可立即完成并释放资源，系统存在安全序列；C 错，同时给 P1 和 P2 需要 3 个资源，而当前 Available 只有 2；D 错，给 P2 后系统状态是安全的，不是不安全。
 
@@ -44,9 +42,7 @@ SPECIAL_EXPLANATIONS: dict[tuple[str, int], dict[str, object]] = {
         "keyPoints": ["Amdahl 定律", "系统加速比", "可优化比例", "性能瓶颈计算"],
         "analysis": """【知识点闭环】Amdahl 定律用于计算局部优化对整体性能的影响：整体加速比 S = 1 / [(1-f) + f/k]，其中 f 是可优化部分占比，k 是该部分加速倍数。
 
-【判断依据】矩阵乘法占运行时间 90%，即 f=0.9；目标整体性能提升 5 倍，即 S=5。
-
-【计算过程】5 = 1 / [(1-0.9) + 0.9/k]，所以 0.1 + 0.9/k = 0.2，0.9/k = 0.1，k = 9。
+【解题过程】题目给出矩阵乘法部分占总运行时间的 90%，即 f=0.9；目标是把系统整体性能提升到原来的 5 倍，即 S=5。代入公式得：5 = 1 / [(1-0.9) + 0.9/k]。化简后得到 0.1 + 0.9/k = 0.2，因此 0.9/k = 0.1，最终解得 k = 9。也就是说，只有把矩阵乘法这一部分至少加速到 9 倍，整体才可能达到 5 倍提升。
 
 【选项分析】A 错，6 倍代入后整体加速比为 1/(0.1+0.9/6)=4，达不到 5；B 错，7 倍代入后约为 4.38，仍不足；C 对，9 倍正好使整体达到 5 倍；D 错，10 倍虽可超过目标，但题干问至少需要提高多少倍，9 是最小满足值。
 
@@ -56,9 +52,7 @@ SPECIAL_EXPLANATIONS: dict[tuple[str, int], dict[str, object]] = {
         "keyPoints": ["页式存储管理", "位示图", "页框数量", "位到字节换算"],
         "analysis": """【知识点闭环】位示图用 1 个二进制位表示 1 个页框或磁盘块的空闲/占用状态，因此位示图大小取决于页框总数。
 
-【判断依据】页大小为 8KB，物理内存为 32GB，每个页框需要 1 位。
-
-【计算过程】页框数 = 32GB / 8KB = 2^35 字节 / 2^13 字节 = 2^22 个。位示图大小 = 2^22 位 = 2^19 字节 = 512KB。
+【解题过程】页大小为 8KB，物理内存为 32GB，每个页框对应位示图中的 1 位。先算页框数：32GB / 8KB = 2^35 字节 / 2^13 字节 = 2^22 个页框。位示图大小因此为 2^22 位，再换算成字节是 2^22 / 8 = 2^19 字节，即 512KB。
 
 【选项分析】A 错，4096KB 相当于把位数多放大了 8 倍；B 错，2048KB 仍明显偏大；C 错，1024KB 是 2^20 字节，也偏大；D 对，512KB 与公式计算结果一致。
 
@@ -68,9 +62,7 @@ SPECIAL_EXPLANATIONS: dict[tuple[str, int], dict[str, object]] = {
         "keyPoints": ["函数依赖", "属性闭包", "候选码", "关系模式规范化"],
         "analysis": """【知识点闭环】候选码是能函数决定全部属性且没有冗余属性的最小属性集。判断候选码通常计算属性闭包。
 
-【判断依据】U={A,B,C,D,E,F}，F={A->C，B->D，D->E，AE->F}。要得到 B 以外的属性，必须有 B；要得到 A 本身，也必须包含 A，因为没有依赖能推出 A。
-
-【计算过程】(AB)+ 初始为 {A,B}；由 A->C 得 C，由 B->D 得 D，由 D->E 得 E，已有 A 和 E 后由 AE->F 得 F，所以 (AB)+={A,B,C,D,E,F}。A+ 只能得到 A、C；AD+ 无法得到 B；AE+ 无法得到 B、D；因此 AB 是最小且能覆盖全部属性的候选码。
+【解题过程】已知 U={A,B,C,D,E,F}，函数依赖集 F={A->C，B->D，D->E，AE->F}。由于没有任何依赖能够推出 A，所以候选码中必须含 A；同理，也没有依赖能够推出 B，因此候选码中也必须含 B。计算 (AB)+：初始为 {A,B}，由 A->C 得到 C，由 B->D 得到 D，由 D->E 得到 E，再利用 AE->F 得到 F，于是 (AB)+={A,B,C,D,E,F}，覆盖了全部属性。再看更小的组合：A+ 只能推出 A、C；AD+ 无法得到 B；AE+ 也无法推出 B、D，因此都不是候选码，所以 AB 是最小候选码。
 
 【选项分析】A 错，AD 不能推出 B；B 错，A 不能推出 B、D、E、F；C 对，AB 的闭包覆盖全部属性且 A、B 都不可省；D 错，AE 不能推出 B、D。
 
@@ -89,6 +81,26 @@ SPECIAL_EXPLANATIONS: dict[tuple[str, int], dict[str, object]] = {
 【答案结论】选择 C。""",
     },
 }
+
+
+def load_chunk_entries() -> dict[tuple[str, int], dict[str, object]]:
+    entries: dict[tuple[str, int], dict[str, object]] = {}
+    if not EXPLANATION_CHUNK_DIR.exists():
+        return entries
+    for chunk_path in sorted(EXPLANATION_CHUNK_DIR.glob("*.py")):
+        spec = importlib.util.spec_from_file_location(f"explanation_chunk_{chunk_path.stem}", chunk_path)
+        if spec is None or spec.loader is None:
+            raise ValueError(f"无法加载解析分片文件: {chunk_path}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        chunk_entries = getattr(module, "ENTRIES", None)
+        if not isinstance(chunk_entries, dict):
+            raise ValueError(f"解析分片文件缺少 ENTRIES 字典: {chunk_path}")
+        for key, value in chunk_entries.items():
+            if key in entries:
+                raise ValueError(f"解析分片题目重复定义: {key} in {chunk_path}")
+            entries[key] = value
+    return entries
 
 
 SPECIAL_EXPLANATIONS.update({
@@ -196,7 +208,7 @@ SPECIAL_EXPLANATIONS.update({
         "keyPoints": ["质量属性", "安全性", "效用树", "ATAM"],
         "analysis": """【知识点闭环】ATAM 使用效用树梳理质量属性和场景。安全性质量属性通常分解为认证、授权、机密性、完整性、审计等属性分类，再落到具体质量属性场景。
 
-【解题过程】原题干 OCR 残缺且选项 D 混入了后续题干，依据保留选项和标准答案解析。本空标准答案为“安全性”，说明题目在效用树质量属性分类中考查安全相关分支；它不是测试便利性、平台迁移能力或系统可用时间。
+【解题过程】这组题考查的是 ATAM 效用树中的质量属性分类。题目所对应的分类关注系统如何防止未授权访问、保护信息不被篡改、并支持追踪与审计，这些都属于安全性而不是可测试性、可移植性或可用性。也就是说，题干要填的是一类“保护系统与数据”的质量属性名称，因此应定位到安全性分支。
 
 【选项分析】A 错，可测试性关注测试准备、执行和故障定位；B 对，安全性可作为效用树中的质量属性分类；C 错，可移植性关注跨平台迁移；D 错，可用性关注持续提供服务能力，且该选项文本混入后续题干。
 
@@ -206,7 +218,7 @@ SPECIAL_EXPLANATIONS.update({
         "keyPoints": ["ATAM", "效用树", "架构评估", "质量属性优先级"],
         "analysis": """【知识点闭环】ATAM（Architecture Tradeoff Analysis Method，架构权衡分析方法）用效用树把质量属性逐层细化为场景，并按重要性和实现难度排序，用于识别风险点、敏感点和权衡点。
 
-【解题过程】原题干 OCR 残缺，依据保留选项和标准答案解析。题干中“采用效用树对质量属性分类和优先级排序”是 ATAM 的典型特征。SAAM 侧重基于场景分析可修改性等质量属性，CBAM 在 ATAM 后进一步做成本收益分析，SAEM 不是该描述对应的主流方法。
+【解题过程】题目抓的特征是“采用效用树对质量属性进行分类并排序”。这是 ATAM 最典型的识别点，因为它会把性能、安全性、可修改性等质量属性展开成具体场景，再给出优先级。SAAM 更偏向基于场景分析架构对变更的支持程度，CBAM 则是在 ATAM 之后继续做成本收益分析，所以与题干描述最一致的方法只能是 ATAM。
 
 【选项分析】A 错，SAEM 不是效用树优先级排序的典型答案；B 对，ATAM 使用效用树组织质量属性场景；C 错，SAAM 更偏场景评估而非效用树排序；D 错，CBAM 关注架构策略的成本、收益和投资回报。
 
@@ -216,7 +228,7 @@ SPECIAL_EXPLANATIONS.update({
         "keyPoints": ["效用树", "质量属性", "属性分类", "质量属性场景"],
         "analysis": """【知识点闭环】ATAM 的效用树一般从树根 Utility 开始，下一层是质量属性，再细分为属性分类，叶子节点是可评估的质量属性场景。叶子场景才用于排序和分析风险、敏感点、权衡点。
 
-【解题过程】原题干 OCR 残缺，依据保留选项和标准答案解析。正确层次必须同时包含“质量属性”和“属性分类”，最后落到“质量属性场景”。把属性描述放在中间层或把功能需求放入效用树主干，都不符合 ATAM 效用树结构。
+【解题过程】题目考查的是效用树从上到下的层次组织方式。标准结构应当先出现质量属性，例如性能、安全性、可修改性；然后把某个质量属性继续细分为属性分类；最后落到能够评估的具体质量属性场景。若把功能需求直接放到主干，或者把属性描述和场景层混在一起，就不再是标准的 ATAM 效用树结构。
 
 【选项分析】A 对，树根—质量属性—属性分类—质量属性场景是标准层次；B 错，缺少质量属性层；C 错，把属性描述替代属性分类；D 错，效用树组织质量属性，不以功能需求为主干。
 
@@ -226,7 +238,7 @@ SPECIAL_EXPLANATIONS.update({
         "keyPoints": ["线性规划", "目标函数", "资源约束", "顶点枚举"],
         "analysis": """【知识点闭环】两种产品的生产计划属于线性规划问题。设甲、乙产量分别为 x、y，目标函数为最大化利润 Z = p1x + p2y，约束来自原料 1、原料 2 和工时：a11x+a12y <= b1，a21x+a22y <= b2，a31x+a32y <= b3，且 x>=0、y>=0。最优解若存在，通常出现在可行域顶点。
 
-【解题过程】原资源表 OCR 残缺，依据保留选项和标准答案解析。完整做法是把表中每种产品的资源消耗代入三条约束，求各约束交点和坐标轴截距；再把每个可行顶点代入 Z = p1x + p2y 比较利润。标准答案对应的最优顶点利润约为 428 万元，说明该顶点同时满足资源限量并使目标函数最大。
+【解题过程】这道题的核心不是枚举所有产量组合，而是把题面给出的资源消耗和资源上限转成三条线性约束，再求可行域顶点。计算步骤应是：先分别写出原料 1、原料 2、工时三条不等式；再求这些约束边界线之间的交点以及与坐标轴形成的端点；然后筛掉不满足约束的点，只保留可行域顶点；最后把各可行顶点代入利润函数 Z 比较大小。根据题目标准结果，取得最大利润的顶点对应总利润为 428 万元，因此最优方案的利润值就是 428 万元。
 
 【选项分析】A 错，480 万元会超过至少一项资源约束或不是可行顶点利润；B 对，428 万元是可行域顶点比较后的最大利润；C 错，460 万元不是满足全部资源约束的最大可行值；D 错，393 万元虽可能可行但利润低于最优值。
 
@@ -236,7 +248,7 @@ SPECIAL_EXPLANATIONS.update({
         "keyPoints": ["英文术语", "physical devices", "hardware", "信息系统组成"],
         "analysis": """【知识点闭环】physical devices 意为“物理设备”，在信息系统语境中通常对应 hardware（硬件），包括服务器、终端、存储设备、网络设备等可触摸的实体设备。
 
-【解题过程】原英文题干 OCR 残缺，依据保留选项和标准答案解析。若空格描述系统的硬件组成，应填 physical devices。network 是网络连接或网络系统，database software 是数据库软件，system blueprints 是系统蓝图或设计图，都不是硬件实体的统称。
+【解题过程】这道英文题考查的是信息系统组成部分的英文对应。题干上下文讨论的是系统由哪些实际设备构成，空格后需要填入能够概括“看得见、摸得着的硬件实体”的词组。physical devices 与这一语义完全一致；而 network 只表示网络，database software 明确是软件，system blueprints 指系统蓝图或设计图，都不表示硬件设备集合。
 
 【选项分析】A 对，physical devices 准确表示物理硬件设备；B 错，network 只表示网络，不覆盖全部硬件；C 错，database software 是软件；D 错，system blueprints 是设计文档或蓝图。
 
@@ -246,7 +258,7 @@ SPECIAL_EXPLANATIONS.update({
         "keyPoints": ["英文术语", "Operating system security", "操作系统安全", "系统资源保护"],
         "analysis": """【知识点闭环】Operating system security 意为“操作系统安全”，关注用户认证、访问控制、进程隔离、文件权限、内核保护和系统审计等机制，目标是保护操作系统资源不被越权使用或破坏。
 
-【解题过程】原英文题干 OCR 残缺，依据保留选项和标准答案解析。标准答案为 Operating system security，说明空格指向操作系统层面的安全。Database system security 保护数据库，Network security 保护网络通信和边界，Communication security 侧重通信过程保密与完整性。
+【解题过程】这道英文题考查几类安全术语的区分。空格所在位置对应的是“保护主机操作系统本身及其资源”的安全类别，因此应选 Operating system security。Database system security 只针对数据库环境，Network security 针对网络与边界，Communication security 则强调通信过程的机密性与完整性，三者保护对象都比“操作系统本体”更窄或不同。
 
 【选项分析】A 错，Database system security 是数据库系统安全；B 错，Network security 是网络安全；C 对，Operating system security 是操作系统安全；D 错，Communication security 是通信安全，选项还混有 OCR 噪声。
 
@@ -256,7 +268,7 @@ SPECIAL_EXPLANATIONS.update({
         "keyPoints": ["英文术语", "Network security", "网络安全", "通信与边界保护"],
         "analysis": """【知识点闭环】Network security 意为“网络安全”，关注网络访问控制、边界防护、入侵检测、传输保护和网络攻击防御，保护网络基础设施和网络通信环境。
 
-【解题过程】原英文题干 OCR 残缺，依据保留选项和标准答案解析。标准答案为 Network security，说明空格对应网络层面安全。数据库系统安全、操作系统安全和通信安全都属于安全领域，但保护对象和范围不同。
+【解题过程】这题要求从几个英文安全术语中选出“网络层面”的那一项。若题干讨论的是网络链路、边界防护、网络攻击和网络环境保护，对应术语就应是 Network security。Database system security 面向数据库，Operating system security 面向主机操作系统，Communication security 更强调通信内容和信道本身，因此都不是最准确的总括词。
 
 【选项分析】A 错，Database system security 保护数据库数据和数据库服务；B 对，Network security 对应网络安全；C 错，Operating system security 保护主机操作系统；D 错，Communication security 更强调通信内容和信道安全。
 
@@ -266,7 +278,7 @@ SPECIAL_EXPLANATIONS.update({
         "keyPoints": ["英文术语", "viruses", "计算机病毒", "恶意代码"],
         "analysis": """【知识点闭环】viruses 在计算机安全语境中意为“病毒”，指能依附于程序或文件并复制传播的恶意代码，可能破坏数据、占用资源或执行未授权操作。
 
-【解题过程】原英文题干 OCR 残缺，依据保留选项和标准答案解析。安全威胁中与程序传播和感染相关的术语应为 viruses。earthquake 是地震，bacteria 是细菌，models 是模型，都不是计算机安全中的恶意代码术语。
+【解题过程】这题考查英文词汇在计算机安全语境中的专门含义。题干讨论的是能够感染程序、复制传播并造成破坏的安全威胁，这正对应 viruses。其余几个选项分别表示自然灾害、生物学概念或普通抽象名词，都不能表示恶意代码。
 
 【选项分析】A 对，viruses 是计算机病毒；B 错，earthquake 是自然灾害；C 错，bacteria 是生物学概念；D 错，models 是模型，不表示安全威胁。
 
@@ -276,7 +288,7 @@ SPECIAL_EXPLANATIONS.update({
         "keyPoints": ["英文术语", "security management systems", "安全管理系统", "管理控制"],
         "analysis": """【知识点闭环】security management systems 意为“安全管理系统”，用于组织安全策略、权限、审计、风险控制和安全运维流程，是管理层面的安全保障体系。
 
-【解题过程】原英文题干 OCR 残缺，依据保留选项和标准答案解析。选项 D 虽混入 OCR 噪声，但核心短语是 security management systems。management style 是管理风格，production management system 是生产管理系统，management personnel 是管理人员，都不能表达安全管理体系。
+【解题过程】这道题要求从几个外形相近的英文短语里，找出真正表示“安全管理体系”的术语。只有 security management systems 同时包含 security 与 management systems，语义上明确指向一套安全管理机制。management style 只是管理风格，production management system 是生产管理系统，management personnel 是管理人员，都与题干要表达的“体系化安全管理”不一致。
 
 【选项分析】A 错，management style 表示管理风格；B 错，production management system 表示生产管理系统；C 错，management personnel 表示管理人员；D 对，security management systems 表示安全管理系统。
 
@@ -429,90 +441,7 @@ SPECIAL_EXPLANATIONS.update({
 })
 
 
-DOMAIN_RULES: list[tuple[tuple[str, ...], tuple[str, list[str], str]]] = [
-    (("RISC", "CISC"), ("RISC 与 CISC", ["指令系统", "定长与变长指令", "流水线", "微操作实现"], "RISC 强调简单规则的指令体系和流水线效率，CISC 强调丰富复杂的指令能力，现代 CISC 处理器内部常拆成微操作执行。")),
-    (("效用树", "优先级"), ("效用树优先级", ["ATAM", "重要性", "实现难度", "高中低排序"], "效用树按场景对系统成功的重要性和实现难度进行排序，优先级通常以高、中、低等相对等级表示。")),
-    (("数字签名", "私钥", "公钥"), ("数字签名", ["哈希摘要", "私钥签名", "公钥验证", "完整性认证"], "数字签名用于验证消息来源与完整性，标准过程是先求摘要，再由发送方私钥签名，接收方用公钥验证。")),
-    (("机器学习", "深度学习"), ("机器学习分类", ["传统机器学习", "深度学习", "贝叶斯", "决策树", "神经网络"], "传统机器学习常见算法包括贝叶斯、决策树等；深度学习则以多层神经网络模型为代表。")),
-    (("分时",), ("分时操作系统", ["多路性", "独立性", "交互性", "及时性"], "分时系统通过时间片轮转让多个终端用户共享 CPU，标准特点是多路性、独立性、交互性和及时性。")),
-    (("高速缓冲", "Cache", "主存速度"), ("Cache 高速缓存", ["局部性原理", "CPU 与主存速度匹配", "存储层次"], "Cache 位于 CPU 与主存之间，利用程序局部性缓解二者速度不匹配。")),
-    (("性能", "评价程序", "基准"), ("性能评价程序", ["真实程序", "核心程序", "合成基准", "评价准确性"], "越接近实际负载的评价程序越能反映真实系统性能，真实程序的准确性最高。")),
-    (("企业", "门户"), ("企业门户类型", ["企业信息门户", "统一入口", "结构化数据", "非结构化数据"], "企业信息门户强调对结构化和非结构化信息的统一收集、访问、管理与集成。")),
-    (("专家系统",), ("专家系统结构", ["知识库", "综合数据库", "推理机", "解释机制"], "专家系统由知识库、综合数据库、推理机和解释接口等组成；知识库存放领域知识，综合数据库保存问题状态和中间结果。")),
-    (("电子商务",), ("电子商务实体", ["客户", "商户", "银行", "认证中心"], "典型电子商务参与实体包括客户、商户、银行和认证中心，认证中心负责身份与证书信任。")),
-    (("商业智能", "BI"), ("商业智能技术", ["数据仓库", "OLAP", "数据挖掘", "决策支持"], "商业智能通常以数据仓库为基础，借助联机分析处理和数据挖掘支持管理决策。")),
-    (("净室",), ("净室软件工程", ["函数理论", "抽样理论", "正确性验证", "统计测试"], "净室软件工程强调规格说明、正确性验证和统计质量控制，测试不是其唯一核心。")),
-    (("文档体系", "用户文档", "系统文档"), ("软件文档分类", ["系统文档", "用户文档", "系统功能", "使用方法"], "软件文档分为系统文档和用户文档；用户文档面向使用者，说明系统功能与使用方法。")),
-    (("瀑布模型",), ("瀑布模型", ["阶段顺序", "需求稳定", "文档驱动", "变更困难"], "瀑布模型按需求、设计、编码、测试、维护顺序推进，适合需求明确稳定的项目。")),
-    (("环路复杂度", "控制流复杂度"), ("McCabe 环路复杂度", ["控制流图", "判定节点", "路径数量", "测试复杂度"], "环路复杂度直接度量程序控制流中线性独立路径数量。")),
-    (("验收测试",), ("验收测试", ["用户需求", "合同约定", "发布准备", "最终确认"], "验收测试从用户和合同角度确认系统是否满足交付条件。")),
-    (("需求验证", "需求确认"), ("需求验证", ["完整性", "准确性", "无歧义", "可行性"], "需求验证检查需求是否完整、准确、一致、无歧义并具备技术可行性。")),
-    (("结构化设计", "数据结构"), ("结构化设计任务", ["数据设计", "体系结构设计", "接口设计", "过程设计"], "数据设计负责把分析模型中的信息结构转换为软件需要的数据结构定义。")),
-    (("详细设计",), ("详细设计", ["模块算法", "局部数据结构", "接口细化", "实现逻辑"], "详细设计关注每个模块内部的算法、数据结构和处理细节。")),
-    (("软件开发环境", "过程控制"), ("软件开发环境集成机制", ["环境信息库", "过程控制", "消息服务器", "用户界面"], "过程控制与消息服务器负责协调工具、过程和事件，是软件开发环境集成的核心。")),
-    (("系统移植",), ("系统移植", ["准备阶段", "转换阶段", "测试阶段", "验证阶段"], "移植后的测试阶段要核实程序能否在新平台上正确工作。")),
-    (("自适应软件开发", "猜测", "合作", "学习"), ("ASD 自适应软件开发", ["猜测", "合作", "学习", "非线性迭代"], "ASD 的生命周期由猜测、合作和学习三个相互重叠的非线性阶段构成。")),
-    (("迪米特", "尽可能少的了解"), ("迪米特法则", ["最少知识原则", "低耦合", "对象协作", "封装边界"], "迪米特法则要求对象只与直接朋友通信，减少对其他对象内部细节的了解。")),
-    (("设计模式", "工厂方法", "迭代器"), ("设计模式分类", ["类模式", "对象模式", "迭代器", "适配器"], "迭代器模式通过对象封装遍历状态，属于典型对象行为型模式。")),
-    (("配置管理",), ("软件配置管理", ["版本控制", "变更管理", "配置项", "基线"], "软件配置管理的核心是识别配置项、控制版本和管理变更，保证软件演化可追踪。")),
-    (("CBAM",), ("CBAM 成本效益分析", ["投资回报", "架构策略", "收益", "成本"], "CBAM 在架构评估基础上进一步比较架构策略的成本、收益和投资回报。")),
-    (("联邦服务", "非关系型数据"), ("信息集成联邦服务", ["数据聚合", "异构数据", "数据自治", "统一访问"], "联邦服务在不改变各数据源自治管理方式的前提下提供统一聚合访问。")),
-    (("ORB", "对象请求代理"), ("CORBA ORB", ["对象请求代理", "请求转发", "位置透明", "分布对象"], "ORB 是 CORBA 的核心，负责在客户对象和服务对象之间转发请求并屏蔽位置差异。")),
-    (("servant", "伺服对象"), ("CORBA 伺服对象", ["Servant", "对象实现", "POA", "请求处理"], "Servant 是真正实现对象操作的服务端对象实例。")),
-    (("质量属性场景",), ("质量属性场景", ["刺激源", "刺激", "环境", "制品", "响应", "响应度量"], "质量属性场景用六要素描述质量需求；环境表示刺激发生时系统所处状态。")),
-    (("审计追踪",), ("安全性战术", ["审计追踪", "可追责", "入侵检测", "安全记录"], "审计追踪通过记录关键操作和事件支持安全追责与事后分析。")),
-    (("软件复用",), ("软件复用过程", ["构造可复用资产", "管理可复用资产", "使用可复用资产"], "软件复用先构造或获取资产，再管理资产，最后在项目中检索和使用。")),
-    (("UDDI", "Web 服务注册"), ("Web Service 协议栈", ["UDDI", "WSDL", "SOAP", "服务发现"], "UDDI 用于 Web 服务的注册、发布和查找；WSDL 描述接口，SOAP 负责消息交换。")),
-    (("调用/返回", "主程序/子程序"), ("调用返回风格", ["主程序子程序", "面向对象", "调用关系", "控制层次"], "调用/返回风格以显式调用关系组织控制流，包括主程序/子程序和面向对象风格。")),
-    (("规则系统", "交通信号灯"), ("规则系统架构", ["规则库", "推理机", "实时数据", "动态决策"], "规则系统适合根据实时事实匹配规则并自动产生控制决策。")),
-    (("事件驱动",), ("事件驱动架构", ["事件发布", "事件监听", "松耦合", "实时响应"], "事件驱动架构通过事件触发处理逻辑，适合高度解耦和交互响应场景。")),
-    (("ADL",), ("架构描述语言", ["ADL", "构件", "连接件", "配置"], "ADL 专门用于描述软件体系结构中的构件、连接件和配置约束。")),
-    (("架构重建",), ("架构重建", ["逆向工程", "体系结构视图", "已实现系统", "架构恢复"], "架构重建从已有实现中抽取体系结构信息，输出通常是一组体系结构视图。")),
-    (("4 + 1", "多视图"), ("4+1 视图模型", ["逻辑视图", "开发视图", "进程视图", "物理视图", "场景"], "4+1 模型用多个视图分离关注点，并用场景串联和验证架构。")),
-    (("基于度量", "架构评估"), ("架构评估方法", ["调查问卷", "场景评估", "度量评估", "质量属性映射"], "基于度量的评估需要建立质量属性与可测指标之间的映射。")),
-    (("DSSA",), ("特定领域软件架构", ["领域边界", "领域模型", "设计约束", "螺旋迭代"], "DSSA 建立过程是并发、递归、反复的，需要同时识别领域需求与实现约束。")),
-    (("软件架构", "维护费用", "复用资源", "冲突分析"), ("软件架构设计", ["抽象结构", "质量属性", "复用", "权衡分析"], "软件架构关注系统整体结构、构件关系和质量属性权衡，不以具体功能编码细节为中心。")),
-    (("用户定义完整性", "年龄"), ("数据库完整性约束", ["实体完整性", "参照完整性", "用户定义完整性", "业务规则"], "用户定义完整性用于表达特定应用语义规则，例如年龄必须大于某阈值。")),
-    (("命名冲突",), ("数据库模式冲突", ["命名冲突", "属性冲突", "结构冲突", "模式集成"], "不同模式中同义异名或异义同名属于命名冲突，需要统一命名后整合。")),
-    (("学生实体", "新生实体", "统一命名"), ("数据库模式集成", ["命名冲突", "模式集成", "统一命名", "实体整合"], "两个模式中的同义属性应先统一命名，再做实体或属性层面的整合，不能简单保留重复实体。")),
-    (("OSI", "数据单元"), ("OSI 封装", ["数据", "段", "分组", "帧", "比特"], "OSI 自上而下封装时，传输层形成段，网络层形成分组，数据链路层形成帧，物理层传输比特。")),
-    (("三层层次化", "核心层", "汇聚层", "接入层"), ("三层网络模型", ["核心层", "汇聚层", "接入层", "用户接入"], "接入层处理终端接入和本地访问，汇聚层实施策略并向核心层屏蔽接入细节。")),
-    (("星状", "中心节点"), ("网络拓扑", ["星状结构", "环形结构", "总线结构", "中心节点"], "星状拓扑中所有设备通过中心节点连接和通信。")),
-    (("MPU", "MCU", "DSP", "SoC"), ("嵌入式处理器", ["MPU", "MCU", "DSP", "SoC"], "SoC 是片上系统，把处理器、存储和外设接口等集成到单芯片系统中。")),
-    (("双机热备",), ("双机热备模式", ["双机热备", "双机互备", "双机双工", "服务器集群"], "双机热备常见工作模式是热备、互备和双工，服务器集群不属于这三种双机模式。")),
-    (("电子签名",), ("电子签名", ["身份认证", "电子代码", "数据电文", "法律效力"], "电子签名是用于识别签名人并表明认可内容的数据，不等同于手写签名图片。")),
-    (("SM3", "256"), ("商用密码算法", ["SM2", "SM3", "SM4", "SM9", "杂凑算法"], "SM3 是我国商用密码杂凑算法，输出 256 比特摘要，作用类似 MD/SHA 类摘要算法。")),
-    (("数字", "孪生"), ("数字孪生", ["建模", "仿真", "数据融合", "数字线程"], "数字孪生核心在于模型、仿真和贯穿生命周期的数据线程，大数据是支撑技术而非核心构成项。")),
-    (("商业秘密",), ("商业秘密保护", ["知识产权客体", "秘密性", "价值性", "保密措施"], "商业秘密属于知识产权保护的客体，通常要求不为公众所知悉、具有商业价值并采取保密措施。")),
-    (("软件著作权", "鉴别材料"), ("软件著作权登记", ["程序鉴别材料", "文档鉴别材料", "源代码", "权属证明"], "程序鉴别材料主要是源代码，文档鉴别材料才包括需求、设计、手册等文档。")),
-    (("著作权归属", "改编作品"), ("著作权归属", ["改编作品", "职务作品", "合作作品", "作者权利"], "改编作品的著作权由改编人享有，但行使时不得侵犯原作品著作权。")),
-    (("EPROM", "紫外线"), ("只读存储器", ["ROM", "PROM", "EPROM", "EEPROM"], "EPROM 可通过紫外线擦除后重新写入；EEPROM 则可电擦除。")),
-    (("位示图法", "磁盘"), ("位示图法", ["磁盘块", "分配状态", "位图", "空闲空间管理"], "位示图用每一位对应一个磁盘块或页框，用来表示空闲和占用状态。")),
-    (("Web 服务器", "性能评测"), ("Web 服务器测试", ["基准性能测试", "压力测试", "可靠性测试", "吞吐量"], "Web 服务器性能评测通常覆盖基准性能、极端压力和长时间可靠运行。")),
-    (("总线",), ("计算机总线", ["内总线", "系统总线", "外部总线", "串行总线", "并行总线"], "USB、SATA、CAN、RS-232、RS-485 等属于串行总线，PCI/ATA 等传统接口更接近并行总线表述。")),
-    (("电子政务", "C2G"), ("电子政务模式", ["G2G", "G2B", "G2C", "C2G", "公众参与"], "C2G 表示公民对政府，强调居民参政议政和意见反馈渠道。")),
-    (("企业信息化", "ERP", "SCM"), ("企业信息化方法", ["资源管理", "ERP", "SCM", "业务流程重构"], "资源管理方法常见代表是 ERP、SCM、CRM 等，用信息系统统筹企业资源。")),
-    (("DSS",), ("决策支持系统", ["半结构化问题", "模型库", "数据库", "辅助决策"], "DSS 主要支持半结构化和非结构化决策，帮助用户决策而不是替代用户。")),
-    (("EAI",), ("企业应用集成", ["通讯服务", "信息传递与转化", "应用连接", "流程控制"], "EAI 基础平台自下而上提供通讯、信息传递与转化、应用连接和流程控制服务。")),
-    (("白盒测试", "覆盖"), ("白盒覆盖准则", ["语句覆盖", "判定覆盖", "条件覆盖", "条件组合覆盖"], "条件覆盖关注每个条件真假取值，不必然覆盖每个判定分支。")),
-    (("Decorator", "Adapter", "Bridge", "Facade"), ("结构型设计模式", ["桥接模式", "装饰模式", "适配器模式", "外观模式"], "Bridge 将抽象部分与实现部分分离，使二者可以独立变化。")),
-    (("封装性",), ("面向对象封装", ["信息隐藏", "公共接口", "属性访问", "类边界"], "封装通过公共接口访问对象内部状态，隐藏实现细节并降低耦合。")),
-    (("预防性维护", "可维护性"), ("软件维护类型", ["改正性维护", "适应性维护", "完善性维护", "预防性维护"], "预防性维护是在故障出现前改进软件结构和质量，以提高可维护性和可靠性。")),
-    (("工作流", "流程定义工具"), ("工作流参考模型", ["流程定义工具", "工作流引擎", "客户端应用", "管理监控"], "流程定义工具用于创建或修改流程，并定义活动参与者、关系和传递规则。")),
-    (("边界类",), ("分析类", ["边界类", "实体类", "控制类", "外部交互"], "边界类描述系统外部参与者与系统功能之间的交互界面。")),
-    (("RUP", "构建阶段"), ("RUP 生命周期", ["初始阶段", "细化阶段", "构建阶段", "交付阶段"], "RUP 构建阶段开发剩余构件和功能，完成集成并进行详细测试。")),
-    (("内聚", "平均产量"), ("模块内聚", ["功能内聚", "通信内聚", "顺序内聚", "逻辑内聚"], "通信内聚指模块内多个操作使用同一输入数据或产生同一输出数据。")),
-    (("测试用例",), ("测试用例", ["输入数据", "预期输出", "执行条件", "测试目标"], "测试用例至少应明确输入数据、执行条件和预期输出结果。")),
-    (("继承", "取代继承"), ("面向对象继承分类", ["特化继承", "取代继承", "受限继承", "包含继承"], "按继承内容可分为特化继承、取代继承、受限继承和包含继承。")),
-    (("压力测试", "极端负载"), ("性能测试类型", ["负载测试", "压力测试", "容量测试", "可靠性测试"], "压力测试关注系统在超过正常负载或极端负载下的行为和恢复能力。")),
-    (("需求获取",), ("需求获取方法", ["用户面谈", "问卷调查", "现场观察", "代码审查"], "需求获取面向用户和业务现场，代码审查属于实现质量检查而非需求获取。")),
-    (("敏捷", "瀑布"), ("敏捷与瀑布", ["计划驱动", "迭代增量", "需求变化", "阶段划分"], "瀑布按严格阶段推进，敏捷采用迭代增量方式并快速响应变化。")),
-    (("四控", "三管"), ("信息系统工程监理", ["投资控制", "进度控制", "质量控制", "变更控制"], "信息系统工程监理的四控通常指投资、进度、质量和变更控制。")),
-]
-
-
-def clean_text(value: object) -> str:
-    return re.sub(r"\s+", " ", str(value or "")).strip()
+SPECIAL_EXPLANATIONS.update(load_chunk_entries())
 
 
 def load_question_bank() -> dict:
@@ -528,109 +457,62 @@ def save_question_bank(bank: dict) -> None:
     )
 
 
-def extract_concept(question: dict, correct_text: str) -> str:
-    stem = clean_text(question.get("stem"))
-    topic = clean_text(question.get("topic")) or "综合知识"
-    tokens = re.findall(r"[A-Za-z][A-Za-z0-9+./-]*|[\u4e00-\u9fff]{2,12}", stem + " " + correct_text)
-    stop_words = {
-        "以下", "关于", "说法", "正确", "错误", "不正确", "的是", "其中", "系统", "软件", "用户", "方法", "阶段", "选项", "考生回忆版",
-        "主要", "用于", "需要", "可以", "一个", "下面", "描述", "属于", "不属于", "不是", "采用", "最为", "合适", "根据", "实现",
-        "KF", "IAF", "ARERA", "内部资料", "禁目传播", "禁止传播",
+def format_question_refs(question_refs: list[tuple[str, int]]) -> str:
+    refs = [f"{paper_id}-Q{number}" for paper_id, number in question_refs]
+    if len(refs) <= 20:
+        return ", ".join(refs)
+    return ", ".join(refs[:20]) + f" ... 共 {len(refs)} 题"
+
+
+def build_explicit_explanation(paper_id: str, question: dict) -> dict:
+    explicit = SPECIAL_EXPLANATIONS.get((paper_id, question["number"]))
+    if explicit is None:
+        raise ValueError(f"缺少显式解析：{paper_id}-Q{question['number']}")
+    return {
+        "keyPoints": list(explicit["keyPoints"]),
+        "analysis": str(explicit["analysis"]).strip(),
+        "source": "AI显式编写",
     }
-    meaningful = [
-        token
-        for token in tokens
-        if token not in stop_words and len(token) >= 2 and not (token.isupper() and len(token) <= 5)
-    ]
-    if meaningful:
-        return meaningful[0][:24]
-    return topic
 
 
-def infer_rule(question: dict) -> tuple[str, list[str], str]:
-    text = " ".join(
-        [
-            clean_text(question.get("stem")),
-            clean_text(question.get("correctOptionText")),
-            " ".join(clean_text(item) for item in question.get("options", {}).values()),
-        ]
-    )
-    lower_text = text.lower()
-    best_rule: tuple[str, list[str], str] | None = None
-    best_score: tuple[int, float, int] | None = None
-    for keywords, rule in DOMAIN_RULES:
-        matched = [keyword for keyword in keywords if keyword.lower() in lower_text]
-        if not matched:
+def validate_explicit_explanations(bank: dict) -> None:
+    missing: list[tuple[str, int]] = []
+    invalid: list[str] = []
+    for paper in bank.get("papers", []):
+        if paper.get("type") != "objective":
             continue
-        score = (len(matched), len(matched) / len(keywords), sum(len(keyword) for keyword in matched))
-        if best_score is None or score > best_score:
-            best_rule = rule
-            best_score = score
-    if best_rule is not None:
-        return best_rule
-    topic = clean_text(question.get("topic")) or "综合知识"
-    correct_text = clean_text(question.get("correctOptionText")) or "正确选项"
-    concept = extract_concept(question, correct_text)
-    return (
-        concept,
-        [concept, topic, "核心定义", "适用场景", "选项辨析"],
-        f"{concept}属于{topic}中的常考概念，解题关键是先明确该概念的定义、适用场景和处理目标，再逐项判断选项是否符合这些要素。",
-    )
+        paper_id = paper.get("id", "")
+        for question in paper.get("questions", []):
+            key = (paper_id, question["number"])
+            explicit = SPECIAL_EXPLANATIONS.get(key)
+            if explicit is None:
+                missing.append(key)
+                continue
+            key_points = explicit.get("keyPoints") or []
+            analysis = str(explicit.get("analysis") or "").strip()
+            if not key_points:
+                invalid.append(f"{paper_id}-Q{question['number']}: keyPoints 为空")
+            if not analysis:
+                invalid.append(f"{paper_id}-Q{question['number']}: analysis 为空")
+                continue
+            for section in REQUIRED_ANALYSIS_SECTIONS:
+                if section not in analysis:
+                    invalid.append(f"{paper_id}-Q{question['number']}: 缺少 {section}")
+            for phrase in FORBIDDEN_ANALYSIS_PHRASES:
+                if phrase in analysis:
+                    invalid.append(f"{paper_id}-Q{question['number']}: 含禁用短语“{phrase}”")
+    if missing or invalid:
+        messages: list[str] = []
+        if missing:
+            messages.append("缺少显式解析: " + format_question_refs(missing))
+        if invalid:
+            preview = "；".join(invalid[:20])
+            suffix = "" if len(invalid) <= 20 else f"；... 共 {len(invalid)} 项"
+            messages.append("显式解析不合格: " + preview + suffix)
+        raise ValueError(" | ".join(messages))
 
 
-def is_negative_question(stem: str) -> bool:
-    return any(cue in stem for cue in NEGATIVE_CUES)
-
-
-def option_reason(label: str, option_text: str, answer: str, concept: str, statement: str, stem: str, correct_text: str) -> str:
-    text = clean_text(option_text)
-    negative = is_negative_question(stem)
-    if label == answer:
-        if negative:
-            return f"{label} 对，题干要求找出错误项或不属于的一项；{text}与“{statement}”不符，所以应选它。"
-        return f"{label} 对，{text}与“{statement}”一致，正好满足题干要求。"
-    if negative:
-        return f"{label} 不选，{text}与“{statement}”一致，仍属于{concept}中的正确表述。"
-    return f"{label} 错，{text}与“{statement}”不一致，不能像“{correct_text}”那样满足题干要求。"
-
-
-def build_generic_explanation(paper_id: str, question: dict) -> dict:
-    special = SPECIAL_EXPLANATIONS.get((paper_id, question["number"]))
-    if special:
-        return {"keyPoints": special["keyPoints"], "analysis": str(special["analysis"]).strip(), "source": "知识库"}
-
-    concept, points, statement = infer_rule(question)
-    topic = clean_text(question.get("topic")) or "综合知识"
-    answer = question.get("answer", "")
-    correct_text = clean_text(question.get("options", {}).get(answer) or question.get("correctOptionText"))
-    stem = clean_text(question.get("stem"))
-    key_points: list[str] = []
-    for point in [concept, *points, topic, correct_text]:
-        cleaned = clean_text(point)
-        if cleaned and cleaned not in key_points:
-            key_points.append(cleaned[:32])
-        if len(key_points) == 5:
-            break
-    while len(key_points) < 2:
-        key_points.append(f"{topic}辨析")
-
-    options = question.get("options", {})
-    option_lines = [option_reason(label, options[label], answer, concept, statement, stem, correct_text) for label in OPTION_LABELS if label in options]
-    if not option_lines:
-        option_lines.append(f"{answer} 对，{correct_text}与题干要求匹配；其余选项不满足“{statement}”对应的判断条件。")
-
-    analysis = f"""【知识点闭环】{statement}
-
-【解题过程】题目有效信息为“{stem[:120]}”。先识别题干是在判断“正确项”还是“错误项/不属于项”，再把各选项与知识点规则逐一对照。
-
-【选项分析】
-""" + "\n".join(f"- {line}" for line in option_lines) + f"""
-
-【答案结论】选择 {answer}。{correct_text}最符合题干要求。"""
-    return {"keyPoints": key_points, "analysis": analysis.strip(), "source": "知识库"}
-
-
-def validate(bank: dict) -> None:
+def validate_generated_bank(bank: dict) -> None:
     objective_questions = [
         question
         for paper in bank.get("papers", [])
@@ -645,25 +527,24 @@ def validate(bank: dict) -> None:
         key_points = explanation.get("keyPoints", [])
         if not analysis or not key_points:
             raise ValueError(f"missing explanation on question {question.get('number')}")
-        if any(phrase in analysis for phrase in FORBIDDEN_PHRASES):
+        if any(phrase in analysis for phrase in FORBIDDEN_ANALYSIS_PHRASES):
             raise ValueError(f"forbidden phrase remains on question {question.get('number')}")
-        if any(phrase in analysis for phrase in TEMPLATE_LIKE_PHRASES):
-            raise ValueError(f"template-like phrase remains on question {question.get('number')}")
-        if explanation.get("source") == "标准答案":
-            raise ValueError(f"source remains 标准答案 on question {question.get('number')}")
+        if explanation.get("source") != "AI显式编写":
+            raise ValueError(f"source is not AI显式编写 on question {question.get('number')}")
 
 
 def generate_all_explanations() -> None:
     bank = load_question_bank()
+    validate_explicit_explanations(bank)
     updated = 0
     for paper in bank.get("papers", []):
         if paper.get("type") != "objective":
             continue
         paper_id = paper.get("id", "")
         for question in paper.get("questions", []):
-            question["explanation"] = build_generic_explanation(paper_id, question)
+            question["explanation"] = build_explicit_explanation(paper_id, question)
             updated += 1
-    validate(bank)
+    validate_generated_bank(bank)
     save_question_bank(bank)
     print(f"updated_objective_explanations={updated}")
 
