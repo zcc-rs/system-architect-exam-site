@@ -265,17 +265,64 @@ function extractResourceDemandTable(stemText) {
   };
 }
 
+function extractProductProfitTable(stemText) {
+  const lines = String(stemText || "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const captionLine = lines.find((line) => /^表\s*1/.test(line));
+  if (!captionLine) {
+    return null;
+  }
+
+  const headerIndex = lines.findIndex((line) => /^产品[\s|]+甲[\s|]+乙[\s|]+资源限量$/.test(line));
+  if (headerIndex === -1) {
+    return null;
+  }
+
+  const rowPattern = /^(.+?)\s*\|\s*(.+?)\s*\|\s*(.+?)\s*\|\s*(.+)$/;
+  const rows = [];
+  for (const line of lines.slice(headerIndex + 1)) {
+    const match = line.match(rowPattern);
+    if (!match) {
+      continue;
+    }
+    rows.push({
+      item: match[1].trim(),
+      productA: match[2],
+      productB: match[3],
+      limit: match[4],
+    });
+  }
+
+  if (rows.length !== 4) {
+    return null;
+  }
+
+  return {
+    caption: captionLine,
+    rows,
+    markerLines: [captionLine, "产品 | 甲 | 乙 | 资源限量", ...rows.map((row) => `${row.item} | ${row.productA} | ${row.productB} | ${row.limit}`)],
+  };
+}
+
 function renderQuestionStem(question) {
   const fallback = "OCR 未能稳定识别本题文字，请查看题库数据修正。";
   const source = String(question.stem || fallback);
-  const table = extractResourceDemandTable(source);
+  const resourceTable = extractResourceDemandTable(source);
+  const productTable = extractProductProfitTable(source);
 
   let textOnly = source;
-  if (table) {
+  if (resourceTable) {
     textOnly = textOnly
       .replace(/\n?表\s*1[^\n]*/g, "")
       .replace(/\n?P\d+[：:]\s*最大需求\s*\d+[，,]\s*已分配\s*\d+[，,]\s*尚需\s*\d+/g, "")
       .trim();
+  } else if (productTable) {
+    for (const markerLine of productTable.markerLines) {
+      textOnly = textOnly.replace(`\n${markerLine}`, "").replace(markerLine, "");
+    }
+    textOnly = textOnly.trim();
   }
 
   const paragraphHtml = textOnly
@@ -285,35 +332,66 @@ function renderQuestionStem(question) {
     .map((paragraph) => `<p class="stem-paragraph">${escapeHtml(paragraph)}</p>`)
     .join("");
 
-  if (!table) {
+  if (!resourceTable && !productTable) {
     return paragraphHtml || `<p class="stem-paragraph">${escapeHtml(fallback)}</p>`;
   }
 
-  const tableRows = table.rows
+  if (resourceTable) {
+    const tableRows = resourceTable.rows
+      .map(
+        (row) => `<tr>
+          <td>${escapeHtml(row.process)}</td>
+          <td>${escapeHtml(row.maxDemand)}</td>
+          <td>${escapeHtml(row.allocated)}</td>
+          <td>${escapeHtml(row.needed)}</td>
+        </tr>`
+      )
+      .join("");
+
+    return `${paragraphHtml}
+      <div class="stem-table-wrap">
+        <div class="stem-table-caption">${escapeHtml(resourceTable.caption)}</div>
+        <table class="stem-table">
+          <thead>
+            <tr>
+              <th>进程</th>
+              <th>最大需求数</th>
+              <th>已分配资源数</th>
+              <th>尚需资源数</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRows}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  const productTableRows = productTable.rows
     .map(
       (row) => `<tr>
-        <td>${escapeHtml(row.process)}</td>
-        <td>${escapeHtml(row.maxDemand)}</td>
-        <td>${escapeHtml(row.allocated)}</td>
-        <td>${escapeHtml(row.needed)}</td>
+        <td>${escapeHtml(row.item)}</td>
+        <td>${escapeHtml(row.productA)}</td>
+        <td>${escapeHtml(row.productB)}</td>
+        <td>${escapeHtml(row.limit)}</td>
       </tr>`
     )
     .join("");
 
   return `${paragraphHtml}
     <div class="stem-table-wrap">
-      <div class="stem-table-caption">${escapeHtml(table.caption)}</div>
+      <div class="stem-table-caption">${escapeHtml(productTable.caption)}</div>
       <table class="stem-table">
         <thead>
           <tr>
-            <th>进程</th>
-            <th>最大需求数</th>
-            <th>已分配资源数</th>
-            <th>尚需资源数</th>
+            <th>产品</th>
+            <th>甲</th>
+            <th>乙</th>
+            <th>资源限量</th>
           </tr>
         </thead>
         <tbody>
-          ${tableRows}
+          ${productTableRows}
         </tbody>
       </table>
     </div>`;
